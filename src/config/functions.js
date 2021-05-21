@@ -212,7 +212,7 @@ export const getPath = async (projectPath, path, collection) => {
                     .get()
                     .then((doc) => {
                     if (!doc.exists) {
-                        location.href = "/dashboard/projects";
+                        location.href = "/";
                     }
                 });
                 break;
@@ -223,7 +223,7 @@ export const getPath = async (projectPath, path, collection) => {
                     .get()
                     .then((doc) => {
                     if (!doc.exists) {
-                        location.href = "/dashboard/projects";
+                        location.href = "/";
                     }
                 });
                 break;
