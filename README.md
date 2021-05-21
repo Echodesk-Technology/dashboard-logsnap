@@ -8,6 +8,7 @@
 
 <br />
 
+
 <p align="center">
 <img alt="Website" src="https://img.shields.io/website?up_message=online&url=https%3A%2F%2Flogsnap.site">
 <img alt="GitHub" src="https://img.shields.io/github/license/serverguyken/logsnap">
