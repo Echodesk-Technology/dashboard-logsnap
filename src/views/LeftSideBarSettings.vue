@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="sdkd flex items-center ml-2">
-            <router-link to="/dashboard/issues">
+            <router-link to="/">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -68,7 +68,7 @@
       </div>
     </div>
     <div id="settings-left" class="settings-ds">
-      <aside class="bg-settings-light shadow-sm px-3 py-3 pb-30">
+      <aside class="bg-settings-light shadow-sm px-3 py-3 pb-30 h-screen">
         <div class="left-main space-mb-sides p-2">
           <div class="cmp-pf-con flex items-center  mt-3">
             <div class="back-btn p-3">

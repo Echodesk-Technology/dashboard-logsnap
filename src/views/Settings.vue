@@ -2,7 +2,7 @@
   <div>
     <div id="page-settings">
       <div class="settings flex flex-row  h-screen">
-        <div id="left" class="w-60 side-left h-screen fixed left-0 overflow-y-scroll">
+        <div id="left" class="w-60 side-left h-screen fixed left-0">
           <LeftSideBarSettings />
         </div>
         <div

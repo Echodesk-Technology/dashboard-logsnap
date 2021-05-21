@@ -308,7 +308,7 @@ export default {
     });
     getAuthUser().then(user => {
       if(user) {
-        this.$router.push({path: '/dashboard/projects'})
+        this.$router.push({path: '/'})
       }
     })
   },

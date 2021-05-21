@@ -244,7 +244,7 @@ export const getPath = async (projectPath: any, path: any, collection: string) =
           .get()
           .then((doc: any) => {
             if (!doc.exists) {
-              location.href = "/dashboard/projects"
+              location.href = "/"
             }
           });
         break;
@@ -255,7 +255,7 @@ export const getPath = async (projectPath: any, path: any, collection: string) =
           .get()
           .then((doc: any) => {
             if (!doc.exists) {
-               location.href = "/dashboard/projects"
+               location.href = "/"
             }
           });
         break;
