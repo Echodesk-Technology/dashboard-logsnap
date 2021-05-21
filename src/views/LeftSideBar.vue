@@ -24,8 +24,8 @@
               <h1 class="text-white text-sm font-medium">{{ initals }}</h1>
             </div>
             <div class="cmp-text ml-3">
-              <h1 ref="workspaceName" class="text-xs font-medium">
-                {{ name }}
+              <h1 ref="workspaceName" class="text-xs font-medium w-24 ">
+               {{ name }}
               </h1>
             </div>
           </div>
