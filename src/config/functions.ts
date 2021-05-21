@@ -76,6 +76,13 @@ export const createProject = async (projectData: any) => {
   })
 }
 
+export const deleteProject = async (projectPath: any) => {
+  return await getAuthUser().then(user => {
+      const uuser: any = user;
+      const isUserDB = userDB.doc(uuser.uid);
+      return isUserDB.collection("projects").doc(projectPath).delete();
+  });
+};
 export const getAllProjects = async () => {
   return await getAuthUser().then(user => {
     const uuser: any = user
@@ -195,7 +202,7 @@ export const getProjectPath = async (path: any) => {
     .get()
     .then((doc: any) => {
       if(!doc.exists) {
-        location.href = "/dashboard/projects"
+        location.href = "/"
       }
     })
   })

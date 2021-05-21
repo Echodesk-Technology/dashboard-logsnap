@@ -77,7 +77,7 @@
 </template>
 <script>
 import { createTodo } from "../config/functions";
-import Dashboard from "./Dashboard";
+import Dashboard from "../components/Dashboard";
 import Todo from "./Todo";
 export default {
   name: "Todos",
@@ -117,7 +117,6 @@ export default {
   created() {
     const pickColor = document.querySelectorAll(".color");
     setTimeout(() => {
-      console.log(pickColor);
       pickColor.forEach((color) => {
         console.log(color);
       });

@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import Dashboard from "./Dashboard";
+import Dashboard from "../components/Dashboard";
 export default {
   name: "Notes",
   components: {

@@ -272,7 +272,7 @@ export default {
             this.isPasswrodReset = false
             this.isError = ""
             setTimeout(() => {
-              this.$router.push({ path: "/dashboard/projects" });
+              this.$router.push({ path: "/" });
               localStorage.removeItem("isEmail")
             }, 1200);
            }

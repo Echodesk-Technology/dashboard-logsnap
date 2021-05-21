@@ -1,11 +1,8 @@
 <template>
   <div>
-    <header
-      class="ds-nav bg-color fixed z-50  top-0 w-full"
-      ref="dsNav"
-    >
+    <header class="ds-nav bg-color fixed z-50 top-0 w-full" ref="dsNav">
       <nav
-        class="ds-nav-con flex  flex-row items-center justify-between space-mb-sides py-4 px-4 ml-auto mr-auto"
+        class="ds-nav-con flex flex-row items-center justify-between space-mb-sides py-4 px-4 ml-auto mr-auto"
       >
         <div class="logo-img">
           <router-link to="/">
@@ -23,7 +20,7 @@
               :key="link.name"
               class="li-link text-gray-500 text-sm font-medium hover:text-main-normal ml-5 mr-5"
             >
-              <router-link :to="link.path">{{ link.name }}</router-link>
+              <a :href="link.path">{{ link.name }}</a>
             </li>
             <div
               v-show="intHovered"
@@ -149,7 +146,7 @@
               :key="link.name"
               class="li-link pt-3 pb-2 text-gray-600 font-medium"
             >
-              <router-link :to="link.path">{{ link.name }}</router-link>
+              <a :href="link.path">{{ link.name }}</a>
             </li>
           </ul>
         </div>
@@ -166,11 +163,8 @@ export default {
       scrollPosition: null,
       intHovered: false,
       links: [
-        { name: "Features", path: "/features" },
-        // { name: "Integrations", path: "/integrations" },
-        { name: "Pricing", path: "/pricing" },
-        // { name: "About", path: "/about" },
-        // { name: "Contact", path: "/contact" },
+        { name: "Features", path: "http://logsnap.app/features" },
+        { name: "Pricing", path: "http://logsnap.app/pricing" },
       ],
     };
   },

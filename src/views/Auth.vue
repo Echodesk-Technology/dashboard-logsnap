@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import Loader from './Loader'
+import Loader from '../components/Loader'
 import Login from "./Login"
 import Signup from "./Signup"
 export default {

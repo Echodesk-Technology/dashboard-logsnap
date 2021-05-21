@@ -139,7 +139,7 @@
           </div>
           <div
             class="absolute z-50 right-0 mr-4 open-cc w-60 bg-white border-t shadow rounded-sm p-2 animate-slide"
-            style="margin-top: 11.10rem"
+            style="margin-top: 11.1rem"
             v-if="openAccAction"
           >
             <div class="gtpsdp">
@@ -168,7 +168,7 @@
 
               <div class="prtd">
                 <router-link
-                  to="/dashboard/projects"
+                  to="/"
                   class="flex px-4 py-2 mt-3 hover:bg-gray-100"
                 >
                   <div class="text-gray-600">Projects</div>
@@ -421,7 +421,7 @@
                           </p>
                         </div>
                         <div class="mt-o">
-                          <div class="cnt-area  w-full">
+                          <div class="cnt-area w-full">
                             <textarea
                               name="content"
                               v-model="issue.description"
@@ -654,7 +654,7 @@
 </template>
 <script>
 import Loader from "./Loader";
-import LeftSideBar from "./LeftSideBar";
+import LeftSideBar from "../views/LeftSideBar";
 import {
   auth,
   db,
@@ -688,6 +688,7 @@ export default {
       uploadValue: 0,
       upLoading: false,
       issue: {
+        projectName: this.$route.fullPath.split("/")[2],
         tags: [],
         attachmentURL: null,
         status: "",
@@ -799,7 +800,7 @@ export default {
             uploadRef.snapshot.ref.getDownloadURL().then((url) => {
               this.attachmentURL = url;
               this.issue.attachmentURL = url;
-              localStorage.isFileName = '';
+              localStorage.isFileName = "";
             });
           }
         );
@@ -808,99 +809,99 @@ export default {
     deleteFile() {
       this.upLoading = false;
       this.$refs.uploadBtn.value = "";
-      localStorage.isFileName = '';
+      localStorage.isFileName = "";
     },
     createIssue() {
-      this.enabled = true
-      if(this.enabled) {
+      this.enabled = true;
+      if (this.enabled) {
         if (this.$refs.summary.value === "") {
-        this.$refs.summaryError.style.display = "block";
-        this.$refs.summary.classList.add("border", "border-red-500");
-        this.$refs.summary.classList.remove("focus:ring-1");
-        return false;
-      } else {
-        this.$refs.summaryError.style.display = "none";
-        this.$refs.summary.classList.remove("border", "border-red-500");
-        this.$refs.summary.classList.add("focus:ring-1");
-      }
-      if (this.$refs.description.value === "") {
-        this.$refs.descriptionError.style.display = "block";
-        this.$refs.description.classList.add("border", "border-red-500");
-        this.$refs.description.classList.remove("focus:ring-1");
-        return false;
-      } else {
-        this.$refs.descriptionError.style.display = "none";
-        this.$refs.description.classList.remove("border", "border-red-500");
-        this.$refs.description.classList.add("focus:ring-1");
-      }
-      if (this.issue.status === "Open") {
-        this.issue.statusColor = "text-white";
-        this.issue.statusBackgroundColor = "bg-green-400";
-      }
-      if (this.issue.status === "In Progress") {
-        this.issue.statusColor = "text-status-inProgressDark";
-        this.issue.statusBackgroundColor = "bg-status-inProgressLight";
-      }
-      if (this.issue.status === "Fixed") {
-        this.issue.statusColor = "text-green-500";
-        this.issue.statusBackgroundColor = "bg-green-200";
-      }
-      if (this.issue.status === "Closed") {
-        this.issue.statusColor = "text-red-500";
-        this.issue.statusBackgroundColor = "bg-red-200";
-      }
-      if (this.issue.priority === "Low") {
-        this.issue.priorityColor = "text-white";
-        this.issue.priorityBackgroundColor = "bg-yellow-300";
-      }
-      if (this.issue.priority === "Medium") {
-        this.issue.priorityColor = "text-white";
-        this.issue.priorityBackgroundColor = "bg-green-400";
-      }
-      if (this.issue.priority === "High") {
-        this.issue.priorityColor = "text-white";
-        this.issue.priorityBackgroundColor = "bg-red-600";
-      }
-      if (
-        this.$refs.summary.value !== "" &&
-        this.$refs.description.value !== ""
-      ) {
-        createIssue(this.getRoute, this.issue)
-          .then((docRef) => {
-            docRef.update({
-              id: docRef.id,
-              projectid: this.getRoute,
-            });
-          })
-          .then(() => {
-            this.issue.tags = [];
-            this.issue.summary = "";
-            this.issue.description = "";
-            this.issue.statusColor = "";
-            this.issue.statusBackgroundColor = "";
-            this.issue.priorityColor = "";
-            this.issue.priorityBackgroundColor = "";
-            this.issue.labels = "";
-            this.issue.status = "";
-            this.issue.priority = "";
-            this.labelTyped = false;
-            this.$refs.summary.value = "";
-            this.$refs.description.value = "";
-            this.$refs.label.value = "";
-            this.openIssueModal = false;
-            this.$refs.uploadBtn.value = "";
-            this.upLoading = false;
-            this.issueCreated = true;
-            setTimeout(() => {
-              this.issueCreated = false;
-              this.$router.replace(this.$route.path)
-            }, 1000);
-          })
+          this.$refs.summaryError.style.display = "block";
+          this.$refs.summary.classList.add("border", "border-red-500");
+          this.$refs.summary.classList.remove("focus:ring-1");
+          return false;
+        } else {
+          this.$refs.summaryError.style.display = "none";
+          this.$refs.summary.classList.remove("border", "border-red-500");
+          this.$refs.summary.classList.add("focus:ring-1");
+        }
+        if (this.$refs.description.value === "") {
+          this.$refs.descriptionError.style.display = "block";
+          this.$refs.description.classList.add("border", "border-red-500");
+          this.$refs.description.classList.remove("focus:ring-1");
+          return false;
+        } else {
+          this.$refs.descriptionError.style.display = "none";
+          this.$refs.description.classList.remove("border", "border-red-500");
+          this.$refs.description.classList.add("focus:ring-1");
+        }
+        if (this.issue.status === "Open") {
+          this.issue.statusColor = "text-white";
+          this.issue.statusBackgroundColor = "bg-green-400";
+        }
+        if (this.issue.status === "In Progress") {
+          this.issue.statusColor = "text-status-inProgressDark";
+          this.issue.statusBackgroundColor = "bg-status-inProgressLight";
+        }
+        if (this.issue.status === "Fixed") {
+          this.issue.statusColor = "text-green-500";
+          this.issue.statusBackgroundColor = "bg-green-200";
+        }
+        if (this.issue.status === "Closed") {
+          this.issue.statusColor = "text-red-500";
+          this.issue.statusBackgroundColor = "bg-red-200";
+        }
+        if (this.issue.priority === "Low") {
+          this.issue.priorityColor = "text-white";
+          this.issue.priorityBackgroundColor = "bg-yellow-300";
+        }
+        if (this.issue.priority === "Medium") {
+          this.issue.priorityColor = "text-white";
+          this.issue.priorityBackgroundColor = "bg-green-400";
+        }
+        if (this.issue.priority === "High") {
+          this.issue.priorityColor = "text-white";
+          this.issue.priorityBackgroundColor = "bg-red-600";
+        }
+        if (
+          this.$refs.summary.value !== "" &&
+          this.$refs.description.value !== ""
+        ) {
+          createIssue(this.getRoute, this.issue)
+            .then((docRef) => {
+              docRef.update({
+                id: docRef.id,
+                projectid: this.getRoute,
+              });
+            })
+            .then(() => {
+              this.issue.tags = [];
+              this.issue.summary = "";
+              this.issue.description = "";
+              this.issue.statusColor = "";
+              this.issue.statusBackgroundColor = "";
+              this.issue.priorityColor = "";
+              this.issue.priorityBackgroundColor = "";
+              this.issue.labels = "";
+              this.issue.status = "";
+              this.issue.priority = "";
+              this.labelTyped = false;
+              this.$refs.summary.value = "";
+              this.$refs.description.value = "";
+              this.$refs.label.value = "";
+              this.openIssueModal = false;
+              this.$refs.uploadBtn.value = "";
+              this.upLoading = false;
+              this.issueCreated = true;
+              setTimeout(() => {
+                this.issueCreated = false;
+                this.$router.replace(this.$route.path);
+              }, 1000);
+            })
 
-          .catch((error) => {
-            error;
-          });
-      }
+            .catch((error) => {
+              error;
+            });
+        }
       }
     },
     clearIssueForm() {
@@ -930,8 +931,7 @@ export default {
           this.$refs.label.value = "";
           this.$refs.uploadBtn.value = "";
           this.upLoading = false;
-          this.$route.query.modalOpen = false
-         
+          this.$route.query.modalOpen = false;
         } else {
           return false;
         }
@@ -991,19 +991,19 @@ export default {
         this.color = `background-color: ${user.coloruserSetActive};`;
       });
     });
-    setTimeout(() => {
-      this.isLoaded = true;
-    }, 1000);
-  },
-  created() {
-    //  if(this.$route.query.modalOpen === "true") {
-    //   this.openIssueModal = true;
-    //   this.enabled = true
-    // }
+    this.isLoaded = true;
     setTimeout(() => {
       this.isLoading = false;
-    }, 500);
-    
+      localStorage.isLoaded = true;
+    }, 1000);
+    if (localStorage.isLoaded === "true") {
+      this.isLoading = false;
+    }
   },
+  created() {
+    window.addEventListener('beforeunload', function(event) {
+         localStorage.isLoaded = false;
+      })
+  }
 };
 </script>
