@@ -11,7 +11,9 @@ import { auth } from './config/functions'
 const app = createApp(App);
 
 auth.onAuthStateChanged((user: any) => {
-    store.dispatch("fetchUser", user)
+    if(user) {
+        store.dispatch("fetchUser", user);
+    }
 })
 
 const isUser = auth.onAuthStateChanged((user: any)=> {

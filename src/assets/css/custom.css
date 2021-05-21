@@ -26,21 +26,27 @@ body {
 .text-yellow {
     color: #f9ff21;
 }
+
 .bg-yellow {
     background-color: #f9ff21;
 }
+
 .bg-tomato {
     background-color: #f85959;
 }
+
 .bg-khaki {
     background-color: #ffc972;
 }
+
 .bg-salmon {
     background-color: #ff9b73;
 }
+
 .bg-plum {
     background-color: #b692fe;
 }
+
 .ds-nav-con {
     max-width: 1200px;
 }
@@ -209,6 +215,10 @@ body {
     padding-top: 3.55rem;
 }
 
+.p-head {
+    z-index: 999999;
+}
+
 .dash-middle {
     padding-left: 10.54rem;
 }
@@ -295,8 +305,6 @@ progress::-webkit-progress-value {
     border-top: 3px solid rgb(205, 205, 1);
 }
 
-
-
 .animation-center {
     position: fixed;
     top: 50%;
@@ -368,10 +376,10 @@ progress::-webkit-progress-value {
 @keyframes slide {
     0% {
         opacity: 0;
-        animation:  cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s 1 normal both running;
-        -webkit-animation:  cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s 1 normal both running;
+        animation: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s 1 normal both running;
+        -webkit-animation: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s 1 normal both running;
         transform: translate3d(0px, -10px, 0px);
-}
+    }
     100% {
         opacity: 1;
         transform: none;
@@ -526,6 +534,28 @@ progress::-webkit-progress-value {
     }
     .todo-card {
         width: 15rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .project-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .project-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .project-list {
+        width: 100%;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .project-list-items {
+        width: 90%;
     }
 }
 

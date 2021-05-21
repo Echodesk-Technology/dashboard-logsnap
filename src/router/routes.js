@@ -1,41 +1,28 @@
 
 import { createWebHistory, createRouter } from 'vue-router';
-import { getAuthUser, isUserVerified } from '../config/functions'
-import Main from '../components/Main.vue';
-import Auth from '../components/Auth.vue';
-import Features from '../components/Features.vue'
-import Pricing from '../components/Pricing.vue'
-import About from '../components/About.vue'
-import Contact from '../components/Contact.vue'
-import Projects from '../components/Projects.vue'
-// import ProjectCreate from '../components/ProjectCreate.vue'
-import Issues from '../components/Issues.vue'
-import Issue from '../components/Issue.vue'
-import Notes from '../components/Notes.vue'
-import Backlog from '../components/Backlog.vue'
-import Todos from '../components/Todos.vue'
-import ProfileSettings from '../components/ProfileSettings.vue'
-import NotificationsSettings from '../components/NotificationsSettings.vue'
-import PreferencesSettings from '../components/PreferencesSettings.vue'
-import WorkspaceSettings from '../components/WorkspaceSettings.vue'
-import UsersSettings from '../components/UsersSettings.vue'
-import IntegrationsSettings from '../components/IntegrationsSettings.vue'
-import APISettings from '../components/APISettings.vue'
-import PlansSettings from '../components/PlansSettings.vue'
-import BillingSettings from '../components/BillingSettings.vue'
-import NotFound from '../components/NotFound.vue';
+import { getAuthUser, isUserVerified } from '../config/functions';
+import Auth from '../views/Auth.vue';
+import Projects from '../views/Projects.vue'
+// import ProjectCreate from '../views/ProjectCreate.vue'
+import Issues from '../views/Issues.vue'
+import Issue from '../views/Issue.vue'
+import Notes from '../views/Notes.vue'
+import Backlog from '../views/Backlog.vue'
+import Todos from '../views/Todos.vue'
+import ProfileSettings from '../views/ProfileSettings.vue'
+import NotificationsSettings from '../views/NotificationsSettings.vue'
+import PreferencesSettings from '../views/PreferencesSettings.vue'
+import WorkspaceSettings from '../views/WorkspaceSettings.vue'
+import UsersSettings from '../views/UsersSettings.vue'
+import IntegrationsSettings from '../views/IntegrationsSettings.vue'
+import APISettings from '../views/APISettings.vue'
+import PlansSettings from '../views/PlansSettings.vue'
+import BillingSettings from '../views/BillingSettings.vue'
+import NotFound from '../views/NotFound.vue';
 
 
 
 const routes = [
-    {
-        path: '/',
-        name: 'home',
-        component: Main,
-        meta: {
-            title: "LogSnap | Issue Tracking"
-        }
-    },
     {
         path: '/login',
         name: 'login',
@@ -50,35 +37,6 @@ const routes = [
         component: Auth,
         meta: {
             title: "Sign up | LogSnap",
-        }
-    },
-    {
-        path: "/features",
-        component: Features,
-        redirect: "/",
-        meta: {
-            title: "Features | LogSnap",
-        }
-    },
-    {
-        path: "/pricing",
-        component: Pricing,
-        meta: {
-            title: "Pricing | LogSnap"
-        }
-    },
-    {
-        path: "/about",
-        component: About,
-        meta: {
-            title: "About | LogSnap"
-        }
-    },
-    {
-        path: "/contact",
-        component: Contact,
-        meta: {
-            title: "Conatact | LogSnap"
         }
     },
     {
@@ -102,7 +60,7 @@ const routes = [
     //     },
     // },
     {
-        path: "/dashboard/projects/",
+        path: "/",
         component: Projects,
         meta: {
             title: "Projects | LogSnap",
@@ -111,7 +69,7 @@ const routes = [
     },
     {
         name: "Issues",
-        path: "/dashboard/project/issues/:id?",
+        path: "/project/:projName/issues/:id",
         component: Issues,
         meta: {
             title: "Issues | LogSnap",
@@ -120,7 +78,7 @@ const routes = [
     },
     {
         name: "Notes",
-        path: "/dashboard/project/notes/:id",
+        path: "/project/:projName/notes/:id",
         component: Notes,
         meta: {
             title: "Notes | LogSnap",
@@ -129,7 +87,7 @@ const routes = [
     },
     {
         name: "Todos",
-        path: "/dashboard/project/todos/:id",
+        path: "/project/:projName/todos/:id",
         component: Todos,
         meta: {
             title: "Todos | LogSnap",
@@ -138,47 +96,22 @@ const routes = [
     },
     {
         name: "Backlog",
-        path: "/dashboard/project/backlog/:id",
+        path: "/project/backlog/:id",
         component: Backlog,
         meta: {
             title: "Backlog | LogSnap",
             requiresAuth: true
         },
     },
-    
-    // {
-    //     path: "/dashboard/projects/create",
-    //     component: ProjectCreate,
-    //     meta: {
-    //         title: "Projects | LogSnap",
-    //         requiresAuth: true
-    //     },
-    // },
     {
         name: "Issue",
-        path: "/dashboard/project/issue/viewissue/:projectid/:id",
+        path: "/project/:projName/issue/viewissue/:projectid/:id",
         component: Issue,
         meta: {
             title: "Issue",
             requiresAuth: true
         },
     },
-    // {
-    //     path: "/dashboard/backlog",
-    //     component: Backlog,
-    //     meta: {
-    //         title: "Backlog | Dashboard",
-    //         requiresAuth: true
-    //     }
-    // },
-    // {
-    //     path: "/dashboard/todo",
-    //     component: Todo,
-    //     meta: {
-    //         title: "Todo| Dashboard",
-    //         requiresAuth: true
-    //     }
-    // },
     {
         path: "/settings/account/profile",
         component: ProfileSettings,

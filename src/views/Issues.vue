@@ -41,9 +41,9 @@
   </div>
 </template>
 <script>
-import Dashboard from "./Dashboard";
+import Dashboard from "../components/Dashboard";
 import LeftCard from "./LeftCard";
-import IssuesData from "./IsuuesData";
+import IssuesData from "../components/IsuuesData";
 export default {
   name: "Issues",
   data() {

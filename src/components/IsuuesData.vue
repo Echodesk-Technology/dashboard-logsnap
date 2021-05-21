@@ -36,7 +36,7 @@
         class="grid grid-cols-5 items-center"
         :to="{
           name: 'Issue',
-          params: { projectid: issue.projectid, id: issue.id },
+          params: { projName: issue.projectName, projectid: issue.projectid, id: issue.id },
         }"
       >
         <div class="issues-flex flex items-center">

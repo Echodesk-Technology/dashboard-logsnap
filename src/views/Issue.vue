@@ -716,6 +716,7 @@ export default {
       editEnabled: true,
       labelTyped: false,
       issueUpdated: false,
+      getProjectName: this.$route.fullPath.split("/")[2],
       getProjectPath: this.$route.fullPath.split("/")[5],
       getIssueID: this.$route.fullPath.split("/")[6],
     };
@@ -813,7 +814,7 @@ export default {
       this.issueUpdated = true;
       setTimeout(() => {
         this.$router.push({
-          path: `/dashboard/project/issues/${this.getProjectPath}`,
+          path: `/project/${this.getProjectName}/issues/${this.getProjectPath}`,
         });
       }, 1800);
     },
@@ -832,7 +833,7 @@ export default {
         }, 0);
         setTimeout(() => {
           this.$router.push({
-            path: `/dashboard/project/issues/${this.getProjectPath}`,
+            path: `/project/${this.getProjectName}/issues/${this.getProjectPath}`,
           });
         }, 1000);
       } else {

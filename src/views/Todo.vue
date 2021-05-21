@@ -100,7 +100,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs);
   },
   created() {
     getTodos(this.projectPath);

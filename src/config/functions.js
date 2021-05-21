@@ -58,6 +58,13 @@ export const createProject = async (projectData) => {
         return isUserDB.collection("projects").add(projectData);
     });
 };
+export const deleteProject = async (projectPath) => {
+    return await getAuthUser().then(user => {
+        const uuser = user;
+        const isUserDB = userDB.doc(uuser.uid);
+        return isUserDB.collection("projects").doc(projectPath).delete();
+    });
+};
 export const getAllProjects = async () => {
     return await getAuthUser().then(user => {
         const uuser = user;
@@ -163,7 +170,7 @@ export const getProjectPath = async (path) => {
             .get()
             .then((doc) => {
             if (!doc.exists) {
-                location.href = "/dashboard/projects";
+                location.href = "/";
             }
         });
     });
