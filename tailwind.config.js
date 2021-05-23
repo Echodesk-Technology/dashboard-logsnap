@@ -7,6 +7,7 @@ module.exports = {
         main: {
           normal: '#17d8e2',
           dark: '#0ab2bb',
+          veryDark: "#046e72",
           light: "#c6f3f5"
         },
         settings: {

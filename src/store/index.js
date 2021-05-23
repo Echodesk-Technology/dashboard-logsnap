@@ -12,6 +12,7 @@ const state = {
     issuesDatas: [],
     getIssue: [],
     todos: [],
+    isCollapsed: "",
 };
 
 const getters = {
@@ -37,6 +38,7 @@ const getters = {
     getIssuesDatas: (state) => state.issuesDatas,
     getIssueData: (state) => state.getIssue,
     getTodos: (state) => state.todos,
+    getCollapsedState: (state) => state.isCollapsed,
 };
 
 const actions = {
@@ -69,7 +71,8 @@ const actions = {
                return false
            }
         })
-      }
+      },
+
 
 };
 
@@ -102,6 +105,9 @@ const mutations = {
     SET_TODOS (state, data) {
          state.todos = data
     },
+    SET_COLLAPSED (state, data) {
+        state.isCollapsed = data
+    }
 };
 
 

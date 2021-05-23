@@ -1,24 +1,28 @@
 <template>
   <div>
+    <div class="loader" v-if="loaded">
+      <div class="bar"></div>
+    </div>
     <div id="page-login">
-      <div class="su-hd pt-3 pb-60">
-        <div class="hd-logo">
+      <div class="animate-fadein pt-3 pb-60">
+        <div class="hd-logo mt-6 mb-2">
           <router-link to="/">
             <img
               src="https://res.cloudinary.com/serveryguken/image/upload/v1612386754/Projects/logsnap/logo/LogSnap-main_xppj6x.svg"
               alt="logsnap-logo"
-              class="w-60 pt-1 pb-2 ml-auto mr-auto"
+              class="w-32 pt-1 pb-2 ml-auto mr-auto"
             />
           </router-link>
         </div>
-        <h1 class="text-center text-2xl text-black font-bold pl-5 pr-5 pt-4">
-        </h1>
+        <h1
+          class="text-center text-2xl text-black font-bold pl-5 pr-5 pt-4"
+        ></h1>
         <!-- <p class="text-center mt-6 text-gray-dim font-normal">
           <span class="text-main-normal" ref="workspaceURL">Log in to kenny.logsnap.app</span>
         </p> -->
 
         <div
-          class="ws-url-con form form-workspace bg-white shadow-2xl rounded-lg max-w-lg w-11/12 ml-auto mr-auto p-6 mt-12 mb-10"
+          class="ws-url-con form form-workspace bg-white shadow-2xl rounded-lg max-w-lg w-11/12 ml-auto mr-auto p-6 mt-8 mb-10"
           v-if="!isWorkSpace"
         >
           <div class="form-group mt-4">
@@ -57,8 +61,11 @@
         </div>
         <div
           v-show="isWorkSpace"
-          class="form form-login shadow-2xl rounded-lg max-w-lg w-11/12 ml-auto mr-auto p-6 mt-5 mb-20"
+          class="form form-login rounded-lg max-w-sm w-11/12 ml-auto mr-auto p-6 mt-2 mb-20"
         >
+          <div class="su-form-hd text-center">
+            <h1 class="text-3xl font-semibold">Log In</h1>
+          </div>
           <div class="error-con mt-2 mb-2">
             <p
               ref="isErrorText"
@@ -68,7 +75,7 @@
             </p>
           </div>
           <div
-          v-if="isPasswrodReset"
+            v-if="isPasswrodReset"
             class="error-con mt-2 mb-2 p-1 rounded bg-red-100 w-64 ml-auto mr-auto animate-reveal"
           >
             <p
@@ -77,44 +84,40 @@
             >
               The password is not correct.
             </p>
-            <div class="text-center"
-              ><span class="text-red-600 text-sm">Did</span>
+            <div class="text-center">
+              <span class="text-red-600 text-sm">Did</span>
               <router-link
                 to="/reset"
                 class="text-main-dark text-sm hover:underline"
               >
                 you forget your password?</router-link
-              ></div
-            >
+              >
+            </div>
           </div>
           <form action="/">
-            <div class="form-group mt-4">
-              <label for="fullName" class="text-gray-dark font-normal"
-                >Email</label
-              >
+            <div class="form-group mt-10">
               <input
                 type="text"
                 id="lsEmail"
                 ref="isEmail"
+                placeholder="Your email address"
                 v-model="isEmail"
-                class="border border-gray-200 rounded-sm p-2 w-full mt-1 focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
+                class="bg-gray-100 focus:bg-white border border-gray-200 p-1 h-9 rounded w-full  focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
               />
             </div>
-            <div class="error-con mt-4 mb-4">
+            <div class="error-con mt-2 mb-2">
               <p ref="isEmailText" class="text-sm font-medium text-red-600">
                 {{ isEmailError }}
               </p>
             </div>
-            <div class="form-group mt-4">
-              <label for="password" class="text-gray-dark font-normal"
-                >Password</label
-              >
+            <div class="form-group">
               <input
                 type="password"
                 id="lsPassword"
                 ref="isPassword"
+                placeholder="Password"
                 v-model="isPassword"
-                class="border border-gray-200 rounded-sm p-2 w-full mt-1 focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
+                class="bg-gray-100 focus:bg-white border border-gray-200 p-1 h-9 rounded w-full  focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
               />
             </div>
             <div class="error-con mt-4 mb-4">
@@ -125,7 +128,7 @@
             <div class="form-btn mt-4" v-if="!spinner">
               <button
                 id="loginBtn"
-                class="w-full focus:outline-none outline-none rounded-sm bg-main-normal text-white p-2 hover:opacity-80"
+                class="w-full focus:outline-none outline-none rounded bg-main-normal text-white p-1 h-9 hover:opacity-80"
                 ref="signInBtn"
                 @click.prevent="signInUser"
               >
@@ -134,12 +137,22 @@
             </div>
             <div class="relative spn-b form-btn mt-4" v-if="spinner">
               <div
-                class="cr-spinner p-2 w-full outline-none focus:outline-none rounded-sm bg-main-normal text-white hover:opacity-90"
+                class="cr-spinner w-full focus:outline-none outline-none rounded bg-main-normal text-white p-1 h-9 hover:opacity-80"
                 ref="crSpinner"
               ></div>
             </div>
           </form>
-          <div class="fp-b mt-3">
+          <div class="text-center mt-8">
+            <p class="text-gray-600 font-medium" style="font-size: 1rem">
+              Don't have an account?
+              <router-link
+                to="/signup"
+                class="text-main-normal hover:opacity-80"
+                >Sign Up</router-link
+              >
+            </p>
+          </div>
+          <div class="fp-b mt-3 text-center">
             <button
               class="text-main-dark text-right outline-none focus:outline-none hover:opacity-80"
             >
@@ -147,12 +160,6 @@
             </button>
           </div>
         </div>
-        <div class="text-center mb-5">
-        <p class="text-gray-600">Don't have a LogSnap account? <router-link to="/signup" class="text-main-normal hover:opacity-80">Sign Up</router-link></p>
-      </div>
-        <div class="text-center">
-        <p class="text-gray-600">&copy; 2021 Echodesk Technology</p>
-      </div>
       </div>
     </div>
   </div>
@@ -177,6 +184,7 @@ export default {
       isPassword: "",
       spinner: false,
       complete: true,
+      loaded: false,
     };
   },
   methods: {
@@ -263,33 +271,35 @@ export default {
         auth
           .signInWithEmailAndPassword(this.isEmail, this.isPassword)
           .then((data) => {
-           if(!data.user.emailVerified) {
-             this.isPasswrodReset = false
-             this.isError = "Please verify your email before you log in."
-           }
-           else {
+            if (!data.user.emailVerified) {
+              this.isPasswrodReset = false;
+              this.isError = "Please verify your email before you log in.";
+            } else {
               this.spinner = true;
-            this.isPasswrodReset = false
-            this.isError = ""
-            setTimeout(() => {
-              this.$router.push({ path: "/" });
-              localStorage.removeItem("isEmail")
-            }, 1200);
-           }
+              this.loaded = true;
+              this.isPasswrodReset = false;
+              this.isError = "";
+              setTimeout(() => {
+                this.spinner = false;
+                this.loaded = false;
+                this.$router.push({ path: "/" });
+                localStorage.removeItem("isEmail");
+              }, 1500);
+            }
           })
           .catch((error) => {
             switch (error.code) {
               case "auth/wrong-password":
                 this.isError = "";
-                this.isPasswrodReset = true
+                this.isPasswrodReset = true;
                 break;
               case "auth/too-many-requests":
                 this.isError = "Too many request | Account disabled.";
-                this.isPasswrodReset = false
+                this.isPasswrodReset = false;
                 break;
               default:
                 this.isError = "The email or password is not correct.";
-                 this.isPasswrodReset = false
+                this.isPasswrodReset = false;
                 break;
             }
           });
@@ -297,20 +307,20 @@ export default {
     },
   },
   mounted() {
-    if(this.isWorkSpace) {
-      this.focusEmailInput()
+    if (this.isWorkSpace) {
+      this.focusEmailInput();
     }
-    if(this.isWorkSpace === false) {
-      this.focusWknameInput()
+    if (this.isWorkSpace === false) {
+      this.focusWknameInput();
     }
     this.$refs.isEmail.addEventListener("keyup", () => {
       this.validateEmail(this.isEmail);
     });
-    getAuthUser().then(user => {
-      if(user) {
-        this.$router.push({path: '/'})
+    getAuthUser().then((user) => {
+      if (user) {
+        this.$router.push({ path: "/" });
       }
-    })
+    });
   },
 };
 </script>
