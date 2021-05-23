@@ -10,7 +10,7 @@
           />
         </router-link>
       </div>
-      <div class="flex flex-row justify-between signup-ft pt-4 pb-10">
+      <div class="flex  justify-between signup-ft pt-4 pb-10">
         <div class="sn-ft max-w-xl p-2">
           <h1 class="text-2xl font-semibold">
             A few clicks away from managing your projects.
@@ -20,7 +20,7 @@
               <img
                 src="https://res.cloudinary.com/serveryguken/image/upload/v1621701353/LogSnap/imgs/report_guveug.svg"
                 alt="report issue image"
-                class="w-6 -mt-3"
+                class="w-6 h-6 mt-2"
               />
               <h1 class="ml-2 text-sm">
                 <span class="font-semibold">Create Issues.</span> Record and
@@ -31,7 +31,7 @@
               <img
                 src="https://res.cloudinary.com/serveryguken/image/upload/v1621702905/LogSnap/imgs/to-do-list_xt7icv.svg"
                 alt="report issue image"
-                class="w-6 -mt-3"
+                class="w-6 h-6 mt-2"
               />
               <h1 class="ml-2 text-sm">
                 <span class="font-semibold">Manage Todos.</span> prioritize the
@@ -42,7 +42,7 @@
               <img
                 src="https://res.cloudinary.com/serveryguken/image/upload/v1621702944/LogSnap/imgs/post-it_mlohh2.svg"
                 alt="report issue image"
-                class="w-6 -mt-3"
+                class="w-6 h-6 mt-2"
               />
               <h1 class="ml-2 text-sm">
                 <span class="font-semibold">Build notes.</span> Simple note
@@ -53,7 +53,7 @@
               <img
                 src="https://res.cloudinary.com/serveryguken/image/upload/v1621702947/LogSnap/imgs/files_nmladb.svg"
                 alt="report issue image"
-                class="w-6 -mt-3"
+                class="w-6 h-6 mt-2"
               />
               <h1 class="ml-2 text-sm">
                 <span class="font-semibold">File Storage.</span> Organize Store
@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        <div class="form-container pl-14 max-w-sm ml-auto mr-auto w-full">
+        <div class="form-container pl-16  max-w-sm ml-auto mr-auto w-10/12">
           <div class="su">
             <div class="su-form-hd text-center">
               <h1 class="text-3xl font-semibold">Join LogSnap</h1>
