@@ -636,6 +636,9 @@ input[type=checkbox]:checked {
     .project-list-items {
         width: 90%;
     }
+    .create-border-list {
+        width: 90%;
+    }
 }
 
 @media (max-width: 800px) {
@@ -647,9 +650,6 @@ input[type=checkbox]:checked {
     }
     .form-container {
         padding-left: 0rem;
-        max-width: 80%;
-        margin-right: auto;
-        margin-left: auto;
     }
     /* .form {
         margin-left: 2rem;
