@@ -4,6 +4,11 @@
       <aside
         class="fixed shadow-none left-0 top-0 z-50 bg-white border-r border-gray-100 dark:bg-gray-800 h-screen"
       >
+        <div
+          v-if="projectDropdown"
+          @click="projectDropdown = false"
+          class="clickaway bg-none fixed top-0 w-full h-screen"
+        ></div>
         <div class="flex">
           <div
             class="first-left shadow-none w-20 bg-main-veryDark border-r border-gray-100 dark:bg-gray-800 h-screen"
@@ -66,9 +71,9 @@
               </svg>
             </div>
             <div
-            v-if="isCollapsed"
+              v-if="isCollapsed"
               @click="openCollapsedMenu"
-              class="collapsed-icon-open cursor-pointer absolute -right-3 mt-1  hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200"
+              class="collapsed-icon-open cursor-pointer absolute -right-3 mt-1 hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,6 +89,109 @@
               </svg>
             </div>
             <div class="links-con" v-if="!isCollapsed">
+              <div class="project-dropdown-container relative">
+                <div
+                  @click="showProjectDropdown"
+                  class="project-dropdown select-none cursor-pointer bg-gray-100 p-1 border border-gray-300 rounded shadow-sm"
+                >
+                  <div class="flex items-center">
+                    <h1 class="text-sm">{{ projectName }}</h1>
+                    <svg
+                      v-if="!projectDropdown"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 ml-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <svg
+                      v-if="projectDropdown"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 ml-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  v-if="projectDropdown"
+                  class="project-dropdown-list select-none bg-white absolute mt-2 rounded-lg l p-2 animate-slidedown-main w-60"
+                >
+                  <div class="project-search flex items-center">
+                    <div class="relative">
+                      <input
+                        @keyup="startSearch($event.target)"
+                        type="text"
+                        ref="searchValue"
+                        class="w-56 bg-white text-gray-600 text-sm border border-gray-100 p-1 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
+                        placeholder="Search for a project"
+                      />
+                    </div>
+                    <div
+                      class="absolute top-3 right-3 cursor-pointer hover:bg-gray-100 rounded p-1"
+                    >
+                      <div class="" v-if="!searching" ref="projectSearchIcon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 text-gray-600"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="animate-spin-icon"
+                        ref="clearSearchIcon"
+                        v-if="searching"
+                        @click="clearSearch"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-5 w-5 text-gray-600"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="projects-list">
+                    <h1 class="text-sm text-gray-400 font-nedium mt-3 p-2">
+                      Projects
+                    </h1>
+                    <ul class="mt-1">
+                      <li
+                        v-for="project in projects"
+                        :key="project.id"
+                        class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer"
+                      >
+                        {{ project.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <ul class="mt-4">
                 <li class="mb-1 p-1 dash-link">
                   <router-link
@@ -389,8 +497,8 @@
   </div>
 </template>
 <script>
-import { getUser, getAuthUser } from "../config/functions";
-import { mapActions } from "vuex";
+import { getUser, getAuthUser, getProjects } from "../config/functions";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "LeftSideBar",
   data() {
@@ -402,6 +510,11 @@ export default {
       initals: "",
       open: false,
       isCollapsed: false,
+      projects: [],
+      projectName: this.$route.fullPath.split("/")[2],
+      searchValue: "",
+      projectDropdown: false,
+      searching: false,
     };
   },
   methods: {
@@ -415,13 +528,37 @@ export default {
       this.$refs.collapsedSidebar.classList.add("animate-slideToLeft");
       this.isCollapsed = true;
       localStorage.sidebarCollasped = true;
-      this.$store.commit("SET_COLLAPSED", true)
+      this.$store.commit("SET_COLLAPSED", true);
     },
     openCollapsedMenu() {
       this.$refs.collapsedSidebar.classList.remove("animate-slideToLeft");
       this.isCollapsed = false;
       localStorage.sidebarCollasped = false;
-      this.$store.commit("SET_COLLAPSED", false)
+      this.$store.commit("SET_COLLAPSED", false);
+    },
+    showProjectDropdown() {
+      if (this.projectDropdown === true) {
+        this.projectDropdown = false;
+        this.searching = false;
+      } else {
+        this.projectDropdown = true;
+      }
+    },
+    startSearch(query) {
+      this.searching = true;
+      if (this.$refs.searchValue.value === "") { 
+        this.searching = false;
+        setTimeout(() => {
+          this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
+        }, 100);
+      }
+    },
+    clearSearch() {
+      this.$refs.searchValue.value = "";
+       this.searching = false;
+       setTimeout(() => {
+          this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
+        }, 100);
     },
   },
   mounted() {
@@ -429,11 +566,11 @@ export default {
       if (localStorage.sidebarCollasped === "true") {
         this.$refs.collapsedSidebar.classList.add("animate-slideToLeft");
         this.isCollapsed = true;
-        this.$store.commit("SET_COLLAPSED", true)
+        this.$store.commit("SET_COLLAPSED", true);
       } else {
-         this.$refs.collapsedSidebar.classList.remove("animate-slideToLeft");
+        this.$refs.collapsedSidebar.classList.remove("animate-slideToLeft");
         this.isCollapsed = false;
-        this.$store.commit("SET_COLLAPSED", false)
+        this.$store.commit("SET_COLLAPSED", false);
       }
     }
     const getInitials = function (name) {
@@ -455,6 +592,15 @@ export default {
     //     isCollapsed: false
     //   })
     // }
+  },
+  computed: mapGetters(["getProjects"]),
+  created() {
+    getProjects();
+  },
+  watch: {
+    "$store.getters.getProjects": function (data) {
+      this.projects = data;
+    },
   },
 };
 </script>

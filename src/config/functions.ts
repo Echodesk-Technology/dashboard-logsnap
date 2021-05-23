@@ -83,6 +83,23 @@ export const deleteProject = async (projectPath: any) => {
       return isUserDB.collection("projects").doc(projectPath).delete();
   });
 };
+
+
+export const getProjects = async () => {
+  return await getAuthUser().then(user => {
+    const uuser: any = user;
+    const isUserDB = userDB.doc(uuser.uid)
+    isUserDB.collection("projects").onSnapshot(querySnapshot => {
+      let projects: any = [];
+      querySnapshot.forEach(doc => {
+        projects.push(doc.data());
+        store.commit('SET_PROJECTS', projects)
+      })
+    })
+  })
+};
+
+
 export const getAllProjects = async () => {
   return await getAuthUser().then(user => {
     const uuser: any = user
@@ -95,7 +112,9 @@ export const getAllProjects = async () => {
       store.commit('SET_PROJECTS_DATAS', projectDatas)
     })
   })
-}
+};
+
+
 
 export const createIssue = async (projectPath: any, issueData: any) => {
   return await getAuthUser().then(user => {
@@ -103,7 +122,7 @@ export const createIssue = async (projectPath: any, issueData: any) => {
     const isUserDB = userDB.doc(uuser.uid)
     return isUserDB.collection("projects").doc(projectPath).collection("issues").add(issueData)
   })
-}
+};
 
 export const getIssue = async (projectPath: any, id: any) => {
   return await getAuthUser().then(user => {
@@ -113,7 +132,7 @@ export const getIssue = async (projectPath: any, id: any) => {
       store.commit('SET_ISSUE', data.data())
     })
   })
-}
+};
 
 export const updateIssue = async (projectPath: any, id: any, data: any) => {
   return await getAuthUser().then(user => {
@@ -121,7 +140,7 @@ export const updateIssue = async (projectPath: any, id: any, data: any) => {
     const isUserDB = userDB.doc(uuser.uid)
     isUserDB.collection("projects").doc(projectPath).collection("issues").doc(id).update(data)
   })
-}
+};
 
 
 export const deleteIssue = async (projectPath: any, id: any) => {
@@ -130,7 +149,7 @@ export const deleteIssue = async (projectPath: any, id: any) => {
     const isUserDB = userDB.doc(uuser.uid)
     isUserDB.collection("projects").doc(projectPath).collection("issues").doc(id).delete()
   })
-}
+};
 
 export const getAllIssues = async (projectPath: any) => {
   return await getAuthUser().then(user => {
@@ -144,14 +163,17 @@ export const getAllIssues = async (projectPath: any) => {
       store.commit('SET_ISSUES_DATAS', issuesData)
     })
   })
-}
+};
+
+
+
 export const createTodo = async (projectPath: any, todoData: any) => {
   return await getAuthUser().then(user => {
     const uuser: any = user
     const isUserDB = userDB.doc(uuser.uid)
     return isUserDB.collection("projects").doc(projectPath).collection("todos").add(todoData)
   })
-}
+};
 
 export const updateTodo = async (projectPath: any, id: any, data: any) => {
   return await getAuthUser().then(user => {
@@ -159,7 +181,7 @@ export const updateTodo = async (projectPath: any, id: any, data: any) => {
     const isUserDB = userDB.doc(uuser.uid)
     isUserDB.collection("projects").doc(projectPath).collection("todos").doc(id).update(data)
   })
-}
+};
 
 export const deleteTodo = async (projectPath: any, id: any) => {
   return await getAuthUser().then(user => {
@@ -167,7 +189,7 @@ export const deleteTodo = async (projectPath: any, id: any) => {
     const isUserDB = userDB.doc(uuser.uid)
     isUserDB.collection("projects").doc(projectPath).collection("todos").doc(id).delete()
   })
-}
+};
 
 export const getTodos = async (projectPath: any) => {
   return await getAuthUser().then(user => {
@@ -181,7 +203,7 @@ export const getTodos = async (projectPath: any) => {
       store.commit('SET_TODOS', todosData)
     })
   })
-}
+};
 
 
 
@@ -206,7 +228,9 @@ export const getProjectPath = async (path: any) => {
       }
     })
   })
-}
+};
+
+
 export const getPath = async (projectPath: any, path: any, collection: string) => {
   if(projectPath === undefined || path === undefined && collection === undefined) {
     throw new Error ("Path and Collection must be specified")
@@ -261,7 +285,7 @@ export const getPath = async (projectPath: any, path: any, collection: string) =
         break;
     }
   })
-}
+};
 
 // Database Functions
 
@@ -278,10 +302,10 @@ export const getPreviousRoute = () => {
     to
     store.commit('SET_PREVIOUS_ROUTE', from.fullPath)
   })
-}
+};
 
 export {
   auth,
   db,
   storage
-}
+};

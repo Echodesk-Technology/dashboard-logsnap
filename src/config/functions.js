@@ -65,6 +65,19 @@ export const deleteProject = async (projectPath) => {
         return isUserDB.collection("projects").doc(projectPath).delete();
     });
 };
+export const getProjects = async () => {
+    return await getAuthUser().then(user => {
+        const uuser = user;
+        const isUserDB = userDB.doc(uuser.uid);
+        isUserDB.collection("projects").onSnapshot(querySnapshot => {
+            let projects = [];
+            querySnapshot.forEach(doc => {
+                projects.push(doc.data());
+                store.commit('SET_PROJECTS', projects);
+            });
+        });
+    });
+};
 export const getAllProjects = async () => {
     return await getAuthUser().then(user => {
         const uuser = user;

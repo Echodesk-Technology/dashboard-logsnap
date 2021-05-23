@@ -140,7 +140,7 @@
           v-for="projectData in getProjectsDatas"
           :key="projectData.path"
         >
-          <router-link
+          <div
             :to="{
               name: 'Issues',
               params: { projName: projectData.name, id: projectData.path },
@@ -181,7 +181,7 @@
                 />
               </svg>
             </div>
-          </router-link>
+          </div>
         </div>
         <div
           @click="createProjectModal = true"

@@ -6,6 +6,7 @@ const state = {
         isLoggedIn: false,
         data: null,
     },
+    projects: [],
     projectDatas: [],
     getPreviousRoute: "",
     isWorkSpaceName: "",
@@ -29,6 +30,7 @@ const getters = {
     getUserID(state) {
         return state
     },
+    getProjects: (state) => state.projects,
     getProjectsDatas: (state) => state.projectDatas,
     deleteProject: (state) => (id) =>  state.projectDatas.filter(project => {
         return project.id === id
@@ -85,6 +87,9 @@ const mutations = {
     },
     SET_USER(state, data) {
         state.user.data = data
+    },
+    SET_PROJECTS (state, data) {
+     state.projects = data
     },
     SET_PROJECTS_DATAS (state, data) {
      state.projectDatas = data

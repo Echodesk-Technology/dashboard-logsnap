@@ -360,6 +360,19 @@ input[type=checkbox]:checked {
     padding-left: 6rem;
 }
 
+.todoText::-webkit-scrollbar {
+    display: none;
+}
+
+.dash-mb-sidebar {
+    z-index: 999999 !important;
+}
+
+.project-dropdown-list {
+    box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
+}
+
+/* Animation starts */
 .animation-center {
     position: fixed;
     top: 50%;
@@ -390,6 +403,10 @@ input[type=checkbox]:checked {
     animation: 0.3s slidedown ease-in-out;
     -webkit-animation: 0.3s slidedown ease-in-out;
 }
+.animate-slidedown-main {
+    animation: 0.3s slidedownmain ease-in-out;
+    -webkit-animation: 0.3s slidedownmain ease-in-out;
+}
 
 .animate-slideup {
     animation: 0.3s slideup ease-in-out;
@@ -418,8 +435,17 @@ input[type=checkbox]:checked {
     transition: width 0.1s cubic-bezier(0, 0, 0.35, 1);
 }
 
-/* Animation Keyframes */
+.animate-spin-icon {
+    animation: .2s spin;
+    -webkit-animation: .2s spin;
+}
+.animate-spin-icon-small {
+    animation: .2s spinsmall;
+    -webkit-animation: .2s spinsmall;
+}
+/* Animation ends */
 
+/* Animation Keyframes starts */
 @keyframes reveal {
     0% {
         opacity: 1;
@@ -457,6 +483,24 @@ input[type=checkbox]:checked {
         -o-transform: translateY(-10%);
         opacity: 0.5;
     }
+    100% {
+        transform: translateY(0%);
+        -webkit-transform: translateY(0%);
+        -moz-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+        -o-transform: translateY(0%);
+        opacity: 1;
+    }
+}
+@keyframes slidedownmain {
+    0% {
+        transform: translateY(-15%);
+        -webkit-transform: translateY(-15%);
+        -moz-transform: translateY(-15%);
+        -ms-transform: translateY(-15%);
+        -o-transform: translateY(-15%);
+        opacity: 1;
+}
     100% {
         transform: translateY(0%);
         -webkit-transform: translateY(0%);
@@ -575,7 +619,39 @@ input[type=checkbox]:checked {
         -o-transform: translateX(-0%);
 }
 }
-/* Media Rules */
+
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+        -webkit-transform:rotate(360deg);
+        -moz-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+}
+}
+@keyframes spinsmall {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(60deg);
+        -webkit-transform:rotate(60deg);
+        -moz-transform:rotate(60deg);
+        -ms-transform:rotate(60deg);
+        -o-transform:rotate(60deg);
+}
+}
+/* Animation Keyframesends */
+
+
+
+
+
+/* Media Rules starts */
 
 @media (min-width: 700px) {
     .ds-nav {
@@ -889,7 +965,7 @@ input[type=checkbox]:checked {
         width: 15rem;
     }
 }
-
+/* Media Rules ends */
 /*  Button loader */
 
 .pr-spinner {
@@ -985,10 +1061,3 @@ input[type=checkbox]:checked {
     }
 }
 
-.todoText::-webkit-scrollbar {
-    display: none;
-}
-
-.dash-mb-sidebar {
-    z-index: 999999 !important;
-}
