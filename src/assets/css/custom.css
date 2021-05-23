@@ -805,13 +805,13 @@ input[type=checkbox]:checked {
     .dashboard {
         display: block;
     }
-    .dash-left {
+    /* .dash-left {
         display: none;
-    }
-    .dash-middle {
+    } */
+    /* .dash-middle {
         width: 100%;
-        padding-left: 0px;
-    }
+        padding-left: 0rem;
+    } */
     .issue-main {
         display: block;
     }
