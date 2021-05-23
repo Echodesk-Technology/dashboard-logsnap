@@ -5,8 +5,7 @@ import './assets/css/custom.css';
 import router from './router/routes';
 import store from './store/';
 import axios from 'axios';
-import { auth } from './config/functions'
-
+import { auth } from './config/functions';
 
 const app = createApp(App);
 

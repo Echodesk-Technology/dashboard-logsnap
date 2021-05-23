@@ -28,7 +28,7 @@ const routes = [
         name: 'login',
         component: Auth,
         meta: {
-            title: "Log in | LogSnap",
+            title: "Log in - LogSnap",
         }
     },
     {
@@ -36,7 +36,7 @@ const routes = [
         name: 'signup',
         component: Auth,
         meta: {
-            title: "Sign up | LogSnap",
+            title: "Try LogSnap for free - LogSnap",
         }
     },
     {
@@ -55,7 +55,7 @@ const routes = [
     //     path: "/dashboard/issues",
     //     component: Issues,
     //     meta: {
-    //         title: "Issues| Dashboard",
+    //         title: "Issues- Dashboard",
     //         requiresAuth: true
     //     },
     // },
@@ -63,7 +63,7 @@ const routes = [
         path: "/",
         component: Projects,
         meta: {
-            title: "Projects | LogSnap",
+            title: "Projects - LogSnap",
             requiresAuth: true
         },
     },
@@ -72,7 +72,7 @@ const routes = [
         path: "/project/:projName/issues/:id",
         component: Issues,
         meta: {
-            title: "Issues | LogSnap",
+            title: "Issues - LogSnap",
             requiresAuth: true,
         },
     },
@@ -81,7 +81,7 @@ const routes = [
         path: "/project/:projName/notes/:id",
         component: Notes,
         meta: {
-            title: "Notes | LogSnap",
+            title: "Notes - LogSnap",
             requiresAuth: true,
         },
     },
@@ -90,7 +90,7 @@ const routes = [
         path: "/project/:projName/todos/:id",
         component: Todos,
         meta: {
-            title: "Todos | LogSnap",
+            title: "Todos - LogSnap",
             requiresAuth: true
         },
     },
@@ -99,7 +99,7 @@ const routes = [
         path: "/project/backlog/:id",
         component: Backlog,
         meta: {
-            title: "Backlog | LogSnap",
+            title: "Backlog - LogSnap",
             requiresAuth: true
         },
     },
@@ -189,7 +189,7 @@ const routes = [
         path: "/:pathMatch(.*)*",
         component: NotFound,
         meta: {
-            title: "404 | Not Found"
+            title: "404 - Not Found"
         }
     }
 ]
@@ -203,7 +203,7 @@ const router = createRouter({
 });
 
 router.afterEach((to, from, next) => {
-    // if (localStorage.theme === 'dark'  || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    // if (localStorage.theme === 'dark'  -- (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     //   document.body.classList.add('dark');
 
     // } else {
