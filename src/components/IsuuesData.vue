@@ -1,37 +1,6 @@
 <template>
   <div>
-    <div id="issuedata" class="issuedata collapsed-opened" ref="issueContainer">
-      <div class="issue-hd-tp fixed top-0 pl-6 p-4 bg-white border-b w-full">
-        <div class="flex">
-          <h1 class="text-gray-60 text-2xl font-semibold">Your Issues</h1>
-        </div>
-      </div>
-      <div class="issues-data-hd bg-gray-100 text-gray-400 p-2 mt-8 ml-6">
-        <div class="grid grid-cols-5">
-          <div class="flex items-center">
-            <!-- <div class="issue-name">
-            <h1 class="text-sm">ID</h1>
-          </div> -->
-            <div class="issue-desc mr-10">
-              <h1 class="text-sm">Summary</h1>
-            </div>
-          </div>
-          <div class="status-con col-span-1 col-start-3 ml-3">
-            <h1 class="text-sm">Status</h1>
-          </div>
-          <div class="priority col-start-4">
-            <h1 class="text-sm">Priority</h1>
-          </div>
-          <div class="aside-fl-flex grid grid-cols-2 items-center col-start-5">
-            <div class="created">
-              <h1 class="text-sm">Created</h1>
-            </div>
-            <!-- <div class="action col-start-6 col-end-5">
-            <h1 class="text-sm">Action</h1>
-          </div> -->
-          </div>
-        </div>
-      </div>
+    <div id="issuedata">
       <div
         class="issues-list mt-4 hover:bg-gray-100 cursor-pointer px-1 py-2 rounded ml-6"
         v-for="issue in getIssuesDatas"
@@ -49,28 +18,6 @@
           }"
         >
           <div class="issues-flex flex items-center">
-            <div class="issue-id-con flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="w-4 text-gray-600"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <!-- <div class="issue-short-desc ml-2 max-w-xs w-20 whitespace-nowrap">
-            <h1
-              class="text-gray-500 font-medium ml-1 overflow-hidden overflow-ellipsis"
-              ref="description"
-            >
-              {{ issue.id }}
-            </h1>
-          </div> -->
-            </div>
             <div class="issue-short-desc ml-2 max-w-xs w-52 whitespace-nowrap">
               <h1
                 class="text-gray-800 font-medium ml-1 overflow-hidden overflow-ellipsis"
@@ -196,7 +143,6 @@
 </template>
 <script>
 import { getAllIssues, getIssue, getProjectPath } from "../config/functions";
-import store from "../store";
 
 import Tag from "./Tag";
 import { mapGetters } from "vuex";
@@ -225,32 +171,10 @@ export default {
   },
   mounted() {
     getProjectPath(this.getRoute);
-    if (localStorage.sidebarCollasped) {
-      if (localStorage.sidebarCollasped === "true") {
-        this.$refs.issueContainer.classList.remove("collapsed-opened");
-        this.$refs.issueContainer.classList.add("collapsed-closed");
-      } else {
-        this.$refs.issueContainer.classList.add("collapsed-opened");
-        this.$refs.issueContainer.classList.remove("collapsed-closed");
-      }
-    }
   },
-  computed: mapGetters(["getIssuesDatas", "getCollapsedState"]),
+  computed: mapGetters(["getIssuesDatas"]),
   created() {
     getAllIssues(this.getRoute);
-  },
-  watch: {
-    "$store.getters.getCollapsedState": function (data) {
-      if (data === true) {
-        localStorage.sidebarCollasped = true;
-        this.$refs.issueContainer.classList.remove("collapsed-opened");
-        this.$refs.issueContainer.classList.add("collapsed-closed");
-      } else {
-        localStorage.sidebarCollasped = false;
-        this.$refs.issueContainer.classList.add("collapsed-opened");
-        this.$refs.issueContainer.classList.remove("collapsed-closed");
-      }
-    },
   },
 };
 </script>

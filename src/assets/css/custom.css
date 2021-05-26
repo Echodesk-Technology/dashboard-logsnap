@@ -75,6 +75,8 @@ body {
     border-right: 1px solid #eeededb4;
 }
 
+
+
 .demo-btn-con:hover {
     transition: 125ms ease-in-out;
     -webkit-transition: 125ms ease-in-out;
@@ -170,6 +172,44 @@ body {
 
 /* Project ends */
 
+.round-circle{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.usernameInitials-sm:hover {
+     width: 36px;
+     height: 36px;
+     transition: .3s ease-in-out;
+     -webkit-transition: .3s ease-in-out;
+     -moz-transition: .3s ease-in-out;
+     -ms-transition: .3s ease-in-out;
+     -o-transition: .3s ease-in-out;
+}
+.usernameInitials-sm:hover .user-img-txt{
+    font-size: 1rem;
+}
+
+.usernameInitials {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    height: 42px;
+    width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .usernameInitials-sm {
     height: 40px;
     width: 40px;
@@ -282,10 +322,41 @@ body {
     background: var(--modal-background);
 }
 
+
+  
 .tooltip-text {
+    position: absolute;
+    top: 0;
+    left: 3.8rem;
+    z-index: 999999;
+    padding: 0.50rem;
+    box-sizing: border-box;
     visibility: hidden;
 }
 
+.tooltip-text::before {
+    z-index: 0;
+}
+.tooltip-text::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-right: 2px solid #1f2937;
+    border-left: 0px solid #1f2937;
+    border-bottom: 0px solid #1f2937;
+    background-color: #1f2937;
+    top: 100%;
+    left: 0;
+    z-index: 0;
+    margin-left: -0.4rem;
+    margin-top: -25px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
 .tooltip:hover .tooltip-text {
     visibility: visible;
 }
@@ -354,7 +425,10 @@ input[type=checkbox]:checked {
 }
 
 .collapsed-opened {
-    padding-left: 14.70rem;
+    padding-left: 19.70rem;
+}
+.collapsed-opened .issue-header {
+    width: 75%;
 }
 .collapsed-closed {
     padding-left: 6rem;
@@ -371,6 +445,8 @@ input[type=checkbox]:checked {
 .project-dropdown-list {
     box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
 }
+
+
 
 /* Animation starts */
 .animation-center {

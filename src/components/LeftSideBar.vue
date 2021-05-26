@@ -13,17 +13,38 @@
           <div
             class="first-left shadow-none w-20 bg-main-veryDark border-r border-gray-100 dark:bg-gray-800 h-screen"
           >
-            <div class="flex flex-col">
-              <!-- <div class="logsnap-logo-icon flex-grow pt-3">
-              <img
-                src="https://res.cloudinary.com/serveryguken/image/upload/v1612385665/Projects/logsnap/logo/LogSnap-icon_cp7dgm.png"
-                alt="workspace-logo"
-                class="w-8 ml-auto mr-auto"
-              />
-            </div> -->
-              <div class="cmp-pf-con flex items-center mt-5">
+            <div class="flex flex-col justify-center items-center">
+              <div class="logsnap-logo-icon flex-grow pt-3">
+                <img
+                  src="https://res.cloudinary.com/serveryguken/image/upload/v1612385665/Projects/logsnap/logo/LogSnap-icon_cp7dgm.png"
+                  alt="workspace-logo"
+                  class="w-8 h-8"
+                />
+                <div class="projects-icon-route tooltip relative z-50 mt-6+ cursor-pointer">
+                  <router-link to="/">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-8 w-8 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                      />
+                    </svg>
+                  </router-link>
+                  <div data-tooltip="Projects" class="project-folder-icon-tooltip tooltip-text bg-gray-800 text-white rounded" style="font-size: 0.90rem;">
+                   <p class="ml-1"> Projects</p>
+                  </div>
+                </div>
+              </div>
+              <div class="cmp-pf-con absolute bottom-6 mt-5">
                 <div
-                  class="user-img usernameInitials rounded-xl p-1 bg-gray-100 ml-auto mr-auto"
+                  class="user-img usernameInitials rounded-xl  bg-gray-100"
                   v-if="userImage"
                 >
                   <img
@@ -50,7 +71,7 @@
             </div>
           </div>
           <div
-            class="collapsedSidebar left-main w-44 space-mb-sides p-4 relative"
+            class="collapsedSidebar left-main w-64 space-mb-sides p-4 relative"
             ref="collapsedSidebar"
           >
             <div
@@ -90,12 +111,13 @@
             </div>
             <div class="links-con" v-if="!isCollapsed">
               <div class="project-dropdown-container relative">
+                <h1 class="text-sm mb-2">Project</h1>
                 <div
                   @click="showProjectDropdown"
-                  class="project-dropdown select-none cursor-pointer bg-gray-100 p-1 border border-gray-300 rounded shadow-sm"
+                  class="project-dropdown select-none cursor-pointer p-1 border border-gray-200 bg-white rounded"
                 >
-                  <div class="flex items-center">
-                    <h1 class="text-sm">{{ projectName }}</h1>
+                  <div class="flex items-center justify-between p-1">
+                    <h1 class="font-semibold">{{ projectName }}</h1>
                     <svg
                       v-if="!projectDropdown"
                       xmlns="http://www.w3.org/2000/svg"
@@ -126,15 +148,15 @@
                 </div>
                 <div
                   v-if="projectDropdown"
-                  class="project-dropdown-list select-none bg-white absolute mt-2 rounded-lg l p-2 animate-slidedown-main w-60"
+                  class="project-dropdown-list select-none bg-white absolute mt-2 rounded-lg l p-2 animate-slidedown-main w-72"
                 >
                   <div class="project-search flex items-center">
-                    <div class="relative">
+                    <div class="relative w-full">
                       <input
                         @keyup="startSearch($event.target)"
                         type="text"
                         ref="searchValue"
-                        class="w-56 bg-white text-gray-600 text-sm border border-gray-100 p-1 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
+                        class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-1 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
                         placeholder="Search for a project"
                       />
                     </div>
@@ -163,7 +185,7 @@
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="h-5 w-5 text-gray-600"
+                          class="h-5 w-5 -mt-1 text-gray-600"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -511,6 +533,7 @@ export default {
       open: false,
       isCollapsed: false,
       projects: [],
+      projectsAll: [],
       projectName: this.$route.fullPath.split("/")[2],
       searchValue: "",
       projectDropdown: false,
@@ -528,6 +551,8 @@ export default {
       this.$refs.collapsedSidebar.classList.add("animate-slideToLeft");
       this.isCollapsed = true;
       localStorage.sidebarCollasped = true;
+      this.projectDropdown = false;
+      this.searching = false;
       this.$store.commit("SET_COLLAPSED", true);
     },
     openCollapsedMenu() {
@@ -546,7 +571,7 @@ export default {
     },
     startSearch(query) {
       this.searching = true;
-      if (this.$refs.searchValue.value === "") { 
+      if (this.$refs.searchValue.value === "") {
         this.searching = false;
         setTimeout(() => {
           this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
@@ -555,10 +580,10 @@ export default {
     },
     clearSearch() {
       this.$refs.searchValue.value = "";
-       this.searching = false;
-       setTimeout(() => {
-          this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
-        }, 100);
+      this.searching = false;
+      setTimeout(() => {
+        this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
+      }, 100);
     },
   },
   mounted() {

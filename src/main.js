@@ -7,6 +7,7 @@ import store from './store/';
 import axios from 'axios';
 import { auth } from './config/functions';
 const app = createApp(App);
+app.provide("$http", axios);
 auth.onAuthStateChanged((user) => {
     if (user) {
         store.dispatch("fetchUser", user);

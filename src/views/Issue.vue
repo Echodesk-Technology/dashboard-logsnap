@@ -376,11 +376,10 @@
                 >
                 </textarea>
               </p>
-              <div class="attach mt-4">
+              <div class="attach mt-4" v-if="getIssueData.attachmentURL">
                 <h2 class="text-gray-800 font-semibold">Attachments</h2>
                 <div class="att-img mt-1">
                   <img
-                    v-if="getIssueData.attachmentURL"
                     class="shadow-sm border border-gray-100 h-40 w-60 rounded-lg"
                     :src="getIssueData.attachmentURL"
                     alt="issue-attachemnt"

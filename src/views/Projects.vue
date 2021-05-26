@@ -215,7 +215,7 @@
       >
         <div class="dkd p-4 mt-5">
           <div
-            class="close-btn hover:bg-gray-100 rd-cn cursor-pointer"
+            class="close-btn hover:bg-gray-100 round-circle cursor-pointer"
             @click="createProjectModal = false"
           >
             <svg
@@ -223,7 +223,7 @@
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              class="text-gray-600 w-6"
+              class="text-gray-600 w-8"
             >
               <path
                 stroke-linecap="round"
