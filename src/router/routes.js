@@ -69,7 +69,7 @@ const routes = [
     },
     {
         name: "Issues",
-        path: "/project/:projName/issues/:id",
+        path: "/project/:projectName/issues/:id",
         component: Issues,
         meta: {
             title: "Issues - LogSnap",
@@ -78,7 +78,7 @@ const routes = [
     },
     {
         name: "Notes",
-        path: "/project/:projName/notes/:id",
+        path: "/project/:projectName/notes/:id",
         component: Notes,
         meta: {
             title: "Notes - LogSnap",
@@ -87,7 +87,7 @@ const routes = [
     },
     {
         name: "Todos",
-        path: "/project/:projName/todos/:id",
+        path: "/project/:projectName/todos/:id",
         component: Todos,
         meta: {
             title: "Todos - LogSnap",
@@ -105,7 +105,7 @@ const routes = [
     },
     {
         name: "Issue",
-        path: "/project/:projName/issue/viewissue/:projectid/:id",
+        path: "/project/:projectName/issue/viewissue/:projectid/:id",
         component: Issue,
         meta: {
             title: "Issue",

@@ -75,8 +75,6 @@ body {
     border-right: 1px solid #eeededb4;
 }
 
-
-
 .demo-btn-con:hover {
     transition: 125ms ease-in-out;
     -webkit-transition: 125ms ease-in-out;
@@ -172,7 +170,7 @@ body {
 
 /* Project ends */
 
-.round-circle{
+.round-circle {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -186,15 +184,16 @@ body {
 }
 
 .usernameInitials-sm:hover {
-     width: 36px;
-     height: 36px;
-     transition: .3s ease-in-out;
-     -webkit-transition: .3s ease-in-out;
-     -moz-transition: .3s ease-in-out;
-     -ms-transition: .3s ease-in-out;
-     -o-transition: .3s ease-in-out;
+    width: 36px;
+    height: 36px;
+    transition: .3s ease-in-out;
+    -webkit-transition: .3s ease-in-out;
+    -moz-transition: .3s ease-in-out;
+    -ms-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
 }
-.usernameInitials-sm:hover .user-img-txt{
+
+.usernameInitials-sm:hover .user-img-txt {
     font-size: 1rem;
 }
 
@@ -210,6 +209,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .usernameInitials-sm {
     height: 40px;
     width: 40px;
@@ -225,15 +225,16 @@ body {
 }
 
 .usernameInitials-sm:hover {
-     width: 36px;
-     height: 36px;
-     transition: .3s ease-in-out;
-     -webkit-transition: .3s ease-in-out;
-     -moz-transition: .3s ease-in-out;
-     -ms-transition: .3s ease-in-out;
-     -o-transition: .3s ease-in-out;
+    width: 36px;
+    height: 36px;
+    transition: .3s ease-in-out;
+    -webkit-transition: .3s ease-in-out;
+    -moz-transition: .3s ease-in-out;
+    -ms-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
 }
-.usernameInitials-sm:hover .user-img-txt{
+
+.usernameInitials-sm:hover .user-img-txt {
     font-size: 1rem;
 }
 
@@ -271,8 +272,6 @@ body {
 .p-head {
     z-index: 999999;
 }
-
-
 
 .issues-contents {
     word-wrap: break-word !important;
@@ -322,8 +321,6 @@ body {
     background: var(--modal-background);
 }
 
-
-  
 .tooltip-text {
     position: absolute;
     top: 0;
@@ -337,6 +334,7 @@ body {
 .tooltip-text::before {
     z-index: 0;
 }
+
 .tooltip-text::after {
     content: '';
     position: absolute;
@@ -357,6 +355,7 @@ body {
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
 }
+
 .tooltip:hover .tooltip-text {
     visibility: visible;
 }
@@ -387,7 +386,7 @@ progress::-webkit-progress-value {
     border-top: 3px solid rgb(205, 205, 1);
 }
 
-input[type=checkbox]:checked { 
+input[type=checkbox]:checked {
     border-color: #444;
 }
 
@@ -399,6 +398,7 @@ input[type=checkbox]:checked {
     -ms-transition: .1s ease-in;
     -o-transition: .1s ease-in;
 }
+
 .collapsed-icon-close:hover svg {
     margin-right: 6px;
     transition: .1s ease-in;
@@ -407,6 +407,7 @@ input[type=checkbox]:checked {
     -ms-transition: .1s ease-in;
     -o-transition: .1s ease-in;
 }
+
 .collapsed-icon-open:hover {
     width: 1.8rem;
     transition: .1s ease-in;
@@ -415,6 +416,7 @@ input[type=checkbox]:checked {
     -ms-transition: .1s ease-in;
     -o-transition: .1s ease-in;
 }
+
 .collapsed-icon-open:hover svg {
     margin-left: 6px;
     transition: .1s ease-in;
@@ -427,12 +429,37 @@ input[type=checkbox]:checked {
 .collapsed-opened {
     padding-left: 19.70rem;
 }
+
 .collapsed-opened .issue-header {
     width: 75%;
 }
+
 .collapsed-closed {
     padding-left: 6rem;
 }
+
+.projects-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* this.$router.push({ name: "Issues", params: {projectName: projectName, id: path}}) */
+
+/*  <router-link
+                      v-for="project in filteredProjects"
+                      :key="project.id"
+                      class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer block"
+                      :to="{
+                        name: 'Issues',
+                        params: { projectName: project.name, id: project.path },
+                      }"
+                    >
+                      {{ project.name }}
+                    </router-link>*/
 
 .todoText::-webkit-scrollbar {
     display: none;
@@ -446,9 +473,8 @@ input[type=checkbox]:checked {
     box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
 }
 
-
-
 /* Animation starts */
+
 .animation-center {
     position: fixed;
     top: 50%;
@@ -479,6 +505,7 @@ input[type=checkbox]:checked {
     animation: 0.3s slidedown ease-in-out;
     -webkit-animation: 0.3s slidedown ease-in-out;
 }
+
 .animate-slidedown-main {
     animation: 0.3s slidedownmain ease-in-out;
     -webkit-animation: 0.3s slidedownmain ease-in-out;
@@ -505,8 +532,8 @@ input[type=checkbox]:checked {
 }
 
 .animate-slideToLeft {
-    animation: .1s  slideToLeft ;
-    -webkit-animation: .1s  slideToLeft ;
+    animation: .1s slideToLeft;
+    -webkit-animation: .1s slideToLeft;
     width: 30px;
     transition: width 0.1s cubic-bezier(0, 0, 0.35, 1);
 }
@@ -515,13 +542,16 @@ input[type=checkbox]:checked {
     animation: .2s spin;
     -webkit-animation: .2s spin;
 }
+
 .animate-spin-icon-small {
     animation: .2s spinsmall;
     -webkit-animation: .2s spinsmall;
 }
+
 /* Animation ends */
 
 /* Animation Keyframes starts */
+
 @keyframes reveal {
     0% {
         opacity: 1;
@@ -568,6 +598,7 @@ input[type=checkbox]:checked {
         opacity: 1;
     }
 }
+
 @keyframes slidedownmain {
     0% {
         transform: translateY(-15%);
@@ -576,7 +607,7 @@ input[type=checkbox]:checked {
         -ms-transform: translateY(-15%);
         -o-transform: translateY(-15%);
         opacity: 1;
-}
+    }
     100% {
         transform: translateY(0%);
         -webkit-transform: translateY(0%);
@@ -678,7 +709,6 @@ input[type=checkbox]:checked {
     }
 }
 
-
 @keyframes slideToLeft {
     0% {
         transform: translateX(-10%);
@@ -686,46 +716,43 @@ input[type=checkbox]:checked {
         -moz-transform: translateX(-10%);
         -ms-transform: translateX(-10%);
         -o-transform: translateX(-10%);
-}
+    }
     100% {
         transform: translateX(-0%);
         -webkit-transform: translateX(-0%);
         -moz-transform: translateX(-0%);
         -ms-transform: translateX(-0%);
         -o-transform: translateX(-0%);
+    }
 }
-}
-
 
 @keyframes spin {
     from {
-        transform:rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-        transform:rotate(360deg);
-        -webkit-transform:rotate(360deg);
-        -moz-transform:rotate(360deg);
-        -ms-transform:rotate(360deg);
-        -o-transform:rotate(360deg);
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+    }
 }
-}
+
 @keyframes spinsmall {
     from {
-        transform:rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-        transform:rotate(60deg);
-        -webkit-transform:rotate(60deg);
-        -moz-transform:rotate(60deg);
-        -ms-transform:rotate(60deg);
-        -o-transform:rotate(60deg);
+        transform: rotate(60deg);
+        -webkit-transform: rotate(60deg);
+        -moz-transform: rotate(60deg);
+        -ms-transform: rotate(60deg);
+        -o-transform: rotate(60deg);
+    }
 }
-}
+
 /* Animation Keyframesends */
-
-
-
-
 
 /* Media Rules starts */
 
@@ -1041,7 +1068,9 @@ input[type=checkbox]:checked {
         width: 15rem;
     }
 }
+
 /* Media Rules ends */
+
 /*  Button loader */
 
 .pr-spinner {
@@ -1136,4 +1165,3 @@ input[type=checkbox]:checked {
         transform: translateX(100%);
     }
 }
-

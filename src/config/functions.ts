@@ -100,6 +100,7 @@ export const getProjects = async () => {
 };
 
 
+
 export const getAllProjects = async () => {
   return await getAuthUser().then(user => {
     const uuser: any = user

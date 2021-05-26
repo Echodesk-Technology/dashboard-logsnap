@@ -20,7 +20,9 @@
                   alt="workspace-logo"
                   class="w-8 h-8"
                 />
-                <div class="projects-icon-route tooltip relative z-50 mt-6+ cursor-pointer">
+                <div
+                  class="projects-icon-route tooltip relative z-50 mt-6+ cursor-pointer"
+                >
                   <router-link to="/">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -37,14 +39,18 @@
                       />
                     </svg>
                   </router-link>
-                  <div data-tooltip="Projects" class="project-folder-icon-tooltip tooltip-text bg-gray-800 text-white rounded" style="font-size: 0.90rem;">
-                   <p class="ml-1"> Projects</p>
+                  <div
+                    data-tooltip="Projects"
+                    class="project-folder-icon-tooltip tooltip-text bg-gray-800 text-white rounded"
+                    style="font-size: 0.9rem"
+                  >
+                    <p class="ml-1">Projects</p>
                   </div>
                 </div>
               </div>
               <div class="cmp-pf-con absolute bottom-6 mt-5">
                 <div
-                  class="user-img usernameInitials rounded-xl  bg-gray-100"
+                  class="user-img usernameInitials rounded-xl bg-gray-100"
                   v-if="userImage"
                 >
                   <img
@@ -114,10 +120,12 @@
                 <h1 class="text-sm mb-2">Project</h1>
                 <div
                   @click="showProjectDropdown"
-                  class="project-dropdown select-none cursor-pointer p-1 border border-gray-200 bg-white rounded"
+                  class="project-dropdown select-none cursor-pointer p-1 border border-gray-200 bg-white rounded w-full"
                 >
                   <div class="flex items-center justify-between p-1">
-                    <h1 class="font-semibold">{{ projectName }}</h1>
+                   <div class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
+                      <span class="font-semibold">{{ projectName }}</span>
+                   </div>
                     <svg
                       v-if="!projectDropdown"
                       xmlns="http://www.w3.org/2000/svg"
@@ -155,8 +163,9 @@
                       <input
                         @keyup="startSearch($event.target)"
                         type="text"
-                        ref="searchValue"
-                        class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-1 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
+                        ref="searchBox"
+                        v-model="search"
+                        class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-2 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
                         placeholder="Search for a project"
                       />
                     </div>
@@ -185,7 +194,7 @@
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="h-5 w-5 -mt-1 text-gray-600"
+                          class="h-5 w-5 text-gray-600"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -198,19 +207,71 @@
                       </div>
                     </div>
                   </div>
-                  <div class="projects-list">
+
+                  <div
+                    class="projects-list mt-2 mb-2 relative max-h-56 overflow-auto"
+                  >
                     <h1 class="text-sm text-gray-400 font-nedium mt-3 p-2">
                       Projects
                     </h1>
                     <ul class="mt-1">
                       <li
-                        v-for="project in projects"
+                        @click="gotoProject($event.target)"
+                        v-for="project in filteredProjects"
                         :key="project.id"
+                        :id="project.path"
                         class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer"
                       >
                         {{ project.name }}
                       </li>
                     </ul>
+                  </div>
+                  <div
+                    class="add-project border-t mt-1 border-gray-300 flex justify-between"
+                    v-if="searching"
+                  >
+                    <div
+                      @click="projectModalOpened = true"
+                      class="add-project-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                      <h1 class="ml-1 text-sm text-gray-600">Add project</h1>
+                    </div>
+                    <router-link
+                      to="/"
+                      class="add-project-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                        />
+                      </svg>
+                      <h1 class="ml-1 text-sm text-gray-600">
+                        View all projects
+                      </h1>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -516,10 +577,126 @@
         </div>
       </aside>
     </div>
+    <div class="create-project-modal" v-if="projectModalOpened">
+      <div class="modal">
+        <div class="modal-contents">
+          <div class="fixed z-50 inset-0">
+            <div
+              class="flex items-end cr-is-top justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+            >
+              <div
+                class="fixed inset-0 overflow-x-auto transition-opacity"
+                aria-hidden="true"
+              >
+                <div
+                  class="absolute inset-0 bg-gray-500 opacity-75"
+                  @click="clearProjectModalForm"
+                ></div>
+              </div>
+
+              <!-- This element is to trick the browser into centering the modal contents. -->
+              <span
+                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+                >&#8203;</span
+              >
+              <div
+                class="inline-block cr-modal align-bottom w-5/6 bg-white rounded-xl text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-headline"
+              >
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-lg">
+                  <div
+                    class="create-project-hd-flex flex items-center justify-between"
+                  >
+                    <h1 class="text-3xl font-medium">Create Project</h1>
+                    <div
+                      @click="clearProjectModalForm"
+                      class="create-project-modal-close round-circle cursor-pointer hover:bg-gray-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="create-project-details mt-4">
+                    <h1 class="mb-2">Project name</h1>
+                    <input
+                      type="text"
+                      ref="projectName"
+                      class="p-2 border border-gray-200 w-full focus:outline-none focus:ring-1 focus:ring-main-normal rounded-sm"
+                      value="New Project"
+                      placeholder="Choose a name for your project"
+                    />
+                    <input
+                      type="text"
+                      ref="projectDescription"
+                      class="p-2 mt-2 border border-gray-200 w-full focus:outline-none focus:ring-1 focus:ring-main-normal rounded-sm"
+                      placeholder="What is your project about?"
+                    />
+                  </div>
+                  <div class="create-project-modal-footer">
+                    <h1 class="mt-4 text-sm text-gray-600">
+                      A better way to organize your work.
+                    </h1>
+                  </div>
+                  <div
+                    class="create-project-modal-buttons button-flex mt-6 flex justify-end"
+                  >
+                    <div class="button-cancel mr-4">
+                      <button
+                        @click="clearProjectModalForm"
+                        class="outline-none focus:outline-none hover:bg-gray-100 p-2 rounded"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <div class="button-create">
+                      <button
+                        v-if="!spinner"
+                        @click="createProject"
+                        class="text-white bg-main-normal outline-none focus:outline-none p-2 rounded hover:opacity-80"
+                      >
+                        Create Project
+                      </button>
+                      <div
+                        v-if="spinner"
+                        class="relative spn-b form-btn w-14 block ml-auto"
+                      >
+                        <div
+                          class="pr-spinner outline-none focus:outline-none rounded bg-main-normal text-white hover:opacity-90"
+                          ref="crSpinner"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { getUser, getAuthUser, getProjects } from "../config/functions";
+import {
+  getUser,
+  getAuthUser,
+  getProjects,
+  generateUID,
+  createProject,
+} from "../config/functions";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "LeftSideBar",
@@ -532,12 +709,15 @@ export default {
       initals: "",
       open: false,
       isCollapsed: false,
+      search: "",
       projects: [],
-      projectsAll: [],
-      projectName: this.$route.fullPath.split("/")[2],
-      searchValue: "",
+      projectName: this.$route.fullPath.split("/")[2].replace(/%20/g, " "),
+      searchBox: "",
       projectDropdown: false,
       searching: false,
+      projID: generateUID(),
+      projectModalOpened: false,
+      spinner: false,
     };
   },
   methods: {
@@ -565,13 +745,15 @@ export default {
       if (this.projectDropdown === true) {
         this.projectDropdown = false;
         this.searching = false;
+        this.search = "";
       } else {
         this.projectDropdown = true;
+        this.search = "";
       }
     },
     startSearch(query) {
       this.searching = true;
-      if (this.$refs.searchValue.value === "") {
+      if (this.$refs.searchBox.value === "") {
         this.searching = false;
         setTimeout(() => {
           this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
@@ -579,11 +761,47 @@ export default {
       }
     },
     clearSearch() {
-      this.$refs.searchValue.value = "";
+      this.search = "";
       this.searching = false;
       setTimeout(() => {
         this.$refs.projectSearchIcon.classList.add("animate-spin-icon-small");
       }, 100);
+    },
+    createProject() {
+      const projectData = {
+        ID: this.projID,
+        name: this.$refs.projectName.value,
+        description: this.$refs.projectDescription.value,
+        path: "",
+      };
+      createProject(projectData).then((data) => {
+        data
+          .update({
+            path: data.id,
+          })
+          .then(() => {
+            this.spinner = true;
+            setTimeout(() => {
+              this.clearProjectModalForm();
+            }, 500);
+          });
+      });
+      console.log("ProjectData: ", projectData);
+    },
+    clearProjectModalForm() {
+      this.search = "";
+      this.projectDropdown = false;
+      this.$refs.projectName.value = "";
+      this.$refs.projectDescription.value = "";
+      this.spinner = false;
+      this.projectModalOpened = false;
+    },
+    gotoProject(project) {
+      const origin = location.origin
+      const path = project.id;
+      const projectName = project.innerText;
+      const url = `${origin}/project/${projectName}/issues/${path}`
+      location.href = url;
     },
   },
   mounted() {
@@ -611,20 +829,38 @@ export default {
         this.color = `background-color: ${user.coloruserSetActive};`;
       });
     });
-    // if(localStorage.sidebarCollapedOpen === "true") {
-    //   this.collapsed = false;
-    //   mapActions("setCollapsed", {
-    //     isCollapsed: false
-    //   })
-    // }
   },
-  computed: mapGetters(["getProjects"]),
+  computed: {
+    ...mapGetters(["getProjects"]),
+    filteredProjects() {
+      return this.projects.filter((project) => {
+        return project.name.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+  },
   created() {
     getProjects();
   },
   watch: {
     "$store.getters.getProjects": function (data) {
       this.projects = data;
+    },
+    projectModalOpened(data) {
+      if (data === true) {
+        this.search = "";
+        this.searching = false;
+        this.projectDropdown = false;
+        setTimeout(() => {
+          this.$refs.projectName.focus();
+        }, 0);
+      }
+    },
+    projectDropdown(data) {
+      if (data === true) {
+        setTimeout(() => {
+          this.$refs.searchBox.focus();
+        }, 0);
+      }
     },
   },
 };

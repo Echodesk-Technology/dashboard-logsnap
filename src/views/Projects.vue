@@ -143,27 +143,28 @@
           <div
             :to="{
               name: 'Issues',
-              params: { projName: projectData.name, id: projectData.path },
+              params: { projectName: projectData.name, id: projectData.path },
             }"
             class=""
           >
             <div class="sd overflow-hidden overflow-ellipsis w-auto">
+              <p class="text-gray-400 text-sm font-medium mb-2"><span>ID:</span> {{projectData.ID}}</p>
               <router-link
                 :to="{
                   name: 'Issues',
-                  params: { projName: projectData.name, id: projectData.path },
+                  params: { projectName: projectData.name, id: projectData.path },
                 }"
                 class="text-lg text-main-dark capitalize cursor-pointer hover:underline"
               >
                 {{ projectData.name }}
               </router-link>
-              <p class="mt-2 text-sm h-16 break-words">
+              <p class="text-sm h-16 break-words">
                 {{ projectData.description }}
               </p>
             </div>
 
             <div
-              class="hover:bg-gray-200 rounded absolute bottom-0 right-0 p-2 mb-1 mr-1"
+              class="hover:bg-gray-200 rounded absolute bottom-0 right-0 p-2 mb-1 mr-1 cursor-pointer"
             >
               <svg
                 @click.prevent="
@@ -216,7 +217,7 @@
         <div class="dkd p-4 mt-5">
           <div
             class="close-btn hover:bg-gray-100 round-circle cursor-pointer"
-            @click="createProjectModal = false"
+            @click="clearProjectModal"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -242,8 +243,8 @@
                   <input
                     type="text"
                     placeholder="Enter a project name"
-                    v-model="projName"
-                    ref="projName"
+                    v-model="projectName"
+                    ref="projectName"
                     class="border bg-gray-200 focus:bg-white w-full rounded p-2 mt-1 text-gray-600 focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
                   />
                   <div
@@ -280,7 +281,7 @@
 
                   <div class="dhf mt-4" v-if="!spinner">
                     <button
-                      class="bg-gray-300 text-gray-400 rounded w-24 text-sm py-2 block ml-auto hover:opacity-80"
+                      class="bg-gray-300 text-gray-400 rounded w-24 text-sm py-2 block ml-auto hover:opacity-80 outline-none focus:outline-none"
                       ref="createProjBtn"
                       @click="createProject"
                     >
@@ -325,11 +326,11 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
                 <div
-                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 sm:mx-0 sm:h-10 sm:w-10"
                 >
                   <!-- Heroicon name: outline/exclamation -->
                   <svg
-                    class="h-6 w-6 text-red-600"
+                    class="h-6 w-6 text-main-normal"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -370,7 +371,7 @@
               <button
                 @click="confirmDeleteProject"
                 type="button"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-main-normal text-base font-medium text-white hover:bg-main-normal focus:outline-none  sm:ml-3 sm:w-auto sm:text-sm"
               >
                 Delete
               </button>
@@ -406,7 +407,7 @@ export default {
       noName: false,
       createProjectModal: false,
       isModalOpened: false,
-      projName: "",
+      projectName: "",
       projDescription: "",
       projID: generateUID(),
       loaded: false,
@@ -442,7 +443,7 @@ export default {
     },
     createProject() {
       const projectData = {
-        name: this.projName,
+        name: this.projectName,
         description: this.projDescription,
         ID: this.projID,
       };
@@ -472,10 +473,15 @@ export default {
       setTimeout(() => {
         this.createProjectModal = false;
         this.spinner = false;
-        this.projName = "";
+        this.projectName = "";
         this.projDescription = "";
         this.projID = generateUID();
       }, 1200);
+    },
+    clearProjectModal() {
+      this.projectName = "";
+      this.projDescription = "";
+      this.createProjectModal = false;
     },
     openAction: function () {
       if (this.actionOpened === false) {
@@ -498,18 +504,27 @@ export default {
     this.createProjectModal;
     this.projID = generateUID();
   },
-  watch: {
-    createProjectModal: function (changed, notchanged) {
-      if (changed === true) {
+  
+  computed: mapGetters(["getProjectsDatas"]),
+  created() {
+    getAllProjects();
+  },watch: {
+    createProjectModal: function (data) {
+      if (data === true) {
+        if(data === true) {
         setTimeout(() => {
-          if (!this.projName) {
+          this.$refs.projectName.focus();
+        }, 0);
+      }
+        setTimeout(() => {
+          if (!this.projectName) {
             this.$refs.createProjBtn.disabled = true;
             this.$refs.createProjBtn.style.cursor = "not-allowed";
           }
-          this.$refs.projName.addEventListener("keyup", () => {
+          this.$refs.projectName.addEventListener("keyup", () => {
             let reg = /[^a-z0-9]/gi;
-            this.projName = this.projName.replace(reg, "");
-            if (!this.projName) {
+            this.projectName = this.projectName.replace(reg, "");
+            if (!this.projectName) {
               this.$refs.createProjBtn.disabled = true;
               this.$refs.createProjBtn.classList.remove(
                 "bg-main-normal",
@@ -520,9 +535,9 @@ export default {
                 "bg-gray-300",
                 "text-gray-400"
               );
-              this.$refs.projName.classList.add("border-red-400");
-              this.$refs.projName.classList.add("focus:ring-0");
-              this.$refs.projName.classList.remove("focus:ring-1");
+              this.$refs.projectName.classList.add("border-red-400");
+              this.$refs.projectName.classList.add("focus:ring-0");
+              this.$refs.projectName.classList.remove("focus:ring-1");
               this.noName = true;
             } else {
               this.$refs.createProjBtn.disabled = false;
@@ -535,21 +550,15 @@ export default {
                 "bg-main-normal",
                 "text-white"
               );
-              this.$refs.projName.classList.remove("border-red-400");
-              this.$refs.projName.classList.remove("focus:ring-0");
-              this.$refs.projName.classList.add("focus:ring-1");
+              this.$refs.projectName.classList.remove("border-red-400");
+              this.$refs.projectName.classList.remove("focus:ring-0");
+              this.$refs.projectName.classList.add("focus:ring-1");
               this.noName = false;
             }
           });
         }, 0);
-      } else {
-        notchanged;
       }
     },
-  },
-  computed: mapGetters(["getProjectsDatas"]),
-  created() {
-    getAllProjects();
   },
 };
 </script>     

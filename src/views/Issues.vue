@@ -96,6 +96,7 @@
                           aria-hidden="true"
                         >
                           <div
+                          @click="clearIssueForm"
                             class="absolute inset-0 bg-gray-500 opacity-75"
                           ></div>
                         </div>
@@ -112,7 +113,7 @@
                           aria-modal="true"
                           aria-labelledby="modal-headline"
                         >
-                          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-lg">
                             <div class="pl-1 pr-1">
                               <div class="mt-3 sm:mt-0 sm:ml-4 sm:text-left">
                                 <h3
@@ -767,6 +768,13 @@ export default {
     },
     attachmentURL(data) {
       this.attachmentURL = data
+    },
+    openIssueModal(data) {
+      if(data === true) {
+        setTimeout(() => {
+          this.$refs.summary.focus();
+        }, 0);
+      }
     }
   },
 };
