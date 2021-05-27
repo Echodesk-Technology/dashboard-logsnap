@@ -1,0 +1,564 @@
+<template >
+  <div>
+    <div class="loader" v-if="loaded">
+      <div class="bar"></div>
+    </div>
+    <div class="p-head fixed top-0 w-full bg-white border-b px-3 py-2">
+      <div class="flex justify-between items-center">
+        <div class="ml-3">
+          <img
+            src="https://res.cloudinary.com/serveryguken/image/upload/v1612386754/Projects/logsnap/logo/LogSnap-main_xppj6x.svg"
+            alt="logsnap-logo"
+          />
+        </div>
+        <div class="menu-icon">
+          <div class="mb-icon-menu flex items-center cursor-pointer">
+            <div
+              class="mb-close"
+              v-show="open"
+              v-on:click="hideMbMenu()"
+              ref="mbNavClose"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-6 text-gray-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+            <div
+              class="mb-open"
+              v-show="!open"
+              v-on:click="showMbMenu()"
+              ref="mbNavOpen"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-6 text-gray-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="yy bg-gray-100 h-screen">
+      <div
+        class="absolute right-0 mt-14 mr-4 bg-white border-t shadow rounded-sm p-2 animate-slide"
+        v-if="open"
+      >
+        <div class="gtpsdp">
+          <router-link
+            to="/settings/account/profile"
+            class="acc0slk px-4 py-2 flex items-center hover:bg-gray-100"
+          >
+            <div class="text-gray-600">Account Settings</div>
+            <div class="flfs ml-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-4 text-gray-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </div>
+          </router-link>
+          <button
+            class="lg-btn hover:bg-gray-100 mt-3 w-full text-left px-4 py-2 outline-none focus:outline-none"
+            @click="logOut"
+          >
+            <span class="outline-none focus:outline-none text-gray-600">
+              Log out
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="tisdlsd pt-20">
+        <div
+          class="ssweowe ml-3 p-2 flex items-center justify-between space-mb-sides"
+        >
+          <h1 class="text-black font-semibold text-2xl">Projects</h1>
+          <div class="create-p-bnt">
+            <button
+              @click="createProjectModal = true"
+              class="bg-main-normal text-white text-sm px-2 py-2 rounded hover:opacity-90 outline-none focus:outline-none"
+            >
+              Create Project
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="projects-con space-mb-sides">
+        <div class="pro-cards p-2">
+          <div class="pro-card bg-white shadow-sm border boder-gray-100 p-2 w-1/6">
+            <div class="pro-hd">
+              <h1>Development</h1>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="skdsd ml-1 flex mt-3 space-mb-sides">
+        <div class="w-full p-2">
+          <div class="sd col-start-1 w-full">
+            <p class="text-sm text-gray-500">All projects</p>
+          </div>
+          <!-- <div class="sd-date col-start-2">
+            <p class="text-sm text-gray-500">Date</p>
+          </div>
+          <div class="sd-lead col-end-5">
+            <p class="text-sm text-gray-500">Lead</p>
+          </div> -->
+        </div>
+      </div>
+      <div class="grid grid-cols-4 project-list pb-20 bg-gray-100">
+        <div
+          class="ml-6  p-4 mt-2 project-list-items bg-white shadow rounded w-64 h-40 mb-5 relative"
+          v-for="projectData in getProjectsDatas"
+          :key="projectData.path"
+        >
+          <div
+            :to="{
+              name: 'Issues',
+              params: { projectName: projectData.name, id: projectData.path },
+            }"
+            class=""
+          >
+            <div class="sd overflow-hidden overflow-ellipsis w-auto">
+              <p class="text-gray-400 text-sm font-medium mb-2"><span>ID:</span> {{projectData.ID}}</p>
+              <router-link
+                :to="{
+                  name: 'Issues',
+                  params: { projectName: projectData.name, id: projectData.path },
+                }"
+                class="text-lg text-main-dark capitalize cursor-pointer hover:underline"
+              >
+                {{ projectData.name }}
+              </router-link>
+              <p class="text-sm h-16 break-words">
+                {{ projectData.description }}
+              </p>
+            </div>
+
+            <div
+              class="hover:bg-gray-200 rounded absolute bottom-0 right-0 p-2 mb-1 mr-1 cursor-pointer"
+            >
+              <svg
+                @click.prevent="
+                  showDeleteProjectModal(projectData.name, projectData.path)
+                "
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="w-4 text-gray-600"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          @click="createProjectModal = true"
+          class="create-border-list  ml-6 p-4 mt-2 space-mb-sides bg-white text-gray-300 rounded border-dashed border-2 flex items-center justify-center w-64 h-40 cursor-pointer"
+        >
+          <div class="nw-p">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 block ml-auto mr-auto"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+            <p>New Project</p>
+          </div>
+        </div>
+      </div>
+      <!-- Create Project Modal starts -->
+      <div
+        class="proj-create animate-slidemodalfromright bg-white w-full absolute top-10 h-screen"
+        id="_2933"
+        v-if="createProjectModal"
+        ref="createProjectModal"
+      >
+        <div class="dkd p-4 mt-5">
+          <div
+            class="close-btn hover:bg-gray-100 round-circle cursor-pointer"
+            @click="clearProjectModal"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="text-gray-600 w-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <div class="cieednd flex justify-center">
+            <div class="pse p-4">
+              <h1 class="text-gray-900 font-medium text-2xl">Create Project</h1>
+              <div class="di mt-10">
+                <div class="dld relative">
+                  <label for="name" class="text-sm text-gray-600">Name</label>
+                  <input
+                    type="text"
+                    placeholder="Enter a project name"
+                    v-model="projectName"
+                    ref="projectName"
+                    class="border bg-gray-200 focus:bg-white w-full rounded p-2 mt-1 text-gray-600 focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
+                  />
+                  <div
+                    v-if="noName"
+                    class="reveal bg-white shadow-sm border border-gray-100 absolute top-0 right-0 z-50 p-2"
+                  >
+                    <p class="text-xs">Project name can't be empty.</p>
+                  </div>
+                </div>
+                <div class="dld relative mt-4">
+                  <label for="name" class="text-sm text-gray-600"
+                    >Description</label
+                  >
+                  <input
+                    type="text"
+                    placeholder="Enter a project description"
+                    v-model="projDescription"
+                    ref="projDescription"
+                    class="border bg-gray-200 focus:bg-white w-full rounded p-2 mt-1 text-gray-600 focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
+                  />
+                </div>
+                <div class="dld mt-4">
+                  <div class="flex justify-between">
+                    <label for="name" class="text-sm text-gray-600">ID</label>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Project ID"
+                    v-model="projID"
+                    ref="projID"
+                    disabled
+                    class="border bg-gray-200 focus:bg-white w-full rounded p-2 mt-1 text-gray-600 focus:outline-none focus:ring-1 focus:ring-main-normal appearance-none"
+                  />
+
+                  <div class="dhf mt-4" v-if="!spinner">
+                    <button
+                      class="bg-gray-300 text-gray-400 rounded w-24 text-sm py-2 block ml-auto hover:opacity-80 outline-none focus:outline-none"
+                      ref="createProjBtn"
+                      @click="createProject"
+                    >
+                      Create
+                    </button>
+                  </div>
+                  <div
+                    v-if="spinner"
+                    class="relative spn-b form-btn mt-4 w-24 block ml-auto"
+                  >
+                    <div
+                      class="pr-spinner outline-none focus:outline-none rounded bg-main-normal text-white hover:opacity-90"
+                      ref="crSpinner"
+                    ></div>
+                  </div>
+                  <p class="mt-4 text-sm text-red-600">{{ error }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Create Project Modal ends -->
+    </div>
+    <!-- Delete Project Modal starts -->
+    <div class="modal-for-confirm" v-if="deleteModal">
+      <div class="fixed z-10 modal-bg inset-0 overflow-y-auto">
+        <div
+          class="m-top flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        >
+          <span
+            class="hidden sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true"
+            >&#8203;</span
+          >
+          <div
+            class="inline-block animate-slideup align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div class="sm:flex sm:items-start">
+                <div
+                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 sm:mx-0 sm:h-10 sm:w-10"
+                >
+                  <!-- Heroicon name: outline/exclamation -->
+                  <svg
+                    class="h-6 w-6 text-main-normal"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
+                  </svg>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3
+                    class="text-lg leading-6 font-medium text-gray-900"
+                    id="modal-headline"
+                  >
+                    Delete Project
+                  </h3>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-500">
+                      You're about to delete this project
+                      <span class="text-main-normal">{{
+                        deleteProjectName
+                      }}</span
+                      >. All of its data will be permanently removed. This
+                      action cannot be undone.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+            >
+              <button
+                @click="confirmDeleteProject"
+                type="button"
+                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-main-normal text-base font-medium text-white hover:bg-main-normal focus:outline-none  sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Delete
+              </button>
+              <button
+                @click="deleteModal = false"
+                type="button"
+                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Project modal ends -->
+  </div>
+</template>
+<script>
+import {
+  auth,
+  createProject,
+  deleteProject,
+  generateUID,
+  getAllProjects,
+} from "../config/functions";
+import { mapGetters, mapActions } from "vuex";
+export default {
+  name: "Project",
+  data() {
+    return {
+      open: false,
+      noName: false,
+      createProjectModal: false,
+      isModalOpened: false,
+      projectName: "",
+      projDescription: "",
+      projID: generateUID(),
+      loaded: false,
+      spinner: false,
+      error: "",
+      actionOpened: false,
+      projectDatas: [],
+      deleteModal: false,
+      deleteProjectName: "",
+      deleteProjectPath: "",
+    };
+  },
+  methods: {
+    ...mapActions(["deleteProject"]),
+    showMbMenu: function () {
+      this.$refs.mbNavOpen.classList.add("animate-spin");
+      setTimeout(() => {
+        this.$refs.mbNavOpen.classList.remove("animate-spin");
+        this.open = true;
+      }, 100);
+    },
+    hideMbMenu: function () {
+      this.$refs.mbNavClose.classList.add("animate-spin");
+      setTimeout(() => {
+        this.$refs.mbNavClose.classList.remove("animate-spin");
+        this.open = false;
+      }, 100);
+    },
+    logOut() {
+      auth.signOut().then(() => {
+        this.$router.push({ path: "/login" });
+      });
+    },
+    createProject() {
+      const projectData = {
+        name: this.projectName,
+        description: this.projDescription,
+        ID: this.projID,
+      };
+      createProject(projectData)
+        .then((data) =>
+          data.update({
+            path: data.id,
+          })
+        )
+        .then(() => {
+          setTimeout(() => {
+            this.loaded = true;
+          }, 1200);
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.loaded = false;
+          }, 3500);
+        })
+        .catch((error) => {
+          if (error) {
+            this.error = "Unable to create project please contact support.";
+          }
+        });
+      this.spinner = true;
+      this.isModalOpened = false;
+      setTimeout(() => {
+        this.createProjectModal = false;
+        this.spinner = false;
+        this.projectName = "";
+        this.projDescription = "";
+        this.projID = generateUID();
+      }, 1200);
+    },
+    clearProjectModal() {
+      this.projectName = "";
+      this.projDescription = "";
+      this.createProjectModal = false;
+    },
+    openAction: function () {
+      if (this.actionOpened === false) {
+        this.actionOpened === true;
+      } else {
+        this.actionOpened = false;
+      }
+    },
+    showDeleteProjectModal(name, path) {
+      this.deleteModal = true;
+      this.deleteProjectName = name;
+      this.deleteProjectPath = path;
+    },
+    confirmDeleteProject() {
+      deleteProject(this.deleteProjectPath);
+      this.deleteModal = false;
+    },
+  },
+  mounted() {
+    this.createProjectModal;
+    this.projID = generateUID();
+  },
+  
+  computed: mapGetters(["getProjectsDatas"]),
+  created() {
+    getAllProjects();
+  },watch: {
+    createProjectModal: function (data) {
+      if (data === true) {
+        if(data === true) {
+        setTimeout(() => {
+          this.$refs.projectName.focus();
+        }, 0);
+      }
+        setTimeout(() => {
+          if (!this.projectName) {
+            this.$refs.createProjBtn.disabled = true;
+            this.$refs.createProjBtn.style.cursor = "not-allowed";
+          }
+          this.$refs.projectName.addEventListener("keyup", () => {
+            let reg = /[^a-z0-9]/gi;
+            this.projectName = this.projectName.replace(reg, "");
+            if (!this.projectName) {
+              this.$refs.createProjBtn.disabled = true;
+              this.$refs.createProjBtn.classList.remove(
+                "bg-main-normal",
+                "text-white"
+              );
+              this.$refs.createProjBtn.style.cursor = "not-allowed";
+              this.$refs.createProjBtn.classList.add(
+                "bg-gray-300",
+                "text-gray-400"
+              );
+              this.$refs.projectName.classList.add("border-red-400");
+              this.$refs.projectName.classList.add("focus:ring-0");
+              this.$refs.projectName.classList.remove("focus:ring-1");
+              this.noName = true;
+            } else {
+              this.$refs.createProjBtn.disabled = false;
+              this.$refs.createProjBtn.style.cursor = "pointer";
+              this.$refs.createProjBtn.classList.remove(
+                "bg-gray-300",
+                "text-gray-400"
+              );
+              this.$refs.createProjBtn.classList.add(
+                "bg-main-normal",
+                "text-white"
+              );
+              this.$refs.projectName.classList.remove("border-red-400");
+              this.$refs.projectName.classList.remove("focus:ring-0");
+              this.$refs.projectName.classList.add("focus:ring-1");
+              this.noName = false;
+            }
+          });
+        }, 0);
+      }
+    },
+  },
+};
+</script>     
