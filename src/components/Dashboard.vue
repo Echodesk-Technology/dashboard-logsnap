@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="notice-beta bg-main-normal text-white w-48 fixed right-4 bottom-10 z-50">
+     <h1>Hey {{user}} </h1>
+    </div>
     <div class="loader-comp">
       <Loader v-if="isLoading" />
     </div>
@@ -16,6 +19,7 @@
   </div>
 </template>
 <script>
+import {getAuthUser} from "../config/functions"
 import Loader from "./Loader";
 import LeftSideBar from "../components/LeftSideBar";
 export default {
@@ -23,6 +27,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      user: "",
     };
   },
   components: {
@@ -30,6 +35,9 @@ export default {
     LeftSideBar,
   },
   mounted() {
+    getAuthUser().then(user => {
+      return this.user = user.displayName;
+    })
     setTimeout(() => {
       this.isLoading = false;
       localStorage.isLoaded = true;

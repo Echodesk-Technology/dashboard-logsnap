@@ -3,10 +3,17 @@
     <div id="page-issues">
       <LeftCard v-if="mobile" />
       <Dashboard>
-        <div class="issuedata collapsed-opened" ref="issueContainer">
+        <div
+          :class="[
+            { 'collapsed-closed': isCollapsed },
+            'issuedata collapsed-opened',
+          ]"
+          ref="issueContainer"
+        >
           <div class="issue-main h-screen space-mb-sides">
             <div
-              class="issue-hd-tp fixed top-0 pl-8 p-6 -mt-1 bg-white border-b w-full"
+              class="issue-hd-tp fixed top-0 pl-8 p-3  bg-white border-b w-full"
+              style="margin-top: 0.15rem"
             >
               <div class="issue-header flex items-center justify-between">
                 <h1 class="text-gray-60 text-2xl font-semibold">Your Issues</h1>
@@ -96,7 +103,7 @@
                           aria-hidden="true"
                         >
                           <div
-                          @click="clearIssueForm"
+                            @click="clearIssueForm"
                             class="absolute inset-0 bg-gray-500 opacity-75"
                           ></div>
                         </div>
@@ -113,7 +120,9 @@
                           aria-modal="true"
                           aria-labelledby="modal-headline"
                         >
-                          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-lg">
+                          <div
+                            class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-lg"
+                          >
                             <div class="pl-1 pr-1">
                               <div class="mt-3 sm:mt-0 sm:ml-4 sm:text-left">
                                 <h3
@@ -447,6 +456,7 @@ export default {
       attachmentURL: "",
       uploadValue: 0,
       upLoading: false,
+      isCollapsed: false,
       issue: {
         workspaceName: this.$route.fullPath.split("/")[2],
         tags: [],
@@ -603,16 +613,16 @@ export default {
         this.$refs.summary.value !== "" &&
         this.$refs.description.value !== ""
       ) {
-        this.uploadFile(this.$refs.uploadBtn)
+        this.uploadFile(this.$refs.uploadBtn);
         createIssue(this.getRoute, this.issue)
           .then((docRef) => {
             setTimeout(() => {
-               docRef.update({
-              id: docRef.id,
-              workspaceid: this.getRoute,
-              attachmentURL: this.attachmentURL
-            });
-            },1100)
+              docRef.update({
+                id: docRef.id,
+                workspaceid: this.getRoute,
+                attachmentURL: this.attachmentURL,
+              });
+            }, 1100);
           })
           .then(() => {
             this.issue.tags = [];
@@ -745,11 +755,9 @@ export default {
     // }, 1000);
     if (localStorage.sidebarCollasped) {
       if (localStorage.sidebarCollasped === "true") {
-        this.$refs.issueContainer.classList.remove("collapsed-opened");
-        this.$refs.issueContainer.classList.add("collapsed-closed");
+        this.isCollapsed = true;
       } else {
-        this.$refs.issueContainer.classList.add("collapsed-opened");
-        this.$refs.issueContainer.classList.remove("collapsed-closed");
+        this.isCollapsed = false;
       }
     }
   },
@@ -758,24 +766,22 @@ export default {
     "$store.getters.getCollapsedState": function (data) {
       if (data === true) {
         localStorage.sidebarCollasped = true;
-        this.$refs.issueContainer.classList.remove("collapsed-opened");
-        this.$refs.issueContainer.classList.add("collapsed-closed");
+        this.isCollapsed = true;
       } else {
         localStorage.sidebarCollasped = false;
-        this.$refs.issueContainer.classList.add("collapsed-opened");
-        this.$refs.issueContainer.classList.remove("collapsed-closed");
+        this.isCollapsed = false;
       }
     },
     attachmentURL(data) {
-      this.attachmentURL = data
+      this.attachmentURL = data;
     },
     openIssueModal(data) {
-      if(data === true) {
+      if (data === true) {
         setTimeout(() => {
           this.$refs.summary.focus();
         }, 0);
       }
-    }
+    },
   },
 };
 </script>
