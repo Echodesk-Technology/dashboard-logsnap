@@ -37,38 +37,27 @@
           <div class="help cursor-pointer tooltip">
             <div class="help-icon">
               <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 icons-color mr-2 cursor-pointer"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clip-rule="evenodd"
-              />
-            </svg>
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 icons-color mr-2 cursor-pointer"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </div>
             <div
-                class="workspace-folder-icon-tooltip tooltip-help-text  text-white rounded"
-              >
-                <p class="ml-1 text-xs">Help</p>
-              </div>
+              class="workspace-folder-icon-tooltip tooltip-help-text text-white rounded"
+            >
+              <p class="ml-1 text-xs">Help</p>
+            </div>
           </div>
           <div class="cmp-pf-con user-card tooltip user-profile">
             <div
-              class="user-img usernameInitials rounded-xl bg-gray-100"
-              v-if="userImage"
-            >
-              <img
-                src="https://res.cloudinary.com/serveryguken/image/upload/v1622134200/LogSnap/logo/LogSnap-icon_j9b15w_lvjemh.svg"
-                alt="workspace-logo"
-                class="w-8"
-              />
-            </div>
-            <div
               class="user-img usernameInitials-sm cursor-pointer ml-auto mr-auto"
-              v-if="!userImage"
               :style="color"
             >
               <h1 class="user-img-txt text-white text-lg font-semibold">
@@ -93,14 +82,26 @@
           <LeftSideBar />
         </div>
         <div id="dash-middle" class="dash-middle">
-          <slot></slot>
+          <div class="dashboard-contents" v-if="!errorWorkspace">
+            <slot />
+          </div>
+          <div
+            class="error-page flex items-center justify-center pt-64"
+            v-if="errorWorkspace"
+          >
+            <h1 class="text-2xl font-normal">
+              This content has
+              <span class="font-bold text-main-normal"> deleted or moved</span>.
+            </h1>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { getAuthUser, getUser } from "../config/functions";
+import { getAuthUser, getUser, userDB, getWorkspacePath } from "../config/functions";
+import { mapGetters } from "vuex";
 import Loader from "./Loader";
 import LeftSideBar from "../components/LeftSideBar";
 export default {
@@ -110,6 +111,10 @@ export default {
       isLoading: false,
       user: "",
       initals: "",
+      color: "",
+      errorWorkspace: false,
+      workspaceName: this.$route.fullPath.split("/")[2].replace(/%20/g, " "),
+      workspacePath: this.$route.fullPath.split("/")[4],
     };
   },
   components: {
@@ -117,6 +122,14 @@ export default {
     LeftSideBar,
   },
   mounted() {
+    getWorkspacePath(this.workspacePath);
+    if (this.$store.getters.getErrorPage === true) {
+      console.log("no content");
+      this.errorWorkspace = true;
+    }
+    else {
+      this.errorWorkspace = false;
+    }
     const getInitials = function (name) {
       var parts = name.split("");
       var initials = parts[0];
@@ -137,10 +150,20 @@ export default {
       this.isLoading = false;
     }
   },
+  computed: {
+    ...mapGetters(["getErrorPage"]),
+  },
   created() {
     window.addEventListener("beforeunload", function () {
       localStorage.isLoaded = false;
     });
+  },
+  watch: {
+    "$store.getters.getErrorPage": function (data) {
+      if (this.$store.getters.getErrorPage === true) {
+        this.errorWorkspace = true;
+      }
+    },
   },
 };
 </script>

@@ -594,10 +594,10 @@ export default {
   name: "LeftSideBar",
   data() {
     return {
-      userImage: false,
+      // userImage: false,
       getRoute: this.$route.fullPath.split("/")[4],
       name: "",
-      color: "",
+      // color: "",
       initals: "",
       open: false,
       isCollapsed: false,

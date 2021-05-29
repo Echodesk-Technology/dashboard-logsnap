@@ -142,7 +142,7 @@
   </div>
 </template>
 <script>
-import { getAllIssues, getIssue, getWorkspacePath } from "../config/functions";
+import { getAllIssues, getIssue, getPath } from "../config/functions";
 
 import Tag from "./Tag";
 import { mapGetters } from "vuex";
@@ -170,7 +170,7 @@ export default {
     },
   },
   mounted() {
-    getWorkspacePath(this.getRoute);
+    getPath(this.getRoute, "Issues")
   },
   computed: mapGetters(["getIssuesDatas"]),
   created() {

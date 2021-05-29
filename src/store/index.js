@@ -14,6 +14,7 @@ const state = {
     getIssue: [],
     todos: [],
     isCollapsed: "",
+    errorPage: null,
 };
 
 const getters = {
@@ -41,6 +42,7 @@ const getters = {
     getIssueData: (state) => state.getIssue,
     getTodos: (state) => state.todos,
     getCollapsedState: (state) => state.isCollapsed,
+    getErrorPage: (state) => state.errorPage
 };
 
 const actions = {
@@ -112,6 +114,9 @@ const mutations = {
     },
     SET_COLLAPSED (state, data) {
         state.isCollapsed = data
+    },
+    SET_ERROR_PAGE (state, data) {
+        state.errorPage = data
     }
 };
 

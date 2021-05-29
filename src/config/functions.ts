@@ -225,7 +225,7 @@ export const getWorkspacePath = async (path: any) => {
     .get()
     .then((doc: any) => {
       if(!doc.exists) {
-        location.href = "/"
+        store.commit('SET_ERROR_PAGE', true);
       }
     })
   })
@@ -269,7 +269,7 @@ export const getPath = async (workspacePath: any, path: any, collection: string)
           .get()
           .then((doc: any) => {
             if (!doc.exists) {
-              location.href = "/"
+              store.commit('SET_ERROR_PAGE', true);
             }
           });
         break;
@@ -280,7 +280,7 @@ export const getPath = async (workspacePath: any, path: any, collection: string)
           .get()
           .then((doc: any) => {
             if (!doc.exists) {
-               location.href = "/"
+               store.commit('SET_ERROR_PAGE', true);
             }
           });
         break;
