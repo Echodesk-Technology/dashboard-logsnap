@@ -14,12 +14,13 @@
           'fixed shadow-none left-0 top-14 z-50  border-r border-gray-100 dark:bg-gray-800 h-screen',
         ]"
       >
-      <div
+        <div class="relative">
+          <div
             v-if="isCollapsed"
             @click="openCollapsedMenu"
             :class="[
               { 'mt-6': isCollapsed },
-              'collapsed-icon-open cursor-pointer absolute -top-2 z-50 -right-3   hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200',
+              'collapsed-icon-open cursor-pointer absolute -top-2 z-50 -right-3   hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200 tooltip',
             ]"
           >
             <svg
@@ -34,12 +35,17 @@
                 clip-rule="evenodd"
               />
             </svg>
+            <div
+              class="workspace-folder-icon-tooltip tooltip-sidebar-text bg-gray-800 text-white rounded"
+            >
+              <p class="ml-1 text-xs">Expand Sidebar</p>
+            </div>
           </div>
+        </div>
         <!-- First Left Sidebar starts -->
         <div
           class="'first-left hidden shadow-none w-20 bg-main-veryDark border-r border-gray-100 dark:bg-gray-800 h-screen fixed top-0 z-50',"
         >
-          
           <!-- First Left Sidebar Contents starts -->
           <div
             class="flex flex-col items-center relative z-50 h-screen sidebar-links"
@@ -79,7 +85,6 @@
                 </div>
               </div>
             </div>
-           
           </div>
           <!-- First Left Sidebar Contents ends-->
         </div>
@@ -89,15 +94,13 @@
           class="collapsedSidebar border-r bg-ghostsmoke border-gray-100 pt-2 w-60 h-screen fixed top-14 z-0"
           ref="collapsedSidebar"
         >
-         <!-- Workspace Dropdwon Container starts -->
+          <!-- Workspace Dropdwon Container starts -->
           <div class="flex wkspace-dropdown items-center w-full">
             <div
               @click="showWorkspaceDropdown"
-              class="workspace-dropdown select-none cursor-pointer  w-full relative"
+              class="workspace-dropdown select-none cursor-pointer w-full relative"
             >
-              <div
-                class="flex items-center justify-between pl-4 py-1 px-2"
-              >
+              <div class="flex items-center justify-between pl-4 py-1 px-2">
                 <div
                   class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap"
                 >
@@ -130,10 +133,9 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                
               </div>
-               <!-- Workspace Dropdwon Container ends -->
-                 <!-- Workspace Dropdown Container Contents  starts -->
+              <!-- Workspace Dropdwon Container ends -->
+              <!-- Workspace Dropdown Container Contents  starts -->
               <div
                 v-if="workspaceDropdown"
                 class="workspace-dropdown-list select-none bg-white absolute z-0 mt-2 rounded-lg ml-4 p-2 animate-slidedown-main w-80"
@@ -310,16 +312,15 @@
                   </li>
                 </ul>
               </div>
-            
+
               <!-- Second Sidebar Links ends -->
-             
             </div>
           </div>
 
           <div
             v-if="!isCollapsed"
             @click="closeCollapsedMenu"
-            class="collapsed-icon-close cursor-pointer absolute top-0 z-50 bg-white -right-3 mt-5 hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 border border-gray-200"
+            class="collapsed-icon-close cursor-pointer absolute top-0 z-50 bg-white -right-3 mt-5 hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 border border-gray-200 tooltip"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -333,6 +334,11 @@
                 clip-rule="evenodd"
               />
             </svg>
+            <div
+              class="workspace-folder-icon-tooltip tooltip-sidebar-text bg-gray-800 text-white rounded"
+            >
+              <p class="ml-1 text-xs">Collapse Sidebar</p>
+            </div>
           </div>
         </div>
         <!-- Second Left Sidebar ends-->

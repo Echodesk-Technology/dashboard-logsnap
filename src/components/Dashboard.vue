@@ -3,44 +3,86 @@
     <div
       class="notice-beta bg-white border-b border-gray-100 shadow-sm w-full h-14 fixed right-0 p-3 top-0 z-50 space-mb-sides"
     >
-     <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between">
         <div class="logo-hdd-top relative w-40">
-        <img
-          src="https://res.cloudinary.com/serveryguken/image/upload/v1622134199/LogSnap/logo/LogSnap-main_xppj6x_nngrml.svg"
-          alt="workspace-logo"
-          class="w-32"
-        />
-        <div class="absolute top-1 right-0 left-1 ml-28 w-20 p-1">
-          <p class="text-sm text-main-normal">Beta</p>
-        </div>
-      </div>
-      <div class="cmp-pf-con user-card tooltip">
-        <div
-          class="user-img usernameInitials rounded-xl bg-gray-100"
-          v-if="userImage"
-        >
           <img
-            src="https://res.cloudinary.com/serveryguken/image/upload/v1622134200/LogSnap/logo/LogSnap-icon_j9b15w_lvjemh.svg"
+            src="https://res.cloudinary.com/serveryguken/image/upload/v1622134199/LogSnap/logo/LogSnap-main_xppj6x_nngrml.svg"
             alt="workspace-logo"
-            class="w-8"
+            class="w-32"
           />
+          <div class="absolute top-1 right-0 left-1 ml-28 w-20 p-1">
+            <p class="text-sm text-main-normal">Beta</p>
+          </div>
         </div>
-        <div
-          class="user-img usernameInitials-sm  cursor-pointer ml-auto mr-auto"
-          v-if="!userImage"
-          :style="color"
-        >
-          <h1 class="user-img-txt text-white text-lg font-semibold">
-            {{ initals }}
-          </h1>
-          <div
-                  class="workspace-folder-icon-tooltip tooltip-text bg-gray-800 text-white rounded"
-                >
-                  <p class="ml-1 text-xs">Profile and settings</p>
-                </div>
+        <div class="flex-second dashboard-nav-links flex items-center">
+          <div class="notification tooltip cursor-pointer relative">
+            <div class="noti-icon mr-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 icons-color rotate-45 transform-gpu cursor-pointer"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
+                />
+              </svg>
+              <div
+                class="workspace-folder-icon-tooltip tooltip-notifications-text bg-gray-800 text-white rounded"
+              >
+                <p class="ml-1 text-xs">Notifications</p>
+              </div>
+            </div>
+          </div>
+          <div class="help cursor-pointer tooltip">
+            <div class="help-icon">
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 icons-color mr-2 cursor-pointer"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            </div>
+            <div
+                class="workspace-folder-icon-tooltip tooltip-help-text  text-white rounded"
+              >
+                <p class="ml-1 text-xs">Help</p>
+              </div>
+          </div>
+          <div class="cmp-pf-con user-card tooltip user-profile">
+            <div
+              class="user-img usernameInitials rounded-xl bg-gray-100"
+              v-if="userImage"
+            >
+              <img
+                src="https://res.cloudinary.com/serveryguken/image/upload/v1622134200/LogSnap/logo/LogSnap-icon_j9b15w_lvjemh.svg"
+                alt="workspace-logo"
+                class="w-8"
+              />
+            </div>
+            <div
+              class="user-img usernameInitials-sm cursor-pointer ml-auto mr-auto"
+              v-if="!userImage"
+              :style="color"
+            >
+              <h1 class="user-img-txt text-white text-lg font-semibold">
+                {{ initals }}
+              </h1>
+              <div
+                class="workspace-folder-icon-tooltip tooltip-profile-text bg-gray-800 text-white rounded"
+              >
+                <p class="ml-1 text-xs">Profile and settings</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-     </div>
     </div>
     <div class="loader-comp">
       <Loader v-if="isLoading" />
@@ -58,7 +100,7 @@
   </div>
 </template>
 <script>
-import { getAuthUser,getUser, } from "../config/functions";
+import { getAuthUser, getUser } from "../config/functions";
 import Loader from "./Loader";
 import LeftSideBar from "../components/LeftSideBar";
 export default {
