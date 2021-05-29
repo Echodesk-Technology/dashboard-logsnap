@@ -172,15 +172,15 @@
             </div>
 
             <div
-              class="hover:bg-gray-200 rounded absolute bottom-0 right-0 p-2 mb-1 mr-1 cursor-pointer"
-            >
-              <svg
-                @click.prevent="
+             @click.prevent="
                   showDeleteWorkspaceModal(
                     workspaceData.name,
                     workspaceData.path
                   )
                 "
+              class="hover:bg-gray-200 rounded absolute bottom-0 right-0 p-2 mb-1 mr-1 cursor-pointer"
+            >
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"

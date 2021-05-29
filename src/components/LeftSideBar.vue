@@ -10,22 +10,16 @@
       <!-- Click away -->
       <aside
         :class="[
-          { 'w-20': isCollapsed },
-          'fixed shadow-none left-0 top-0 z-50  border-r border-gray-100 dark:bg-gray-800 h-screen',
+          { 'w-12': isCollapsed },
+          'fixed shadow-none left-0 top-14 z-50  border-r border-gray-100 dark:bg-gray-800 h-screen',
         ]"
       >
-        <!-- First Left Sidebar starts -->
-        <div
-          class="
-            'first-left shadow-none w-20  bg-main-veryDark border-r border-gray-100  dark:bg-gray-800 h-screen fixed top-0 z-50',
-          "
-        >
-          <div
+      <div
             v-if="isCollapsed"
             @click="openCollapsedMenu"
             :class="[
               { 'mt-6': isCollapsed },
-              'collapsed-icon-open cursor-pointer absolute -top-1 z-20 -right-3   hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200',
+              'collapsed-icon-open cursor-pointer absolute -top-2 z-50 -right-3   hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200',
             ]"
           >
             <svg
@@ -41,20 +35,25 @@
               />
             </svg>
           </div>
+        <!-- First Left Sidebar starts -->
+        <div
+          class="'first-left hidden shadow-none w-20 bg-main-veryDark border-r border-gray-100 dark:bg-gray-800 h-screen fixed top-0 z-50',"
+        >
+          
           <!-- First Left Sidebar Contents starts -->
           <div
-            class="flex flex-col items-center justify-center relative h-screen sidebar-links"
+            class="flex flex-col items-center relative z-50 h-screen sidebar-links"
           >
-          <div class="logo-hdd-top w-full p-3 mt-1">
-          <img
+            <div class="logo-hdd-top w-full p-3 mt-1">
+              <img
                 src="https://res.cloudinary.com/serveryguken/image/upload/v1622134200/LogSnap/logo/LogSnap-icon_j9b15w_lvjemh.svg"
                 alt="workspace-logo"
                 class="w-8 h-8 block ml-auto mr-auto"
               />
-        </div>
-            <div class="flex-grow mt-3">
+            </div>
+            <div class="mt-3">
               <div
-                class="workspaces-icon-route folder-icon-main tooltip relative z-20 mt-2 cursor-pointer"
+                class="workspaces-icon-route folder-icon-main tooltip relative z-50 mt-2 cursor-pointer"
               >
                 <router-link to="/">
                   <svg
@@ -80,47 +79,25 @@
                 </div>
               </div>
             </div>
-            <div class="cmp-pf-con user-card absolute bottom-4">
-              <div
-                class="user-img usernameInitials rounded-xl bg-gray-100"
-                v-if="userImage"
-              >
-                <img
-                  src="https://res.cloudinary.com/serveryguken/image/upload/v1622134200/LogSnap/logo/LogSnap-icon_j9b15w_lvjemh.svg"
-                  alt="workspace-logo"
-                  class="w-8"
-                />
-              </div>
-              <div
-                class="user-img usernameInitials-sm border-2 border-white cursor-pointer ml-auto mr-auto"
-                v-if="!userImage"
-                :style="color"
-              >
-                <h1 class="user-img-txt text-white text-lg font-semibold">
-                  {{ initals }}
-                </h1>
-              </div>
-              <div class="cmp-text ml-3">
-                <!-- <h1 ref="workspaceName" class="text-xs font-medium w-24">
-                {{ name }}
-              </h1> -->
-              </div>
-            </div>
+           
           </div>
           <!-- First Left Sidebar Contents ends-->
         </div>
         <!-- First Left Sidebar ends -->
         <!-- Second Left Sidebar starts -->
         <div
-          class="collapsedSidebar  border-r border-gray-100 pt-2  w-60 h-screen fixed top-0 ml-20"
+          class="collapsedSidebar border-r bg-ghostsmoke border-gray-100 pt-2 w-60 h-screen fixed top-14 z-0"
           ref="collapsedSidebar"
         >
+         <!-- Workspace Dropdwon Container starts -->
           <div class="flex wkspace-dropdown items-center w-full">
             <div
               @click="showWorkspaceDropdown"
-              class="workspace-dropdown pl-4 select-none cursor-pointer border-b  border-gray-100 bg-white w-full relative"
+              class="workspace-dropdown select-none cursor-pointer  w-full relative"
             >
-              <div class="flex items-center justify-between py-1 px-2">
+              <div
+                class="flex items-center justify-between pl-4 py-1 px-2"
+              >
                 <div
                   class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap"
                 >
@@ -153,135 +130,196 @@
                     clip-rule="evenodd"
                   />
                 </svg>
+                
               </div>
-              <!-- Workspace Dropdown Container starts-->
-                <!-- Workspace Dropdown Container Contents  starts -->
-                <div
+               <!-- Workspace Dropdwon Container ends -->
+                 <!-- Workspace Dropdown Container Contents  starts -->
+              <div
                 v-if="workspaceDropdown"
-                  class="workspace-dropdown-list select-none bg-white absolute z-50 mt-2 rounded-lg l p-2 animate-slidedown-main w-80"
-                >
-                  <div class="workspace-search flex items-center">
-                    <div class="relative w-full">
-                      <input
-                        @keyup="startSearch($event.target)"
-                        type="text"
-                        ref="searchBox"
-                        v-model="search"
-                        class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-2 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
-                        placeholder="Search for a workspace"
-                      />
-                    </div>
-                    <div
-                      class="absolute top-3 right-3 cursor-pointer hover:bg-gray-100 rounded p-1"
-                    >
-                      <div class="" v-if="!searching" ref="workspaceSearchIcon">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-4 w-4 text-gray-600"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        class="animate-spin-icon"
-                        ref="clearSearchIcon"
-                        v-if="searching"
-                        @click="clearSearch"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-5 w-5 text-gray-600"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    class="workspaces-list mt-2 mb-2 relative max-h-56 overflow-auto"
-                  >
-                    <h1 class="text-sm text-gray-400 font-nedium mt-3 p-2">
-                      workspaces
-                    </h1>
-                    <ul class="mt-1">
-                      <li
-                        @click="gotoworkspace($event.target)"
-                        v-for="workspace in filteredworkspaces"
-                        :key="workspace.id"
-                        :id="workspace.path"
-                        class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer"
-                      >
-                        {{ workspace.name }}
-                      </li>
-                    </ul>
+                class="workspace-dropdown-list select-none bg-white absolute z-0 mt-2 rounded-lg ml-4 p-2 animate-slidedown-main w-80"
+              >
+                <div class="workspace-search flex items-center">
+                  <div class="relative w-full">
+                    <input
+                      @keyup="startSearch($event.target)"
+                      type="text"
+                      ref="searchBox"
+                      v-model="search"
+                      class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-2 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
+                      placeholder="Search for a workspace"
+                    />
                   </div>
                   <div
-                    class="add-workspace border-t mt-1 border-gray-300 flex justify-between"
+                    class="absolute top-3 right-3 cursor-pointer hover:bg-gray-100 rounded p-1"
                   >
+                    <div class="" v-if="!searching" ref="workspaceSearchIcon">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 text-gray-600"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
                     <div
-                      @click="openWorkspaceModal"
-                      class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                      class="animate-spin-icon"
+                      ref="clearSearchIcon"
+                      v-if="searching"
+                      @click="clearSearch"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-gray-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                        class="h-5 w-5 text-gray-600"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clip-rule="evenodd"
                         />
                       </svg>
-                      <h1 class="ml-1 text-sm text-gray-600">Add workspace</h1>
                     </div>
-                    <router-link
-                      to="/"
-                      class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-gray-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                        />
-                      </svg>
-                      <h1 class="ml-1 text-sm text-gray-600">View all</h1>
-                    </router-link>
                   </div>
                 </div>
-                <!-- Workspace Dropdown Container Contents ends -->
-              <!-- Workspace Dropdwon Container ends -->
+
+                <div
+                  class="workspaces-list mt-2 mb-2 relative max-h-56 overflow-auto"
+                >
+                  <h1 class="text-sm text-gray-400 font-nedium mt-3 p-2">
+                    workspaces
+                  </h1>
+                  <ul class="mt-1">
+                    <li
+                      @click="gotoworkspace($event.target)"
+                      v-for="workspace in filteredworkspaces"
+                      :key="workspace.id"
+                      :id="workspace.path"
+                      class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer"
+                    >
+                      {{ workspace.name }}
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="add-workspace border-t mt-1 border-gray-300 flex justify-between"
+                >
+                  <div
+                    @click="openWorkspaceModal"
+                    class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                    <h1 class="ml-1 text-sm text-gray-600">Add workspace</h1>
+                  </div>
+                  <router-link
+                    to="/"
+                    class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                      />
+                    </svg>
+                    <h1 class="ml-1 text-sm text-gray-600">View all</h1>
+                  </router-link>
+                </div>
+              </div>
+              <!-- Workspace Dropdown Container Contents ends -->
+              <!-- Second Sidebar Links starts -->
+              <div class="links-con pl-1" v-if="!isCollapsed">
+                <ul class="mt-4">
+                  <li class="mb-1 p-1 dash-link">
+                    <router-link
+                      :to="{ name: 'Issues', params: { id: getRoute } }"
+                      class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
+                    >
+                      <div class="icon-con">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          class="w-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                          />
+                        </svg>
+                      </div>
+                      <div class="link-txt ml-3">
+                        <p class="text-sm font-medium text-gray-600">Issues</p>
+                      </div>
+                    </router-link>
+                  </li>
+
+                  <li class="mb-1 p-1 dash-link">
+                    <router-link
+                      :to="{ name: 'Todos', params: { id: getRoute } }"
+                      class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
+                    >
+                      <div class="icon-con">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          class="w-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                          />
+                        </svg>
+                      </div>
+                      <div class="link-txt ml-3">
+                        <p class="text-sm font-medium text-gray-600">Todos</p>
+                      </div>
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            
+              <!-- Second Sidebar Links ends -->
+             
             </div>
           </div>
 
           <div
             v-if="!isCollapsed"
             @click="closeCollapsedMenu"
-            class="collapsed-icon-close cursor-pointer absolute top-0 -right-3 mt-5 hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 bg-white border border-gray-200"
+            class="collapsed-icon-close cursor-pointer absolute top-0 z-50 bg-white -right-3 mt-5 hover:bg-main-normal hover:text-white flex items-center justify-center rounded-full w-6 h-6 border border-gray-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -295,64 +333,6 @@
                 clip-rule="evenodd"
               />
             </svg>
-          </div>
-          <div class="f"></div>
-          <div class="links-con" v-if="!isCollapsed">
-            <ul class="mt-4">
-              <li class="mb-1 p-1 dash-link">
-                <router-link
-                  :to="{ name: 'Issues', params: { id: getRoute } }"
-                  class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
-                >
-                  <div class="icon-con">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      class="w-4"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                      />
-                    </svg>
-                  </div>
-                  <div class="link-txt ml-3">
-                    <p class="text-sm font-medium text-gray-600">Issues</p>
-                  </div>
-                </router-link>
-              </li>
-
-              <li class="mb-1 p-1 dash-link">
-                <router-link
-                  :to="{ name: 'Todos', params: { id: getRoute } }"
-                  class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
-                >
-                  <div class="icon-con">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      class="w-4"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                      />
-                    </svg>
-                  </div>
-                  <div class="link-txt ml-3">
-                    <p class="text-sm font-medium text-gray-600">Todos</p>
-                  </div>
-                </router-link>
-              </li>
-            </ul>
           </div>
         </div>
         <!-- Second Left Sidebar ends-->
@@ -659,7 +639,7 @@ export default {
     },
     openWorkspaceModal() {
       this.workspaceModalOpened = true;
-      this.workspaceDropdown = false;
+      this.workspaceDropdown === false;
     },
     startSearch() {
       this.searching = true;
@@ -728,19 +708,19 @@ export default {
         this.$store.commit("SET_COLLAPSED", false);
       }
     }
-    const getInitials = function (name) {
-      var parts = name.split("");
-      var initials = parts[0];
-      return initials;
-    };
-    this.getRoute = this.$route.fullPath.split("/")[4];
-    getAuthUser().then((user) => {
-      getUser(user.uid).then((user) => {
-        this.name = user.fullName;
-        this.initals = getInitials(this.name);
-        this.color = `background-color: ${user.coloruserSetActive};`;
-      });
-    });
+    // const getInitials = function (name) {
+    //   var parts = name.split("");
+    //   var initials = parts[0];
+    //   return initials;
+    // };
+    // this.getRoute = this.$route.fullPath.split("/")[4];
+    // getAuthUser().then((user) => {
+    //   getUser(user.uid).then((user) => {
+    //     this.name = user.fullName;
+    //     this.initals = getInitials(this.name);
+    //     this.color = `background-color: ${user.coloruserSetActive};`;
+    //   });
+    // });
   },
   computed: {
     ...mapGetters(["getWorkspace"]),
@@ -761,7 +741,6 @@ export default {
       if (data === true) {
         this.search = "";
         this.searching = false;
-        this.workspaceDropdown = false;
         setTimeout(() => {
           this.$refs.workspaceName.focus();
         }, 0);

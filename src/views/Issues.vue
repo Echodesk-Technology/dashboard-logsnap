@@ -12,8 +12,8 @@
         >
           <div class="issue-main h-screen space-mb-sides">
             <div
-              class="issue-hd-tp fixed top-0 pl-8 p-3  bg-white border-b w-full"
-              style="margin-top: 0.15rem"
+              class="issue-hd-tp fixed top-10 pl-8 p-4  bg-white border-b border-gray-100 w-full"
+              style="margin-top: 0.60rem"
             >
               <div class="issue-header flex items-center justify-between">
                 <h1 class="text-gray-60 text-2xl font-semibold">Your Issues</h1>
@@ -40,7 +40,7 @@
                 </div>
               </div>
             </div>
-            <div class="issues-data-hd bg-gray-100 text-gray-400 p-2 mt-8 ml-7">
+            <div class="issues-data-hd bg-gray-100 text-gray-400 p-2 mt-20 ml-7">
               <div class="grid grid-cols-5">
                 <div class="flex items-center">
                   <!-- <div class="issue-name">

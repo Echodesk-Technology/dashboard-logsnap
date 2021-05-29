@@ -211,8 +211,8 @@ body {
 }
 
 .usernameInitials-sm {
-    height: 40px;
-    width: 40px;
+    height: 28px;
+    width: 28px;
     padding: 14px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -225,8 +225,8 @@ body {
 }
 
 .usernameInitials-sm:hover {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     transition: .3s ease-in-out;
     -webkit-transition: .3s ease-in-out;
     -moz-transition: .3s ease-in-out;
@@ -235,7 +235,7 @@ body {
 }
 
 .usernameInitials-sm:hover .user-img-txt {
-    font-size: 1rem;
+    font-size: 0.90rem;
 }
 
 .usernameInitials {
@@ -321,33 +321,33 @@ body {
     background: var(--modal-background);
 }
 
+
 .tooltip-text {
     position: absolute;
-    top: 0;
-    left: 3.8rem;
+    top: 3.5rem;
+    right: 0;
     z-index: 999999;
     padding: 0.50rem;
     box-sizing: border-box;
+    background-color: #03373a;
     visibility: hidden;
 }
 
-.tooltip-text::before {
-    z-index: 0;
-}
+
 
 .tooltip-text::after {
     content: '';
     position: absolute;
     width: 14px;
     height: 14px;
-    border-right: 2px solid #1f2937;
-    border-left: 0px solid #1f2937;
-    border-bottom: 0px solid #1f2937;
-    background-color: #1f2937;
-    top: 100%;
-    left: 0;
-    z-index: 0;
-    margin-left: -0.4rem;
+    border-right: 2px solid #03373a;
+    border-left: 0px solid #03373a;
+    border-bottom: 0px solid #03373a;
+    background-color: #03373a;
+    top: 1.2rem;
+    left: 2.2rem;
+    z-index: 999999;
+    margin-left: 3.5rem;
     margin-top: -25px;
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
@@ -427,7 +427,7 @@ input[type=checkbox]:checked {
 }
 
 .collapsed-opened {
-    padding-left: 18.70rem;
+    padding-left: 12.70rem;
 }
 
 .collapsed-opened .issue-header {
@@ -435,7 +435,7 @@ input[type=checkbox]:checked {
 }
 
 .collapsed-closed {
-    padding-left: 3.5rem;
+    padding-left: 1.8rem;
 }
 
 .logsnap-logo-collapsed {
