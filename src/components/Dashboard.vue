@@ -10,8 +10,8 @@
             alt="workspace-logo"
             class="w-32"
           />
-          <div class="absolute top-1 right-0 left-1 ml-28 w-20 p-1">
-            <p class="text-sm text-main-normal">Beta</p>
+          <div class="absolute top-5 right-0 left-1 ml-24 w-20 p-1">
+            <p class="text-xs text-gray-400">Beta</p>
           </div>
         </div>
         <div class="flex-second dashboard-nav-links flex items-center">
