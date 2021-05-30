@@ -559,9 +559,9 @@ input[type=checkbox]:checked {
     padding-left: 12.70rem;
 }
 
-.collapsed-opened .issue-header {
+/* .collapsed-opened .issue-header {
     width: 60%;
-}
+} */
 
 .collapsed-closed {
     padding-left: 1.8rem;

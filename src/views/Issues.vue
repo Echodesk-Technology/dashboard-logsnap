@@ -12,17 +12,20 @@
         >
           <div class="issue-main h-screen space-mb-sides">
             <div
-              class="issue-hd-tp fixed top-10 pl-8 p-4  bg-white border-b border-gray-100 w-full"
+              class="issue-hd-tp bg-white  fixed flex top-10 pl-8 p-4  border-b border-gray-100 w-full"
               style="margin-top: 0.60rem"
             >
-              <div class="issue-header flex items-center justify-between">
-                <h1 class="text-gray-60 text-2xl font-semibold">Your Issues</h1>
+              <div class="issue-header flex items-center justify-between mt-1 w-full">
                 <div class="">
+                  <h1 class="text-gray-60 text-2xl font-semibold">Your Issues</h1>
+                </div>
+                <div class="mr-52 pr-3">
                   <button
-                    class="bg-main-dark outline-none rounded px-1 py-1 focus:outline-none"
+                    class="bg-main-dark text-white text-sm outline-none rounded-sm p-1 focus:outline-none"
                     @click="openIssueModal = true"
                   >
-                    <svg
+                  New Issue
+                    <!-- <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -35,7 +38,7 @@
                         stroke-width="2"
                         d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                       />
-                    </svg>
+                    </svg> -->
                   </button>
                 </div>
               </div>
