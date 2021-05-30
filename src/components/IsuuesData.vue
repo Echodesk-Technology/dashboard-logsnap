@@ -132,67 +132,71 @@
         </div>
       </div>
     </div>
-    <div class="show-issue-modal-bg">
+    <!-- <div
+      v-if="showIssueView"
+      class="show-issue-modal-bg bg-gray-500 opacity-75 w-full h-screen fixed top-0 left-0 z-50"
+    ></div> -->
+   <div class="modal-issue-view-contents">
       <div
-        v-if="showIssueView"
-        ref="showIssueViewElement"
-        :class="[
-          { 'animate-slideFromLeft-05sec': !showIssueView },
-          'show-issue-container bg-white w-4/12 shadow-lg h-screen fixed top-0 right-0 z-50 border-l-4 border-gray-200 p-2 animate-slideFromRight-05sec',
-        ]"
-      >
-        <div class="show-issue-cancel">
-          <div
-            @click="closeIssueView"
-            class="create-workspace-modal-close round-circle cursor-pointer hover:bg-gray-100"
+      v-if="showIssueView"
+      ref="showIssueViewElement"
+      :class="[
+        { 'animate-slideFromLeft-05sec': !showIssueView },
+        'show-issue-container bg-white w-4/12 shadow-lg h-screen fixed top-0 right-0 z-50 border-l-4 border-gray-200 p-2 animate-slideFromRight-05sec',
+      ]"
+    >
+      <div class="show-issue-cancel">
+        <div
+          @click="closeIssueView"
+          class="create-workspace-modal-close round-circle cursor-pointer hover:bg-gray-100"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
         </div>
-        <div class="issue-view-contents">
-          <div class="issue-data mt-5 break-words w-3/6">
-            <p class="text-gray-500 capitalize">{{ getIssueData.id }}</p>
-            <div class="issue-summary w-10/12">
-              <input
-                type="text"
-                v-model="getIssueData.summary"
+      </div>
+      <div class="issue-view-contents">
+        <div class="issue-data mt-5 break-words w-3/6">
+          <p class="text-gray-500 capitalize">{{ getIssueData.id }}</p>
+          <div class="issue-summary w-10/12">
+            <input
+              type="text"
+              v-model="getIssueData.summary"
+              required
+              ref="issueDataSummary"
+              class="py-1 rounded-sm w-full focus:outline-none text-gray-800 font-medium text-2xl appearance-none"
+            />
+            <p class="mt-1 pr-20 px-0">
+              <textarea
+                name="content"
+                v-model="getIssueData.description"
+                ref="issueDataDescription"
                 required
-                ref="issueDataSummary"
-                class="py-1 rounded-sm w-full focus:outline-none text-gray-800 font-medium text-2xl appearance-none"
-              />
-              <p class="mt-1 pr-20 px-0">
-                <textarea
-                  name="content"
-                  v-model="getIssueData.description"
-                  ref="issueDataDescription"
-                  required
-                  id="descContent"
-                  class="w-full h-30 max-h-56 focus:outline-none outline-none appearance-none"
-                >
-                </textarea>
-              </p>
-              <div class="attach mt-4" v-if="getIssueData.attachmentURL">
-                <h2 class="text-gray-800 font-semibold">Attachments</h2>
-                <div class="att-img mt-1">
-                  <img
-                    class="shadow-sm border border-gray-100 h-40 w-60 rounded-lg"
-                    :src="getIssueData.attachmentURL"
-                    alt="issue-attachemnt"
-                  />
-                </div>
+                id="descContent"
+                class="w-full h-30 max-h-56 focus:outline-none outline-none appearance-none"
+              >
+              </textarea>
+            </p>
+            <div class="attach mt-4" v-if="getIssueData.attachmentURL">
+              <h2 class="text-gray-800 font-semibold">Attachments</h2>
+              <div class="att-img mt-1">
+                <img
+                  class="shadow-sm border border-gray-100 h-40 w-60 rounded-lg"
+                  :src="getIssueData.attachmentURL"
+                  alt="issue-attachemnt"
+                />
               </div>
-              <div class="px-4 py-3 w-full flex justify-end mb-3">
+            </div>
+            <div class="px-4 py-3 w-full flex justify-end mb-3">
               <button
                 @click="updateIssue(getIssueData.id)"
                 type="button"
@@ -208,11 +212,11 @@
                 Delete
               </button>
             </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
+   </div>
   </div>
 </template>
 <script>
@@ -275,11 +279,11 @@ export default {
       this.showIssueView = false;
     },
     updateIssue(id) {
-     console.log(this.getIssueData.summary);
+      console.log(this.getIssueData.summary);
     },
     deleteIssue(id) {
       console.log(id);
-    }
+    },
   },
   mounted() {
     // getPath(this.getRoute, "Issues")
