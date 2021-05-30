@@ -220,7 +220,7 @@
 
               <div class="flex items-center label-element mt-4">
                 <h1 class="text-gray-800 font-medium text-sm">Label</h1>
-                <div class="label-group ml-3" v-if="editEnabled">
+                <div class="label-group ml-3">
                   <div class="relative">
                     <!-- <input
                       type="text"
@@ -244,7 +244,7 @@
                         >
                           {{ tag }}
                         </p>
-                        <div class="cancel-label">
+                        <!-- <div class="cancel-label">
                           <svg
                             @click="removeLabel(tag)"
                             xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +260,7 @@
                               d="M6 18L18 6M6 6l12 12"
                             />
                           </svg>
-                        </div>
+                        </div> -->
                       </div>
 
                       <div
@@ -424,38 +424,31 @@ export default {
           .get()
           .then((data) => {
             this.getIssueData = data.data();
-            const isAttachmentURL = data.data().attachmentURL;
-            console.log(isAttachmentURL);
-            if(isAttachmentURL) {
-              console.log("yes");
-            }
-            else {
-              console.log("no");
-            }
+             const oldTags = data.data().tags;
+             this.newTags = oldTags
           });
       });
-      getAuthUser().then((user) => {
-        const uuser = user;
-        const isUserDB = userDB.doc(uuser.uid);
-        isUserDB
-          .collection("workspace")
-          .doc(this.workspacePath)
-          .collection("issues")
-          .doc(id)
-          .get()
-          .then((data) => {
-            const oldTags = data.data().tags;
-            oldTags.forEach((tag) => {
-              this.newTags.push(tag);
-            });
-          });
-      });
+      // getAuthUser().then((user) => {
+      //   const uuser = user;
+      //   const isUserDB = userDB.doc(uuser.uid);
+      //   isUserDB
+      //     .collection("workspace")
+      //     .doc(this.workspacePath)
+      //     .collection("issues")
+      //     .doc(id)
+      //     .get()
+      //     .then((data) => {
+      //       const oldTags = data.data().tags;
+      //       oldTags.forEach((tag) => {
+      //         this.newTags.push(tag);
+      //       });
+      //     });
+      // });
     },
     closeIssueView() {
       this.showIssueView = false;
     },
     updateIssue(id) {
-      console.log(this.$refs.summary.value);
       const summaryNewValue = this.$refs.summary.value;
       const descriptionNewValue = this.$refs.description.value;
       const statusNewValue = this.$refs.status.value;

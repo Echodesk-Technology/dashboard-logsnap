@@ -422,7 +422,7 @@
 <script>
 import Dashboard from "../components/Dashboard";
 import LeftCard from "./LeftCard";
-import IssuesData from "../components/IsuuesData";
+import IssuesData from "../components/IssuesData";
 import {
   auth,
   db,

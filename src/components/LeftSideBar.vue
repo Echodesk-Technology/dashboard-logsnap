@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div id="aside-left" class="border-r">
-      <!-- Click away -->
-      <div
+    <div
         v-if="workspaceDropdown"
         @click="workspaceDropdown = false"
-        class="clickaway bg-red-200 fixed top-0 w-full h-screen"
+        class="clickaway bg-none fixed top-0  left-0 w-full z-30 h-screen"
       ></div>
+    <div id="aside-left" class="border-r">
+      <!-- Click away -->
+      
       <!-- Click away -->
       <aside
         :class="[
