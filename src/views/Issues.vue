@@ -248,7 +248,8 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="drop-file drop-zone upload mt-2">
+                               <!-- <div class="upload-file-element">
+                                  <div class="drop-file drop-zone upload mt-2">
                                   <p class="text-xs text-gray-600">
                                     Attachment
                                   </p>
@@ -280,12 +281,6 @@
                                   >
                                     <div class="file-preview">
                                       <div class="flex">
-                                        <!-- <img
-                                          :src="attachmentURL"
-                                          alt=""
-                                          ref="selectedfile"
-                                          class="w-6"
-                                        /> -->
                                         <p ref="isFileName" class="text-xs"></p>
                                       </div>
                                       <div class="flex justify-between">
@@ -335,6 +330,7 @@
                                 <p v-if="upLoading" class="mt-3 text-xs mb-2">
                                   Create issue to upload file
                                 </p>
+                               </div> -->
                                 <div class="status-select mt-2 w-full">
                                   <p class="text-xs text-gray-600">Status</p>
                                   <div class="selecxt">
@@ -547,7 +543,6 @@ export default {
             uploadRef.snapshot.ref.getDownloadURL().then((url) => {
               this.attachmentURL = url;
               this.issue.attachmentURL = url;
-              localStorage.attachmentURL = url;
             });
           }
         );
@@ -613,14 +608,13 @@ export default {
         this.$refs.summary.value !== "" &&
         this.$refs.description.value !== ""
       ) {
-        this.uploadFile(this.$refs.uploadBtn);
+        // this.uploadFile(this.$refs.uploadBtn);
         createIssue(this.getRoute, this.issue)
           .then((docRef) => {
             setTimeout(() => {
               docRef.update({
                 id: docRef.id,
                 workspaceid: this.getRoute,
-                attachmentURL: this.attachmentURL,
               });
             }, 1100);
           })
@@ -633,8 +627,6 @@ export default {
             this.issue.priorityColor = "";
             this.issue.priorityBackgroundColor = "";
             this.issue.labels = "";
-            this.issue.status = "";
-            this.issue.priority = "";
             this.labelTyped = false;
             this.$refs.summary.value = "";
             this.$refs.description.value = "";
@@ -643,6 +635,7 @@ export default {
             this.$refs.uploadBtn.value = "";
             this.upLoading = false;
             this.issueCreated = true;
+            // this.attachmentURL = "";
             setTimeout(() => {
               this.issueCreated = false;
               this.$router.replace(this.$route.path);
@@ -771,9 +764,6 @@ export default {
         localStorage.sidebarCollasped = false;
         this.isCollapsed = false;
       }
-    },
-    attachmentURL(data) {
-      this.attachmentURL = data;
     },
     openIssueModal(data) {
       if (data === true) {

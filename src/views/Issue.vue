@@ -356,11 +356,11 @@
       <div class="issue-id p-4 w-11/12 block ml-auto mr-auto space-mb-sides">
         <div class="flex issue-main-view">
           <div class="issue-data mt-5 break-words w-3/6">
-            <p class="text-gray-500 capitalize">{{ getIssueData.id }}</p>
+            <p class="text-gray-500 capitalize">{{ issue.id }}</p>
             <div class="issue-summary w-10/12">
               <input
                 type="text"
-                v-model="getIssueData.summary"
+                v-model="issue.summary"
                 required
                 ref="summary"
                 class="py-1 rounded-sm w-full focus:outline-none text-gray-800 font-medium text-2xl appearance-none"
@@ -368,7 +368,7 @@
               <p class="mt-1 pr-20 px-0">
                 <textarea
                   name="content"
-                  v-model="getIssueData.description"
+                  v-model="issue.description"
                   ref="description"
                   required
                   id="descContent"
@@ -376,12 +376,12 @@
                 >
                 </textarea>
               </p>
-              <div class="attach mt-4" v-if="getIssueData.attachmentURL">
+              <div class="attach mt-4" v-if="issue.attachmentURL">
                 <h2 class="text-gray-800 font-semibold">Attachments</h2>
                 <div class="att-img mt-1">
                   <img
                     class="shadow-sm border border-gray-100 h-40 w-60 rounded-lg"
-                    :src="getIssueData.attachmentURL"
+                    :src="issue.attachmentURL"
                     alt="issue-attachemnt"
                   />
                 </div>
@@ -453,7 +453,7 @@
                 <div class="selecxt">
                   <select
                     ref="status"
-                    v-model="getIssueData.status"
+                    v-model="issue.status"
                     class="w-2/4 bg-gray-200 py-1 text-sm rounded-sm border focus:outline-none outline-none focus:bg-white focus:border=gray-200"
                   >
                     <option value="Open">Open</option>
@@ -471,7 +471,7 @@
                 <div class="selecxt">
                   <select
                     ref="priority"
-                    v-model="getIssueData.priority"
+                    v-model="issue.priority"
                     class="w-2/4 bg-gray-200 py-1 text-sm rounded-sm border focus:outline-none outline-none focus:bg-white focus:border=gray-200"
                   >
                     <option value="Low">Low</option>
@@ -501,29 +501,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="issueUpdated"
-      class="fixed z-50 top-5 right-0 bg-white px-3 py-3 shadow rounded-lg mr-5 animate-slide"
-    >
-      <div class="flex items-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          class="w-4 text-green-600"
-          ref="notiColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <p class="text-gray-600 text-sm ml-1" ref="notiText">
-          Issue updated successfully
-        </p>
-      </div>
-    </div>
+    
     <!-- <div class="issue-view">
       <div class="issue-modal">
         <div class="modal">
@@ -556,7 +534,7 @@
                           class="text-lg leading-6 font-medium text-gray-700"
                           id="modal-headline"
                         >
-                          {{getIssueData.summary}}
+                          {{issue.summary}}
                         </h3>
                         <div class="mt-2">
                           <p class="text-xs text-gray-600">
@@ -566,7 +544,7 @@
                         <div class="mt-0 w-full">
                           <input
                             type="text"
-                            v-model="getIssueData.summary"
+                            v-model="issue.summary"
                             required
                             ref="summary"
                             class="bg-gray-200 text-sm py-1 text-gray-600 rounded-sm w-full focus:outline-none pl-2 focus:bg-white focus:ring-1 focus:ring-main-normal appearance-none"
@@ -590,7 +568,7 @@
                             <div class="cnt-area border w-full">
                               <textarea
                                 name="content"
-                                v-model="getIssueData.description"
+                                v-model="issue.description"
                                 ref="description"
                                 required
                                 id="descContent"
@@ -609,14 +587,14 @@
                         <p class="text-xs text-gray-600 mt-2">Attachment</p>
 
                         <div class="issur-att">
-                          <img :src="getIssueData.attachmentURL" alt="issue-attachment" />
+                          <img :src="issue.attachmentURL" alt="issue-attachment" />
                         </div>
                         <div class="status-select mt-2 w-full">
                           <p class="text-xs text-gray-600">Status</p>
                           <div class="selecxt">
                             <select
                               ref="status"
-                              v-model="getIssueData.status"
+                              v-model="issue.status"
                               class="w-2/4 bg-gray-200 py-1 text-sm rounded-sm border focus:outline-none outline-none focus:bg-white focus:border=gray-200"
                             >
                               <option value="Open">Open</option>
@@ -631,7 +609,7 @@
                             <p class="text-xs text-gray-600">Priority</p>
                             <select
                               ref="priority"
-                              v-model="getIssueData.priority"
+                              v-model="issue.priority"
                               class="w-2/4 bg-gray-200 py-1 text-sm rounded-sm border focus:outline-none outline-none focus:bg-white focus:border=gray-200"
                             >
                               <option value="Low">Low</option>
@@ -716,9 +694,10 @@ export default {
       labelTyped: false,
       issueUpdated: false,
       getWorkspaceName: this.$route.fullPath.split("/")[2],
+      getWorkspacePath: "FoMF6vvwtjjGPbZGuLFE",
+      getIssuePath: "u2fDK3qiHmgRqioeyRjU",
     };
   },
-  props: ['workspacePath','issuePath'],
   methods: {
     showMbMenu: function () {
       this.open = true;
@@ -843,8 +822,8 @@ export default {
       this.issue.labels = "";
     },
   },
+  computed: mapGetters(["issue"]),
   mounted() {
-    // getWorkspacePath(this.getWorkspacePath)
     getPath(this.getWorkspacePath, this.getIssuePath, "Issues");
     const getInitials = function (name) {
       var parts = name.split(" ");
@@ -865,6 +844,7 @@ export default {
     });
   },
   created() {
+    getIssue(this.getWorkspacePath, this.getIssuePath);
     getAuthUser().then((user) => {
       db.collection("users")
         .doc(user.uid)
