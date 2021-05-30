@@ -6,16 +6,9 @@
         v-for="issue in getIssuesDatas"
         :key="issue.id"
       >
-        <router-link
+        <div
+          @click="openIssueView(issue.id)"
           class="grid grid-cols-5 items-center"
-          :to="{
-            name: 'Issue',
-            params: {
-              projName: issue.workspaceName,
-              workspaceid: issue.workspaceid,
-              id: issue.id,
-            },
-          }"
         >
           <div class="issues-flex flex items-center">
             <div class="issue-short-desc ml-2 max-w-xs w-52 whitespace-nowrap">
@@ -136,13 +129,102 @@
             </div>
           </div> -->
           </div>
-        </router-link>
+        </div>
+      </div>
+    </div>
+    <div class="show-issue-modal-bg">
+      <div
+        v-if="showIssueView"
+        ref="showIssueViewElement"
+        :class="[
+          { 'animate-slideFromLeft-05sec': !showIssueView },
+          'show-issue-container bg-white w-4/12 shadow-lg h-screen fixed top-0 right-0 z-50 border-l-4 border-gray-200 p-2 animate-slideFromRight-05sec',
+        ]"
+      >
+        <div class="show-issue-cancel">
+          <div
+            @click="closeIssueView"
+            class="create-workspace-modal-close round-circle cursor-pointer hover:bg-gray-100"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="issue-view-contents">
+          <div class="issue-data mt-5 break-words w-3/6">
+            <p class="text-gray-500 capitalize">{{ getIssueData.id }}</p>
+            <div class="issue-summary w-10/12">
+              <input
+                type="text"
+                v-model="getIssueData.summary"
+                required
+                ref="issueDataSummary"
+                class="py-1 rounded-sm w-full focus:outline-none text-gray-800 font-medium text-2xl appearance-none"
+              />
+              <p class="mt-1 pr-20 px-0">
+                <textarea
+                  name="content"
+                  v-model="getIssueData.description"
+                  ref="issueDataDescription"
+                  required
+                  id="descContent"
+                  class="w-full h-30 max-h-56 focus:outline-none outline-none appearance-none"
+                >
+                </textarea>
+              </p>
+              <div class="attach mt-4" v-if="getIssueData.attachmentURL">
+                <h2 class="text-gray-800 font-semibold">Attachments</h2>
+                <div class="att-img mt-1">
+                  <img
+                    class="shadow-sm border border-gray-100 h-40 w-60 rounded-lg"
+                    :src="getIssueData.attachmentURL"
+                    alt="issue-attachemnt"
+                  />
+                </div>
+              </div>
+              <div class="px-4 py-3 w-full flex justify-end mb-3">
+              <button
+                @click="updateIssue(getIssueData.id)"
+                type="button"
+                class="w-16 block rounded-md border px-1 py-1 text-xs bg-main-normal font-medium text-white hover:bg-main-dark focus:outline-none outline-none sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Update
+              </button>
+              <button
+                @click="deleteIssue(getIssueData.id)"
+                type="button"
+                class="w-16 block rounded-md px-1 py-1 text-xs bg-none font-medium text-main-normal hover:text-main-dark focus:outline-none outline-none sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Delete
+              </button>
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { getAllIssues, getIssue, getPath } from "../config/functions";
+import {
+  getAuthUser,
+  userDB,
+  getAllIssues,
+  getPath,
+  getIssue,
+  updateIssue,
+  deleteIssue,
+} from "../config/functions";
 
 import Tag from "./Tag";
 import { mapGetters } from "vuex";
@@ -155,9 +237,12 @@ export default {
     return {
       actionClicked: false,
       issues: [],
+      getIssueData: [],
       tags: [],
-      issuePath: "",
       getRoute: this.$route.fullPath.split("/")[4].split("?")[0],
+      workspacePath: this.$route.fullPath.split("/")[4].split("?")[0],
+      issuePath: "",
+      showIssueView: false,
     };
   },
   methods: {
@@ -168,13 +253,56 @@ export default {
         this.actionClicked = false;
       }
     },
+    openIssueView(id) {
+      this.showIssueView = true;
+      this.issuePath = id;
+      getAuthUser().then((user) => {
+        const uuser = user;
+        const isUserDB = userDB.doc(uuser.uid);
+        isUserDB
+          .collection("workspace")
+          .doc(this.workspacePath)
+          .collection("issues")
+          .doc(id)
+          .get()
+          .then((data) => {
+            this.getIssueData = data.data();
+            console.log(this.getIssueData.attachmentURL);
+          });
+      });
+    },
+    closeIssueView() {
+      this.showIssueView = false;
+    },
+    updateIssue(id) {
+     console.log(this.getIssueData.summary);
+    },
+    deleteIssue(id) {
+      console.log(id);
+    }
   },
   mounted() {
-    getPath(this.getRoute, "Issues")
+    // getPath(this.getRoute, "Issues")
   },
-  computed: mapGetters(["getIssuesDatas"]),
+  computed: mapGetters(["getIssuesDatas", "getIssueData"]),
   created() {
     getAllIssues(this.getRoute);
+    // getIssue(this.getWorkspacePath, this.getIssueID);
+    // getAuthUser().then((user) => {
+    //   db.collection("users")
+    //     .doc(user.uid)
+    //     .collection("workspace")
+    //     .doc(this.getWorkspacePath)
+    //     .collection("issues")
+    //     .doc(this.getIssueID)
+    //     .get()
+    //     .then((getTags) => {
+    //       const oldTags = getTags.data().tags;
+    //       oldTags.forEach((tag) => {
+    //         this.tags.push(tag);
+    //       });
+    //     });
+    // });
   },
 };
 </script>

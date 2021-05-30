@@ -5,14 +5,15 @@
     >
       <div class="flex items-center justify-between">
         <div class="logo-hdd-top relative w-40">
-          <img
-            src="https://res.cloudinary.com/serveryguken/image/upload/v1622134199/LogSnap/logo/LogSnap-main_xppj6x_nngrml.svg"
-            alt="workspace-logo"
-            class="w-32"
-          />
-          <div class="absolute top-5 right-0 left-1 ml-24 w-20 p-1">
+          <router-link to="/">
+            <img
+              src="https://res.cloudinary.com/serveryguken/image/upload/v1622134199/LogSnap/logo/LogSnap-main_xppj6x_nngrml.svg"
+              alt="workspace-logo"
+              class="w-32"
+          /></router-link>
+          <!-- <div class="absolute top-5 right-0 left-1 ml-24 w-20 p-1">
             <p class="text-xs text-gray-400">Beta</p>
-          </div>
+          </div> -->
         </div>
         <div class="flex-second dashboard-nav-links flex items-center">
           <div class="notification tooltip cursor-pointer relative">
@@ -90,7 +91,7 @@
             v-if="errorWorkspace"
           >
             <h1 class="text-2xl font-normal">
-              This content has
+              This content has been
               <span class="font-bold text-main-normal"> deleted or moved</span>.
             </h1>
           </div>
@@ -100,7 +101,12 @@
   </div>
 </template>
 <script>
-import { getAuthUser, getUser, userDB, getWorkspacePath } from "../config/functions";
+import {
+  getAuthUser,
+  getUser,
+  userDB,
+  getWorkspacePath,
+} from "../config/functions";
 import { mapGetters } from "vuex";
 import Loader from "./Loader";
 import LeftSideBar from "../components/LeftSideBar";
@@ -126,8 +132,7 @@ export default {
     if (this.$store.getters.getErrorPage === true) {
       console.log("no content");
       this.errorWorkspace = true;
-    }
-    else {
+    } else {
       this.errorWorkspace = false;
     }
     const getInitials = function (name) {
@@ -160,7 +165,7 @@ export default {
   },
   watch: {
     "$store.getters.getErrorPage": function (data) {
-      if (this.$store.getters.getErrorPage === true) {
+      if (data === true) {
         this.errorWorkspace = true;
       }
     },

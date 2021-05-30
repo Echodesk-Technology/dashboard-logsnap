@@ -3,13 +3,19 @@
     <div class="loader" v-if="loaded">
       <div class="bar"></div>
     </div>
-    <div :class="[{'top-1': loaded}, 'p-head fixed  w-full bg-white border-b px-3 py-2']">
+    <div
+      :class="[
+        { 'top-1': loaded },
+        'p-head fixed  w-full bg-white border-b px-3 py-2',
+      ]"
+    >
       <div class="flex justify-between items-center">
         <div class="ml-3">
-          <img
-            src="https://res.cloudinary.com/serveryguken/image/upload/v1622134199/LogSnap/logo/LogSnap-main_xppj6x_nngrml.svg"
-            alt="logsnap-logo"
-          />
+          <router-link to="/">
+            <img
+              src="https://res.cloudinary.com/serveryguken/image/upload/v1622134199/LogSnap/logo/LogSnap-main_xppj6x_nngrml.svg"
+              alt="logsnap-logo"
+          /></router-link>
         </div>
         <div class="menu-icon">
           <div class="mb-icon-menu flex items-center cursor-pointer">
@@ -172,12 +178,9 @@
             </div>
 
             <div
-             @click.prevent="
-                  showDeleteWorkspaceModal(
-                    workspaceData.name,
-                    workspaceData.path
-                  )
-                "
+              @click.prevent="
+                showDeleteWorkspaceModal(workspaceData.name, workspaceData.path)
+              "
               class="hover:bg-gray-200 rounded absolute bottom-0 right-0 p-2 mb-1 mr-1 cursor-pointer"
             >
               <svg
@@ -467,7 +470,7 @@ export default {
           })
         )
         .then(() => {
-            this.loaded = true;
+          this.loaded = true;
         })
         .then(() => {
           setTimeout(() => {
@@ -484,7 +487,7 @@ export default {
           if (error) {
             this.loaded = false;
             this.error = "Unable to create workspace please contact support.";
-            this.spinner  = false;
+            this.spinner = false;
             this.createWorkspaceModal = true;
           }
         });

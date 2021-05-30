@@ -716,10 +716,9 @@ export default {
       labelTyped: false,
       issueUpdated: false,
       getWorkspaceName: this.$route.fullPath.split("/")[2],
-      getWorkspacePath: this.$route.fullPath.split("/")[5],
-      getIssueID: this.$route.fullPath.split("/")[6],
     };
   },
+  props: ['workspacePath','issuePath'],
   methods: {
     showMbMenu: function () {
       this.open = true;
@@ -799,7 +798,7 @@ export default {
         priorityBackgroundColor = "bg-red-600";
       }
 
-      updateIssue(this.getWorkspacePath, this.getIssueID, {
+      updateIssue(this.getWorkspacePath, this.getIssuePath, {
         summary: summaryNewValue,
         description: descriptionNewValue,
         status: statusNewValue,
@@ -823,7 +822,7 @@ export default {
           `You are about to delete this issue, ${this.$refs.summary.value}`
         )
       ) {
-        deleteIssue(this.getWorkspacePath, this.getIssueID);
+        deleteIssue(this.getWorkspacePath, this.getIssuePath);
         this.issueUpdated = true;
         setTimeout(() => {
           this.$refs.notiColor.classList.remove("text-green-600");
@@ -844,10 +843,9 @@ export default {
       this.issue.labels = "";
     },
   },
-  computed: mapGetters(["getIssueData"]),
   mounted() {
     // getWorkspacePath(this.getWorkspacePath)
-    getPath(this.getWorkspacePath, this.getIssueID, "Issues");
+    getPath(this.getWorkspacePath, this.getIssuePath, "Issues");
     const getInitials = function (name) {
       var parts = name.split(" ");
       var initials = "";
@@ -867,14 +865,13 @@ export default {
     });
   },
   created() {
-    getIssue(this.getWorkspacePath, this.getIssueID);
     getAuthUser().then((user) => {
       db.collection("users")
         .doc(user.uid)
         .collection("workspace")
         .doc(this.getWorkspacePath)
         .collection("issues")
-        .doc(this.getIssueID)
+        .doc(this.getIssuePath)
         .get()
         .then((data) => {
           const oldTags = data.data().tags;

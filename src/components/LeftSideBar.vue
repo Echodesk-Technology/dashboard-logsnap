@@ -5,7 +5,7 @@
       <div
         v-if="workspaceDropdown"
         @click="workspaceDropdown = false"
-        class="clickaway bg-none fixed top-0 w-full h-screen"
+        class="clickaway bg-red-200 fixed top-0 w-full h-screen"
       ></div>
       <!-- Click away -->
       <aside
@@ -91,14 +91,14 @@
         <!-- First Left Sidebar ends -->
         <!-- Second Left Sidebar starts -->
         <div
-          class="collapsedSidebar border-r bg-ghostsmoke border-gray-100 pt-2 w-60 h-screen fixed top-14 z-0"
+          class="collapsedSidebar border-r bg-ghostsmoke border-gray-100 pt-2 w-60 h-screen fixed top-14 z-50"
           ref="collapsedSidebar"
         >
           <!-- Workspace Dropdwon Container starts -->
-          <div class="flex wkspace-dropdown items-center w-full">
+          <div class="flex wkspace-dropdown items-center w-full relative">
             <div
               @click="showWorkspaceDropdown"
-              class="workspace-dropdown select-none cursor-pointer w-full relative"
+              class="workspace-dropdown select-none cursor-pointer w-full"
             >
               <div class="flex items-center justify-between pl-4 py-1 px-2">
                 <div
@@ -135,125 +135,6 @@
                 </svg>
               </div>
               <!-- Workspace Dropdwon Container ends -->
-              <!-- Workspace Dropdown Container Contents  starts -->
-              <div
-                v-if="workspaceDropdown"
-                class="workspace-dropdown-list select-none bg-white absolute z-0 mt-2 rounded-lg ml-4 p-2 animate-slidedown-main w-80"
-              >
-                <div class="workspace-search flex items-center">
-                  <div class="relative w-full">
-                    <input
-                      @keyup="startSearch($event.target)"
-                      type="text"
-                      ref="searchBox"
-                      v-model="search"
-                      class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-2 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
-                      placeholder="Search for a workspace"
-                    />
-                  </div>
-                  <div
-                    class="absolute top-3 right-3 cursor-pointer hover:bg-gray-100 rounded p-1"
-                  >
-                    <div class="" v-if="!searching" ref="workspaceSearchIcon">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-gray-600"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="animate-spin-icon"
-                      ref="clearSearchIcon"
-                      v-if="searching"
-                      @click="clearSearch"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 text-gray-600"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="workspaces-list mt-2 mb-2 relative max-h-56 overflow-auto"
-                >
-                  <h1 class="text-sm text-gray-400 font-nedium mt-3 p-2">
-                    workspaces
-                  </h1>
-                  <ul class="mt-1">
-                    <li
-                      @click="gotoworkspace($event.target)"
-                      v-for="workspace in filteredworkspaces"
-                      :key="workspace.id"
-                      :id="workspace.path"
-                      class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer"
-                    >
-                      {{ workspace.name }}
-                    </li>
-                  </ul>
-                </div>
-                <div
-                  class="add-workspace border-t mt-1 border-gray-300 flex justify-between"
-                >
-                  <div
-                    @click="openWorkspaceModal"
-                    class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
-                    </svg>
-                    <h1 class="ml-1 text-sm text-gray-600">Add workspace</h1>
-                  </div>
-                  <router-link
-                    to="/"
-                    class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                      />
-                    </svg>
-                    <h1 class="ml-1 text-sm text-gray-600">View all</h1>
-                  </router-link>
-                </div>
-              </div>
-              <!-- Workspace Dropdown Container Contents ends -->
               <!-- Second Sidebar Links starts -->
               <div class="links-con pl-1" v-if="!isCollapsed">
                 <ul class="mt-4">
@@ -315,6 +196,125 @@
 
               <!-- Second Sidebar Links ends -->
             </div>
+            <!-- Workspace Dropdown Container Contents  starts -->
+            <div
+              v-if="workspaceDropdown"
+              class="workspace-dropdown-list select-none bg-white absolute top-12 z-50 mt-2 rounded-lg ml-4 p-2 animate-slidedown-main w-80"
+            >
+              <div class="workspace-search flex items-center">
+                <div class="w-full">
+                  <input
+                    @keyup="startSearch($event.target)"
+                    type="text"
+                    ref="searchBox"
+                    v-model="search"
+                    class="w-full bg-white text-gray-600 text-sm border border-gray-100 p-2 focus:outline-none focus:border-main-normal rounded placeholder-gray-600"
+                    placeholder="Search for a workspace"
+                  />
+                </div>
+                <div
+                  class="absolute top-3 right-3 cursor-pointer hover:bg-gray-100 rounded p-1"
+                >
+                  <div class="" v-if="!searching" ref="workspaceSearchIcon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-gray-600"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="animate-spin-icon"
+                    ref="clearSearchIcon"
+                    v-if="searching"
+                    @click="clearSearch"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-gray-600"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="workspaces-list mt-2 mb-2 relative max-h-56 overflow-auto"
+              >
+                <h1 class="text-sm text-gray-400 font-nedium mt-3 p-2">
+                  Your Workspaces
+                </h1>
+                <ul class="mt-1">
+                  <li
+                    @click="gotoworkspace($event.target)"
+                    v-for="workspace in filteredworkspaces"
+                    :key="workspace.id"
+                    :id="workspace.path"
+                    class="text-sm text-gray-800 font-normal hover:bg-gray-100 rounded p-2 cursor-pointer"
+                  >
+                    {{ workspace.name }}
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="add-workspace border-t mt-1 border-gray-300 flex justify-between"
+              >
+                <div
+                  @click="openWorkspaceModal"
+                  class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                  <h1 class="ml-1 text-sm text-gray-600">Add workspace</h1>
+                </div>
+                <router-link
+                  to="/"
+                  class="add-workspace-icon flex items-center p-2 mt-2 cursor-pointer hover:bg-gray-100"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                    />
+                  </svg>
+                  <h1 class="ml-1 text-sm text-gray-600">View all</h1>
+                </router-link>
+              </div>
+            </div>
+            <!-- Workspace Dropdown Container Contents ends -->
           </div>
 
           <div
@@ -645,7 +645,7 @@ export default {
     },
     openWorkspaceModal() {
       this.workspaceModalOpened = true;
-      this.workspaceDropdown === false;
+      this.workspaceDropdown = false;
     },
     startSearch() {
       this.searching = true;
