@@ -12,19 +12,37 @@
         >
           <div class="issue-main h-screen space-mb-sides">
             <div
-              class="issue-hd-tp bg-white  fixed flex top-10 pl-8 p-4  border-b border-gray-100 w-full"
-              style="margin-top: 0.60rem"
+              class="issue-hd-tp bg-white fixed flex top-10 pl-8 p-4 border-b border-gray-100 w-full"
+              style="margin-top: 0.6rem"
             >
-              <div class="issue-header flex items-center justify-between mt-1 w-full">
+              <div
+                class="issue-header flex items-center justify-between mt-1 w-full"
+              >
                 <div class="">
-                  <h1 class="text-gray-60 text-2xl font-semibold ml-3">Your Issues</h1>
+                  <h1 class="text-gray-60 text-2xl font-semibold ml-3">
+                    Your Issues
+                  </h1>
                 </div>
                 <div class="mr-52 pr-3 create-new-issue">
                   <button
-                    class="bg-main-dark text-white text-sm outline-none rounded-sm p-1 focus:outline-none"
+                    class="bg-main-dark flex text-white text-sm outline-none rounded-xl p-1 focus:outline-none"
                     @click="openIssueModal = true"
                   >
-                  New Issue
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                    New Issue
                     <!-- <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -43,7 +61,9 @@
                 </div>
               </div>
             </div>
-            <div class="issues-data-hd bg-gray-100 text-gray-400 p-2 mt-20 ml-7">
+            <div
+              class="issues-data-hd bg-gray-100 text-gray-400 p-2 mt-20 ml-7"
+            >
               <div class="grid grid-cols-5">
                 <div class="flex items-center">
                   <!-- <div class="issue-name">
@@ -251,7 +271,68 @@
                                     </div>
                                   </div>
                                 </div>
-                               <!-- <div class="upload-file-element">
+                                <div class="uploader mt-2" v-if="!upLoaded">
+                                  <p class="text-xs text-gray-600">
+                                    Attachment
+                                  </p>
+                                  <Uploader
+                                    v-model="url"
+                                    :uploader="uploadButton"
+                                  >
+                                    <div
+                                      class="flex justify-center mt-2 border-2 py-2 border-gray-200 border-dashed"
+                                    >
+                                      <input
+                                        @change="getFile"
+                                        type="file"
+                                        id="upload"
+                                        name="isFileName"
+                                        accept="image/x-png,image/gif,image/jpeg,image/jpg"
+                                        hidden
+                                      />
+                                      <label
+                                        ref="uploadBtn"
+                                        class="text-xs uploadBtn text-main-normal focus:outline-none outline-none bg-white hover:underline cursor-pointer"
+                                        for="upload"
+                                        >Choose file</label
+                                      >
+                                    </div>
+                                  </Uploader>
+                                </div>
+                                <div
+                                  v-if="upLoaded"
+                                  class="flex justify-between items-center"
+                                >
+                                  <div class="file-preview">
+                                    <div class="flex">
+                                      <p ref="isFileName" class="text-xs">
+                                        {{ fileName }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="file-size cancel-con flex items-center -ml-8"
+                                  >
+                                    <div
+                                      class="delete-btn hover:bg-gray-200 cursor-pointer rounded-2xl p-1"
+                                      @click="deleteFile"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        class="w-5 text-gray-600 cursor-pointer"
+                                      >
+                                        <path
+                                          fill-rule="evenodd"
+                                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                          clip-rule="evenodd"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- <div class="upload-file-element">
                                   <div class="drop-file drop-zone upload mt-2">
                                   <p class="text-xs text-gray-600">
                                     Attachment
@@ -431,12 +512,18 @@ import {
   db,
   getUser,
   getAuthUser,
-  uploadFile,
   createIssue,
 } from "../config/functions";
 import { mapGetters } from "vuex";
+import Uploader from "../components/Uploader";
 export default {
   name: "Issues",
+  components: {
+    Dashboard,
+    LeftCard,
+    IssuesData,
+    Uploader,
+  },
   data() {
     return {
       mobile: false,
@@ -448,13 +535,12 @@ export default {
       openIssueModal: false,
       content: "",
       name: "",
-      tinyAPIKey: "",
       labelTyped: false,
+      uploaderButton: document.querySelector(".uploadBtn"),
       fileSize: "",
-      isFileName: "",
-      attachmentURL: "",
+      fileName: "",
       uploadValue: 0,
-      upLoading: false,
+      upLoaded: false,
       isCollapsed: false,
       issue: {
         workspaceName: this.$route.fullPath.split("/")[2],
@@ -475,11 +561,7 @@ export default {
       UPLOADCARE_KEY: process.env.VUE_APP_UPLOADCARE_KEY,
     };
   },
-  components: {
-    Dashboard,
-    LeftCard,
-    IssuesData,
-  },
+
   methods: {
     getFormattedDate() {
       const todayTime = new Date();
@@ -513,50 +595,9 @@ export default {
       this.$refs.label.value = "";
       this.issue.labels = "";
     },
-    handleFileUpload(uploader) {
-      this.upLoading = true;
-      setTimeout(() => {
-        if (uploader.files) {
-          this.upLoading = true;
-          setTimeout(() => {
-            this.isFileName = uploader.files[0].name;
-            this.$refs.isFileName.innerText = uploader.files[0].name;
-          }, 200);
-          this.fileSize = uploader.files[0].size;
-        }
-      }, 100);
-    },
-    uploadFile(file) {
-      if (file) {
-        const uploadRef = uploadFile(
-          `logsnapcdnimages/${this.isFileName}`,
-          (this.isFileName = file.files[0])
-        );
-        uploadRef.on(
-          "state_changed",
-          (snapshot) => {
-            this.uploadValue =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          },
-          (error) => {
-            error;
-          },
-          () => {
-            this.uploadValue = 100;
-            uploadRef.snapshot.ref.getDownloadURL().then((url) => {
-              this.attachmentURL = url;
-              this.issue.attachmentURL = url;
-            });
-          }
-        );
-      }
-    },
     deleteFile() {
-      this.$refs.uploadBtn.value = "";
-      this.$refs.isFileName.innerText = "";
-      this.$refs.uploadValue.value = "";
-      this.$refs.uploadValueText.innerText = "";
-      this.$refs.fileSize.innerText = "";
+      this.fileName = "";
+      this.upLoaded = false;
     },
     createIssue() {
       if (this.$refs.summary.value === "") {
@@ -757,7 +798,7 @@ export default {
       }
     }
   },
-  computed: mapGetters(["getIssuesDatas", "getCollapsedState"]),
+  computed: mapGetters(["getIssuesDatas", "getCollapsedState", "getFileName", "getFileURL"]),
   watch: {
     "$store.getters.getCollapsedState": function (data) {
       if (data === true) {
@@ -773,6 +814,18 @@ export default {
         setTimeout(() => {
           this.$refs.summary.focus();
         }, 0);
+      }
+    },
+    "$store.getters.getFileName": function (data) {
+      if(data) {
+        this.upLoaded = true;
+        this.fileName = data;
+      }
+    },
+    "$store.getters.getFileURL": function (data) {
+     if(data) {
+        this.upLoaded = true;
+        this.issue.attachmentURL = data;
       }
     },
   },

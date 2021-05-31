@@ -5,14 +5,34 @@
         id="Notes-page"
         :class="[{ 'collapsed-closed': isCollapsed }, ' collapsed-opened']"
       >
-        <div class="notes-main h-screen space-mb-sides ">
+        <div class="notes-main h-screen space-mb-sides">
           <div
             class="notes-header bg-white fixed flex items-center justify-between top-10 z-20 pl-8 p-4 border-b border-gray-100 w-full"
             style="margin-top: 0.6rem"
           >
-           <div class="notes-header-text">
-              <h1 class="text-gray-60 text-2xl font-semibold mt-1 ml-3">Notes</h1>
-           </div>
+            <div class="notes-header-text w-3/12 flex items-center justify-between mt-1">
+              <h1 class="text-gray-60 text-2xl font-semibold  ml-3">
+                Notes
+              </h1>
+              <div class="add-new-note mr-5">
+                <button class="text-sm flex items-center bg-main-normal text-white rounded-xl p-1 outline-none focus:outline-none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    /></svg
+                  >New Note
+                </button>
+              </div>
+            </div>
             <div class="search-header w-3/12 bg-white mr-56">
               <div
                 class="side-1 search-notes w-full relative bg-white border border-gray-100 rounded-2xl outline-none p-2 space-mb-side"
@@ -49,16 +69,32 @@
             class="flex items-center notes-side-1 notes-side-2-view mt-16 bg-white"
           >
             <div class="side-1-notes w-5/12 max-w-sm h-screen">
-              <div class="notes-list break-words  select-none">
-               <div v-for="note in notes" :key="note.id" class="note  border-b border-gray-200 w-full p-3 pl-10 cursor-pointer">
-                <div class="note-created-date">
-                  <p class="uppercase text-xs text-gray-600 mt-1">{{note.createdAt}}</p>
-                  <div class="note-heading">
-                    <h1 class="mt-2 font-semibold text-lg" style="font-size: 1.126rem">{{ note.title }}</h1>
-                    <h2 class="font-normal text-gray-400 mt-2 w-11/12 whitespace-nowrap overflow-hidden overflow-ellipsis" style="font-size: 1rem">{{ note.description }}</h2>
+              <div class="notes-list break-words select-none">
+                <div
+                  v-for="note in notes"
+                  :key="note.id"
+                  class="note border-b border-gray-200 w-full p-3 pl-10 cursor-pointer"
+                >
+                  <div class="note-created-date">
+                    <p class="uppercase text-xs text-gray-600 mt-1">
+                      {{ note.createdAt }}
+                    </p>
+                    <div class="note-heading">
+                      <h1
+                        class="mt-2 font-semibold text-lg"
+                        style="font-size: 1.126rem"
+                      >
+                        {{ note.title }}
+                      </h1>
+                      <h2
+                        class="font-normal text-gray-400 mt-2 w-11/12 whitespace-nowrap overflow-hidden overflow-ellipsis"
+                        style="font-size: 1rem"
+                      >
+                        {{ note.description }}
+                      </h2>
+                    </div>
                   </div>
                 </div>
-               </div>
               </div>
             </div>
             <div
@@ -81,9 +117,20 @@ export default {
       isCollapsed: false,
       search: "",
       notes: [
-        {id: "1", createdAt: "may 29", title: "Development Practice", description: "Building a website with Vue and Tailwind!"},
-        {id: "2", createdAt: "may 31", title: "Marketing Ideas", description: "A new way to market your business.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}
-      ]
+        {
+          id: "1",
+          createdAt: "may 29",
+          title: "Development Practice",
+          description: "Building a website with Vue and Tailwind!",
+        },
+        {
+          id: "2",
+          createdAt: "may 31",
+          title: "Marketing Ideas",
+          description:
+            "A new way to market your business.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        },
+      ],
     };
   },
   components: {
@@ -92,12 +139,12 @@ export default {
   mounted() {
     const notes = document.querySelectorAll(".note");
     notes[0].classList.add("bg-main-noteLight");
-    notes.forEach(note => {
+    notes.forEach((note) => {
       note.addEventListener("click", () => {
-        notes.forEach(isNote => isNote.classList.remove('bg-main-noteLight'));
-        note.classList.add('bg-main-noteLight');
-      })
-    })
+        notes.forEach((isNote) => isNote.classList.remove("bg-main-noteLight"));
+        note.classList.add("bg-main-noteLight");
+      });
+    });
   },
   watch: {
     "$store.getters.getCollapsedState": function (data) {

@@ -38,12 +38,38 @@ export const sendEmailVerification = (settings: any) => {
 
 
 // Database Functions
-export const userDB = db.collection("users")
-export const tenantDB = db.collection("tenants")
-export const uploadFile = (path: any, file: any) => {
-  return storage().ref(path).put(file)
-}
-
+export const userDB = db.collection("users");
+export const tenantDB = db.collection("tenants");
+export const firebaseUploader = (file: any, updateProgress: any) =>
+  new Promise((resolve, reject) => {
+    const storageReference = firebase.storage().ref("logsnapIssueImages");
+    const reference = storageReference.child(
+      `${file.name}`
+    );
+    const uploadTask = reference.put(file);
+    store.commit('SET_FILENAME', file.name);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        if (updateProgress) updateProgress(progress);
+      },
+      error => {
+        console.log("Got error", error);
+        return reject(new Error("unable_to_upload"));
+      },
+      () => {
+        uploadTask.snapshot.ref
+          .getDownloadURL()
+          .then(url => {
+            resolve(url);
+            store.commit('SET_FILEURL', url)
+          })
+          .catch(() => reject(new Error("unable_to_upload")));
+      }
+    );
+  });
 export const getTenant = async (id: any) => {
   const tenant = await tenantDB.doc(id).get();
   return tenant.data() ? tenant.data() : "No tenant found in the database"

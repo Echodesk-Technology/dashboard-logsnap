@@ -14,6 +14,8 @@ const state = {
     getIssue: [],
     todos: [],
     isCollapsed: "",
+    fileName: "",
+    fileURL: "",
     errorPage: null,
 };
 
@@ -42,7 +44,9 @@ const getters = {
     getIssueData: (state) => state.getIssue,
     getTodos: (state) => state.todos,
     getCollapsedState: (state) => state.isCollapsed,
-    getErrorPage: (state) => state.errorPage
+    getErrorPage: (state) => state.errorPage,
+    getFileName: (state) => state.fileName,
+    getFileURL: (state) => state.fileURL,
 };
 
 const actions = {
@@ -117,7 +121,13 @@ const mutations = {
     },
     SET_ERROR_PAGE (state, data) {
         state.errorPage = data
-    }
+    },
+    SET_FILENAME (state, data) {
+        state.fileName = data
+    },
+    SET_FILEURL (state, data) {
+        state.fileURL = data
+    },
 };
 
 

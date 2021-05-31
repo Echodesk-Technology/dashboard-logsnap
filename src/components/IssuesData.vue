@@ -206,7 +206,7 @@
                 >
                 </textarea>
               </div>
-              <div class="attach mt-3" v-if="attachmentURL">
+              <div class="attach mt-3" v-if="getIssueData.attachmentURL">
                 <h2 class="text-gray-800 font-semibold text-sm">Attachments</h2>
                 <div class="att-img mt-2">
                   <img
