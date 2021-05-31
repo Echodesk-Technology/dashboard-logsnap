@@ -586,6 +586,11 @@ input[type=checkbox]:checked {
 .collapsed-closed .notes-header {
     padding-left: 1rem;
 }
+
+.collapsed-closed .notes-search-header {
+    margin-right: 3.5rem;
+}
+
 .collapsed-closed .note {
     padding-left: 1.5rem;
 }

@@ -33,11 +33,11 @@
                 </button>
               </div>
             </div>
-            <div class="search-header w-3/12 bg-white mr-56">
+            <div class="notes-search-header w-3/12 bg-white mr-56">
               <div
                 class="side-1 search-notes w-full relative bg-white border border-gray-100 rounded-2xl outline-none p-2 space-mb-side"
               >
-                <div class="search-input ml-7 select-none">
+                <div class="note-search-input ml-7 select-none">
                   <input
                     type="text"
                     ref="searchNotes"
