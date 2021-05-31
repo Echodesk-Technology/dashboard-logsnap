@@ -2,7 +2,7 @@
   <div>
     <div id="issuedata">
       <div
-        class="issues-list mt-4 hover:bg-gray-100 cursor-pointer px-1 py-2 rounded ml-6"
+        class="issues-list mt-4 hover:bg-gray-100 cursor-pointer px-1 py-2  rounded ml-6"
         v-for="issue in getIssuesDatas"
         :key="issue.id"
       >

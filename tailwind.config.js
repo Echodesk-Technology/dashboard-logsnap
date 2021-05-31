@@ -8,7 +8,8 @@ module.exports = {
           normal: '#17d8e2',
           dark: '#0ab2bb',
           veryDark: "#046e72",
-          light: "#c6f3f5"
+          light: "#c6f3f5",
+          noteLight: "#f1f9f9"
         },
         settings: {
           light: "#eefbfc",

@@ -17,9 +17,9 @@
             >
               <div class="issue-header flex items-center justify-between mt-1 w-full">
                 <div class="">
-                  <h1 class="text-gray-60 text-2xl font-semibold">Your Issues</h1>
+                  <h1 class="text-gray-60 text-2xl font-semibold ml-3">Your Issues</h1>
                 </div>
-                <div class="mr-52 pr-3">
+                <div class="mr-52 pr-3 create-new-issue">
                   <button
                     class="bg-main-dark text-white text-sm outline-none rounded-sm p-1 focus:outline-none"
                     @click="openIssueModal = true"
@@ -472,7 +472,7 @@ export default {
       },
       getRoute: this.$route.fullPath.split("/")[4].split("?")[0],
       issueCreated: false,
-      IBM_TOKEN: process.env.VUE_APP_IBM_TOKEN,
+      UPLOADCARE_KEY: process.env.VUE_APP_UPLOADCARE_KEY,
     };
   },
   components: {

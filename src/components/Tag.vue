@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tag w-20  max-w-md text-center">
+    <div class="tag w-24  max-w-md text-center">
       <div :class="[rounded,color,backgroundColor,textSize]">{{status}}</div>
     </div>
   </div>
@@ -27,7 +27,7 @@ export default {
         },
         textSize: {
           type: String,
-          default: "text-xs"
+          default: "text-sm"
         }
     },
 };

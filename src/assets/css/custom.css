@@ -489,6 +489,7 @@ body {
 }
 
 
+
 .tags-con .tg {
     display: inline-block;
     word-wrap: break-word;
@@ -559,12 +560,34 @@ input[type=checkbox]:checked {
     padding-left: 12.70rem;
 }
 
-/* .collapsed-opened .issue-header {
-    width: 60%;
-} */
+
 
 .collapsed-closed {
     padding-left: 1.8rem;
+}
+
+.collapsed-closed .issue-header {
+    width: 100%;
+    margin-left: -1.2rem;
+}
+
+.collapsed-closed .create-new-issue {
+    margin-right: 1rem;
+}
+
+.collapsed-closed .issues-data-hd {
+    margin-left: 1.2rem;
+}
+
+.collapsed-closed .issues-list {
+    margin-left: 1rem;
+}
+
+.collapsed-closed .notes-header {
+    padding-left: 1rem;
+}
+.collapsed-closed .note {
+    padding-left: 1.5rem;
 }
 
 .logsnap-logo-collapsed {

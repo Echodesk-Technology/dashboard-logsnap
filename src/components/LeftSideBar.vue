@@ -192,6 +192,34 @@
                       </div>
                     </router-link>
                   </li>
+
+
+                   <li class="mb-1 p-1 dash-link">
+                    <router-link
+                      :to="{ name: 'Notes', params: { id: getRoute } }"
+                      class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
+                    >
+                      <div class="icon-con">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          class="w-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                          />
+                        </svg>
+                      </div>
+                      <div class="link-txt ml-3">
+                        <p class="text-sm font-medium text-gray-600">Notes</p>
+                      </div>
+                    </router-link>
+                  </li>
                 </ul>
               </div>
 
