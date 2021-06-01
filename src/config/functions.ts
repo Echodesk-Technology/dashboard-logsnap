@@ -40,6 +40,8 @@ export const sendEmailVerification = (settings: any) => {
 // Database Functions
 export const userDB = db.collection("users");
 export const tenantDB = db.collection("tenants");
+
+
 export const firebaseUploader = (file: any, updateProgress: any) =>
   new Promise((resolve, reject) => {
     const storageReference = firebase.storage().ref("logsnapIssueImages");
@@ -69,7 +71,8 @@ export const firebaseUploader = (file: any, updateProgress: any) =>
           .catch(() => reject(new Error("unable_to_upload")));
       }
     );
-  });
+});
+
 export const getTenant = async (id: any) => {
   const tenant = await tenantDB.doc(id).get();
   return tenant.data() ? tenant.data() : "No tenant found in the database"
@@ -104,9 +107,9 @@ export const createWorkspace = async (workspaceData: any) => {
 
 export const deleteWorkspace = async (workspacePath: any) => {
   return await getAuthUser().then(user => {
-      const uuser: any = user;
-      const isUserDB = userDB.doc(uuser.uid);
-      return isUserDB.collection("workspace").doc(workspacePath).delete();
+    const uuser: any = user;
+    const isUserDB = userDB.doc(uuser.uid);
+    return isUserDB.collection("workspace").doc(workspacePath).delete();
   });
 };
 
@@ -147,7 +150,7 @@ export const createIssue = async (workspacePath: any, issueData: any) => {
   return await getAuthUser().then(user => {
     const uuser: any = user
     const isUserDB = userDB.doc(uuser.uid)
-    return isUserDB.collection("workspace").doc(workspacePath).collection("issues").add(issueData)
+    return isUserDB.collection("workspace").doc(workspacePath).collection("issues").add(issueData);
   })
 };
 
@@ -232,56 +235,87 @@ export const getTodos = async (workspacePath: any) => {
   })
 };
 
-
-
-
-
-export const getWorkspacePath = async (path: any) => {
-  if(path === undefined) {
-    throw new Error ("Path not specified")
-  }
-  if(path === "") {
-    throw new Error ("Path cannot be empty")
-  }
+export const createNote = async (workspacePath: any, notesData: any) => {
   return await getAuthUser().then(user => {
     const uuser: any = user
     const isUserDB = userDB.doc(uuser.uid)
-    isUserDB.collection("workspace")
-    .doc(path)
-    .get()
-    .then((doc: any) => {
-      if(!doc.exists) {
-        store.commit('SET_ERROR_PAGE', true);
-      }
+    return isUserDB.collection("workspace").doc(workspacePath).collection("notes").add(notesData)
+  })
+};
+
+export const getNote = async (workspacePath: any, id: any) => {
+  return await getAuthUser().then(user => {
+    const uuser: any = user
+    const isUserDB = userDB.doc(uuser.uid)
+    return isUserDB.collection("workspace").doc(workspacePath).collection("notes").doc(id).get().then(data => {
+      let note: any = [];
+      note.push(data.data())
+      store.commit('SET_NOTE', note)
+    });
+  })
+};
+
+export const getNotes = async (workspacePath: any) => {
+  return await getAuthUser().then(user => {
+    const uuser: any = user
+    const isUserDB = userDB.doc(uuser.uid)
+    isUserDB.collection("workspace").doc(workspacePath).collection("notes").orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+      let notesData: any = []
+      querySnapshot.forEach(doc => {
+        notesData.push(doc.data());
+      })
+      store.commit('SET_NOTES', notesData)
     })
   })
 };
 
 
+export const getWorkspacePath = async (path: any) => {
+  if (path === undefined) {
+    throw new Error("Path not specified")
+  }
+  if (path === "") {
+    throw new Error("Path cannot be empty")
+  }
+  return await getAuthUser().then(user => {
+    const uuser: any = user
+    const isUserDB = userDB.doc(uuser.uid)
+    isUserDB.collection("workspace")
+      .doc(path)
+      .get()
+      .then((doc: any) => {
+        if (!doc.exists) {
+          store.commit('SET_ERROR_PAGE', true);
+        }
+      })
+  })
+};
+
+
 export const getPath = async (workspacePath: any, path: any, collection: string) => {
-  if(workspacePath === undefined || path === undefined && collection === undefined) {
-    throw new Error ("Path and Collection must be specified")
+  if (workspacePath === undefined || path === undefined && collection === undefined) {
+    throw new Error("Path and Collection must be specified")
   }
-  if(workspacePath === undefined) {
-    throw new Error ("workspacePath not specified")
+  if (workspacePath === undefined) {
+    throw new Error("workspacePath not specified")
   }
-  if(path === undefined) {
-    throw new Error ("Path not specified")
+  if (path === undefined) {
+    throw new Error("Path not specified")
   }
-  if(collection === undefined) {
-    throw new Error ("Collection not specified")
+  if (collection === undefined) {
+    throw new Error("Collection not specified")
   }
-  if(workspacePath === "" && path === "" && collection === "") {
-    throw new Error ("Path and Collection cannot be empty")
+  if (workspacePath === "" && path === "" && collection === "") {
+    throw new Error("Path and Collection cannot be empty")
   }
-  if(workspacePath === "") {
-    throw new Error ("workspacePath cannot be empty")
+  if (workspacePath === "") {
+    throw new Error("workspacePath cannot be empty")
   }
-  if(path === "") {
-    throw new Error ("Path cannot be empty")
+  if (path === "") {
+    throw new Error("Path cannot be empty")
   }
-  if(collection === "") {
-    throw new Error ("Collection cannot be empty")
+  if (collection === "") {
+    throw new Error("Collection cannot be empty")
   }
   return await getAuthUser().then(user => {
     const uuser: any = user
@@ -306,7 +340,7 @@ export const getPath = async (workspacePath: any, path: any, collection: string)
           .get()
           .then((doc: any) => {
             if (!doc.exists) {
-               store.commit('SET_ERROR_PAGE', true);
+              store.commit('SET_ERROR_PAGE', true);
             }
           });
         break;

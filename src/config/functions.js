@@ -187,6 +187,37 @@ export const getTodos = async (workspacePath) => {
         });
     });
 };
+export const createNote = async (workspacePath, notesData) => {
+    return await getAuthUser().then(user => {
+        const uuser = user;
+        const isUserDB = userDB.doc(uuser.uid);
+        return isUserDB.collection("workspace").doc(workspacePath).collection("notes").add(notesData);
+    });
+};
+export const getNote = async (workspacePath, id) => {
+    return await getAuthUser().then(user => {
+        const uuser = user;
+        const isUserDB = userDB.doc(uuser.uid);
+        return isUserDB.collection("workspace").doc(workspacePath).collection("notes").doc(id).get().then(data => {
+            let note = [];
+            note.push(data.data());
+            store.commit('SET_NOTE', note);
+        });
+    });
+};
+export const getNotes = async (workspacePath) => {
+    return await getAuthUser().then(user => {
+        const uuser = user;
+        const isUserDB = userDB.doc(uuser.uid);
+        isUserDB.collection("workspace").doc(workspacePath).collection("notes").orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+            let notesData = [];
+            querySnapshot.forEach(doc => {
+                notesData.push(doc.data());
+            });
+            store.commit('SET_NOTES', notesData);
+        });
+    });
+};
 export const getWorkspacePath = async (path) => {
     if (path === undefined) {
         throw new Error("Path not specified");

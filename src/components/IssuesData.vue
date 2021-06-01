@@ -384,7 +384,6 @@ export default {
     return {
       actionClicked: false,
       issues: [],
-      getIssueData: [],
       tags: [],
       newTags: [],
       attachmentURL: false,

@@ -5,6 +5,7 @@
     --ghostsmoke: #fafbfc;
     --modal-background: rgba(9, 30, 66, 0.54);
     --icons-color: #03373a;
+    --noteLight: #f1f9f9;
 }
 
 body {
@@ -160,6 +161,10 @@ body {
 
 .settings-link .exact-active div p {
     color: var(--main-color);
+}
+
+.note .exact-active  {
+    background-color: var(--noteLight);
 }
 
 /* Dashboard */

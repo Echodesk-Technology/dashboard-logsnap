@@ -141,7 +141,7 @@
                 <ul class="mt-4">
                   <li class="mb-1 p-1 dash-link">
                     <router-link
-                      :to="{ name: 'Issues', params: { id: getRoute } }"
+                      :to="{ name: 'Issues', params: { workspacePath: workspacePath } }"
                       class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
                     >
                       <div class="icon-con">
@@ -168,7 +168,7 @@
 
                   <li class="mb-1 p-1 dash-link">
                     <router-link
-                      :to="{ name: 'Todos', params: { id: getRoute } }"
+                      :to="{ name: 'Todos', params: { id: workspacePath } }"
                       class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
                     >
                       <div class="icon-con">
@@ -196,7 +196,7 @@
 
                    <li class="mb-1 p-1 dash-link">
                     <router-link
-                      :to="{ name: 'Notes', params: { id: getRoute } }"
+                      :to="{ name: 'Notes', params: { workspacePath: workspacePath } }"
                       class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
                     >
                       <div class="icon-con">
@@ -428,7 +428,7 @@
             <ul class="mt-4">
               <li class="mb-1 p-1 dash-link">
                 <router-link
-                  :to="{ name: 'Issues', params: { id: getRoute } }"
+                  :to="{ name: 'Issues', params: { id: workspacePath } }"
                   class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
                 >
                   <div class="icon-con">
@@ -455,7 +455,7 @@
 
               <li class="mb-1 p-1 dash-link">
                 <router-link
-                  :to="{ name: 'Todos', params: { id: getRoute } }"
+                  :to="{ name: 'Todos', params: { id: workspacePath } }"
                   class="flex items-center p-2 hover:bg-gray-100 rounded text-sm"
                 >
                   <div class="icon-con">
@@ -624,7 +624,7 @@ export default {
   data() {
     return {
       // userImage: false,
-      getRoute: this.$route.fullPath.split("/")[4],
+      workspacePath: this.$route.fullPath.split("/")[4],
       name: "",
       // color: "",
       initals: "",
@@ -748,7 +748,7 @@ export default {
     //   var initials = parts[0];
     //   return initials;
     // };
-    // this.getRoute = this.$route.fullPath.split("/")[4];
+    // this.workspacePath = this.$route.fullPath.split("/")[4];
     // getAuthUser().then((user) => {
     //   getUser(user.uid).then((user) => {
     //     this.name = user.fullName;

@@ -16,6 +16,8 @@ const state = {
     isCollapsed: "",
     fileName: "",
     fileURL: "",
+    notes: [],
+    noteData: [],
     errorPage: null,
 };
 
@@ -47,6 +49,8 @@ const getters = {
     getErrorPage: (state) => state.errorPage,
     getFileName: (state) => state.fileName,
     getFileURL: (state) => state.fileURL,
+    getNote: (state) => state.noteData,
+    getNotes: (state) => state.notes
 };
 
 const actions = {
@@ -127,6 +131,12 @@ const mutations = {
     },
     SET_FILEURL (state, data) {
         state.fileURL = data
+    },
+    SET_NOTES (state, data) {
+        state.notes = data
+    },
+    SET_NOTE (state, data) {
+        state.noteData = data
     },
 };
 

@@ -655,12 +655,10 @@ export default {
         // this.uploadFile(this.$refs.uploadBtn);
         createIssue(this.getRoute, this.issue)
           .then((docRef) => {
-            setTimeout(() => {
-              docRef.update({
-                id: docRef.id,
-                workspaceid: this.getRoute,
-              });
-            }, 1100);
+            docRef.update({
+              id: docRef.id,
+              workspaceid: this.getRoute,
+            });
           })
           .then(() => {
             this.issue.tags = [];
@@ -798,7 +796,12 @@ export default {
       }
     }
   },
-  computed: mapGetters(["getIssuesDatas", "getCollapsedState", "getFileName", "getFileURL"]),
+  computed: mapGetters([
+    "getIssuesDatas",
+    "getCollapsedState",
+    "getFileName",
+    "getFileURL",
+  ]),
   watch: {
     "$store.getters.getCollapsedState": function (data) {
       if (data === true) {
@@ -817,13 +820,13 @@ export default {
       }
     },
     "$store.getters.getFileName": function (data) {
-      if(data) {
+      if (data) {
         this.upLoaded = true;
         this.fileName = data;
       }
     },
     "$store.getters.getFileURL": function (data) {
-     if(data) {
+      if (data) {
         this.upLoaded = true;
         this.issue.attachmentURL = data;
       }

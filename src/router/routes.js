@@ -2,22 +2,23 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import { getAuthUser, isUserVerified } from '../config/functions';
 import Auth from '../views/Auth.vue';
-import Workspace from '../views/Workspace.vue'
-// import workspaceCreate from '../views/workspaceCreate.vue'
-import Issues from '../views/Issues.vue'
-import Issue from '../views/Issue.vue'
-import Notes from '../views/Notes.vue'
-import Backlog from '../views/Backlog.vue'
-import Todos from '../views/Todos.vue'
-import ProfileSettings from '../views/ProfileSettings.vue'
-import NotificationsSettings from '../views/NotificationsSettings.vue'
-import PreferencesSettings from '../views/PreferencesSettings.vue'
-import WorkspaceSettings from '../views/WorkspaceSettings.vue'
-import UsersSettings from '../views/UsersSettings.vue'
-import IntegrationsSettings from '../views/IntegrationsSettings.vue'
-import APISettings from '../views/APISettings.vue'
-import PlansSettings from '../views/PlansSettings.vue'
-import BillingSettings from '../views/BillingSettings.vue'
+import Workspace from '../views/Workspace.vue';
+// import workspaceCreate from '../views/workspaceCreate.vue';
+import Issues from '../views/Issues.vue';
+import Issue from '../views/Issue.vue';
+import Notes from '../views/Notes.vue';
+import Note from "../views/Note.vue";
+import Backlog from '../views/Backlog.vue';
+import Todos from '../views/Todos.vue';
+import ProfileSettings from '../views/ProfileSettings.vue';
+import NotificationsSettings from '../views/NotificationsSettings.vue';
+import PreferencesSettings from '../views/PreferencesSettings.vue';
+import WorkspaceSettings from '../views/WorkspaceSettings.vue';
+import UsersSettings from '../views/UsersSettings.vue';
+import IntegrationsSettings from '../views/IntegrationsSettings.vue';
+import APISettings from '../views/APISettings.vue';
+import PlansSettings from '../views/PlansSettings.vue';
+import BillingSettings from '../views/BillingSettings.vue';
 import NotFound from '../views/NotFound.vue';
 
 
@@ -69,7 +70,7 @@ const routes = [
     },
     {
         name: "Issues",
-        path: "/workspace/:workspaceName/issues/:id",
+        path: "/workspace/:workspaceName/issues/:workspacePath",
         component: Issues,
         meta: {
             title: "Issues - LogSnap",
@@ -78,7 +79,7 @@ const routes = [
     },
     {
         name: "Notes",
-        path: "/workspace/:workspaceName/notes/:id",
+        path: "/workspace/:workspaceName/notes/:workspacePath",
         component: Notes,
         meta: {
             title: "Notes - LogSnap",
@@ -87,7 +88,7 @@ const routes = [
     },
     {
         name: "Todos",
-        path: "/workspace/:workspaceName/todos/:id",
+        path: "/workspace/:workspaceName/todos/:workspacePath",
         component: Todos,
         meta: {
             title: "Todos - LogSnap",
@@ -105,10 +106,19 @@ const routes = [
     },
     {
         name: "Issue",
-        path: "/workspace/:workspaceName/issue/viewissue/:workspaceid/:id",
+        path: "/workspace/:workspaceName/issue/viewissue/:workspaceid/:issueID",
         component: Issue,
         meta: {
             title: "Issue",
+            requiresAuth: true
+        },
+    },
+    {
+        name: "Note",
+        path: "/workspace/:workspaceName/note/:workspacePath/:noteID",
+        component: Note,
+        meta: {
+            title: "Note",
             requiresAuth: true
         },
     },
@@ -217,9 +227,9 @@ router.afterEach((to, from, next) => {
 
 
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    if(requiresAuth && !await getAuthUser()) {
+    if (requiresAuth && !await getAuthUser()) {
         next('login')
     }
     else if (requiresAuth && await isUserVerified() === false) {
